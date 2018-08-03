@@ -1034,7 +1034,7 @@ exports.musterLive_FUTURE= function(req, res) {
           statusBar="danger";
 
 
-          res.render('musterLive', { title: 'Command Center - Live Muster', statusBar : statusBar, overallProgress : overallProgress, overallProgRound : overallProgRound, missingCount : missingCount, resEvacs : resEvacs, progress : progress, username: req.session.username, resz1 : resz1, resz2 : resz2, resz3 : resz3});
+          res.render('musterLive', { title: 'Command Center - Live Muster', statusBar : statusBar, overallProgress : overallProgress, overallProgRound : overallProgRound, missingCount : missingCount, resEvacs : resEvacs, progress : progress, username: req.session.username, resz1 : resz1, resz2 : resz2, resz3 : resz3, serverAddress});
         }
       });
         } // if else last get muster

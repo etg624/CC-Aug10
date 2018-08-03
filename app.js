@@ -391,7 +391,6 @@ if (process.env.CC_SSL == "YES"){
      port: 3000,
      path: '/microsoftgraph',
      method: 'POST',
-     rejectUnauthorized: false,
      headers: {
        'Content-Type': 'application/x-www-form-urlencoded',
        'Content-Length': Buffer.byteLength(json)
@@ -491,7 +490,6 @@ if (process.env.CC_SSL == "YES"){
      port: 3000,
      path: '/distributionlist',
      method: 'POST',
-     rejectUnauthorized: false,
      headers: {
        'Content-Type': 'application/x-www-form-urlencoded'
      }
@@ -568,7 +566,6 @@ if (process.env.CC_SSL == "YES"){
      port: 3000,
      path: '/distributionlistmembers',
      method: 'POST',
-     rejectUnauthorized: false,
      headers: {
        'Content-Type': 'application/x-www-form-urlencoded'
      }
