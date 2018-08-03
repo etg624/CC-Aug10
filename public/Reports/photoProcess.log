@@ -1,0 +1,207 @@
+done
+done
+done with zip
+done with zip
+done with zip
+--
+Wed Jul 18 2018 21:47:50 GMT-0700 (Pacific Daylight Time) Zip processing started.
+--
+Archiver (zip) has been finalized and the output file descriptor has closed.
+--
+172129 total bytes
+--
+Wed Jul 18 2018 21:50:57 GMT-0700 (Pacific Daylight Time) Zip processing started.
+Size of Zip file is 172129 total bytes
+Archiver (zip) has been finalized and the output file descriptor has closed.
+--
+Processing
+Thu Jul 19 2018 07:26:15 GMT-0700 (Pacific Daylight Time) Zip processing started.
+Size of Zip file is 172129 total bytes
+Complete
+Archiver (zip) has been finalized and the output file descriptor has closed.
+--
+Processing
+Thu Jul 19 2018 07:29:23 GMT-0700 (Pacific Daylight Time) Zip processing started.
+Size of Zip file is 172129 total bytes
+Complete: Archiver (zip) has been finalized and the output file descriptor has closed.
+--
+Thu Jul 19 2018 07:33:04 GMT-0700 (Pacific Daylight Time) Zip processing started.
+Complete: photos zipped into file of 172129 total bytes
+Size of Zip file is 172129 total bytes
+--
+Processing: Thu Jul 19 2018 07:40:39 GMT-0700 (Pacific Daylight Time) Zip processing started.
+Complete: photos zipped into file of 172129 total bytes
+--
+Processing: Thu Jul 19 2018 08:35:42 GMT-0700 (Pacific Daylight Time) Zip processing started.
+--
+Processing: Thu Jul 19 2018 09:18:31 GMT-0700 (Pacific Daylight Time) Zip processing started.
+Complete: photos zipped into file of 172129 total bytes
+--
+Processing: Thu Jul 19 2018 09:26:00 GMT-0700 (Pacific Daylight Time) Zip processing started.
+Complete: photos zipped into file of 3087915 total bytes
+--
+Processing: Thu Jul 19 2018 09:28:02 GMT-0700 (Pacific Daylight Time) Zip processing started.
+Complete: photos zipped into file of 3087915 total bytes
+--
+Processing: Thu Jul 19 2018 09:29:08 GMT-0700 (Pacific Daylight Time) Zip processing started.
+Complete: photos zipped into file of 3087915 total bytes
+--
+--
+Processing: Thu Jul 19 2018 09:38:48 GMT-0700 (Pacific Daylight Time) Zip processing started.
+Complete: photos zipped into file of 3087915 total bytes
+--
+Processing: Thu Jul 19 2018 10:01:54 GMT-0700 (Pacific Daylight Time) began photo import.
+Processing: Thu Jul 19 2018 10:01:58 GMT-0700 (Pacific Daylight Time) Zip processing started.
+Complete: photos zipped into file of 3087915 total bytes
+--
+Processing: Thu Jul 19 2018 10:47:08 GMT-0700 (Pacific Daylight Time) began photo import.
+Processing: Thu Jul 19 2018 10:47:12 GMT-0700 (Pacific Daylight Time) Zip processing started.
+Complete: photos zipped into file of 3087915 total bytes
+Processing: Thu Jul 19 2018 10:50:37 GMT-0700 (Pacific Daylight Time) began photo import.
+--
+Processing: Thu Jul 19 2018 10:51:05 GMT-0700 (Pacific Daylight Time) Zip processing started.
+Complete: photos zipped into file of 29349917 total bytes
+--TEST--
+--
+Processing: Thu Jul 19 2018 11:07:10 GMT-0700 (Pacific Daylight Time) began photo import.
+Processing: Thu Jul 19 2018 11:07:37 GMT-0700 (Pacific Daylight Time) Zip processing started.
+Complete: photos zipped into file of 29349917 total bytes
+--
+Processing: Thu Jul 19 2018 11:10:38 GMT-0700 (Pacific Daylight Time) began photo import.
+Processing: Thu Jul 19 2018 11:11:38 GMT-0700 (Pacific Daylight Time) zip processing started.
+Complete: photos zipped into file of 58549917 total bytes.
+--
+Processing: Thu Jul 19 2018 12:07:26 GMT-0700 (Pacific Daylight Time) began photo import.
+--
+Processing: Thu Jul 19 2018 12:08:22 GMT-0700 (Pacific Daylight Time) zip processing started.
+Status of File Zip: 20047 files to be zipped.
+Status of File Zip: 1 chunk(s) required.
+--
+Processing: Thu Jul 19 2018 12:13:19 GMT-0700 (Pacific Daylight Time) began photo import.
+Processing: Thu Jul 19 2018 12:14:15 GMT-0700 (Pacific Daylight Time) zip processing started.
+Status of File Zip: 20047 files to be zipped.
+Status of File Zip: 1 chunk(s) required.
+Status of File Zip: the file to be zipped is C:\Users\bligh\Dropbox\CC7.0.3_Master\public\photoZipChunks0\
+--
+Processing: Thu Jul 19 2018 12:17:39 GMT-0700 (Pacific Daylight Time) began photo import.
+Processing: Thu Jul 19 2018 12:18:28 GMT-0700 (Pacific Daylight Time) zip processing started.
+Status of File Zip: 20047 files to be zipped.
+Status of File Zip: 1 chunk(s) required.
+Status of File Zip: the file to be zipped is C:\Users\bligh\Dropbox\CC7.0.3_Master\public\photoZipChunks0\
+Processing: Thu Jul 19 2018 12:18:36 GMT-0700 (Pacific Daylight Time) zip processing started.
+Status of File Zip: the 0 chunk is zipped.
+--
+Processing: Thu Jul 19 2018 12:28:31 GMT-0700 (Pacific Daylight Time) began photo import.
+Processing: Thu Jul 19 2018 12:29:25 GMT-0700 (Pacific Daylight Time) zip processing started.
+Status of File Zip: 20047 files to be zipped.
+Status of File Zip: 1 chunk(s) required.
+Status of File Zip: the directory being zipped is C:\Users\bligh\Dropbox\CC7.0.3_Master\public\photoZipChunks0\
+Processing: Thu Jul 19 2018 12:29:33 GMT-0700 (Pacific Daylight Time) zip processing started.
+Status of File Zip: the 0 chunk is zipped.
+--
+Processing: Thu Jul 19 2018 12:32:53 GMT-0700 (Pacific Daylight Time) began photo import.
+Processing: Thu Jul 19 2018 12:33:46 GMT-0700 (Pacific Daylight Time) zip processing started.
+Status of File Zip: 20047 files to be zipped.
+Status of File Zip: 1 chunk(s) required.
+Status of File Zip: the directory being zipped is C:\Users\bligh\Dropbox\CC7.0.3_Master\public\photoZipChunks0\
+Processing: Thu Jul 19 2018 12:33:54 GMT-0700 (Pacific Daylight Time) zip processing started.
+Status of File Zip: the 0 chunk is zipped.
+Complete: all chunks have been zipped.
+--
+Processing: Thu Jul 19 2018 12:37:24 GMT-0700 (Pacific Daylight Time) began photo import.
+Processing: Thu Jul 19 2018 12:38:14 GMT-0700 (Pacific Daylight Time) zip processing started.
+Status of File Zip: 20047 files to be zipped.
+Status of File Zip: 1 chunk(s) required.
+Status of File Zip: the directory being zipped is C:\Users\bligh\Dropbox\CC7.0.3_Master\public\photoZipChunks0\
+Status of File Zip: the 0 chunk is zipped. 58549917 total bytes.
+Complete: all chunks have been zipped.
+--
+Processing: Thu Jul 19 2018 17:54:41 GMT-0700 (Pacific Daylight Time) began photo import.
+Processing: Thu Jul 19 2018 18:00:44 GMT-0700 (Pacific Daylight Time) zip processing started.
+Status of File Zip: 51047 files to be zipped.
+Status of File Zip: 3 chunk(s) required.
+Directory created: ./public/photoZipChunks0
+--
+Processing: Thu Jul 19 2018 18:13:20 GMT-0700 (Pacific Daylight Time) began photo import.
+Processing: Thu Jul 19 2018 18:16:07 GMT-0700 (Pacific Daylight Time) zip processing started.
+Status of File Zip: 51000 files to be zipped.
+Status of File Zip: 3 chunk(s) required.
+Directory created: ./public/photoZipChunks0
+--
+Processing: Thu Jul 19 2018 18:34:27 GMT-0700 (Pacific Daylight Time) began photo import.
+Processing: Thu Jul 19 2018 18:36:44 GMT-0700 (Pacific Daylight Time) zip processing started.
+Status of File Zip: 51000 files to be zipped.
+Status of File Zip: 3 chunk(s) required.
+Status of File Zip: the directory being zipped is C:\Users\bligh\Dropbox\CC7.0.3_Master\public\photoZipChunks2\
+Status of File Zip: the directory being zipped is C:\Users\bligh\Dropbox\CC7.0.3_Master\public\photoZipChunks1\
+Status of File Zip: the directory being zipped is C:\Users\bligh\Dropbox\CC7.0.3_Master\public\photoZipChunks0\
+Status of File Zip: the 2 chunk is zipped. 2917806 total bytes.
+Complete: all chunks have been zipped.
+Status of File Zip: the 1 chunk is zipped. 72985588 total bytes.
+Status of File Zip: the 0 chunk is zipped. 72994460 total bytes.
+--
+Processing: Tue Jul 31 2018 08:51:08 GMT-0700 (Pacific Daylight Time) began photo import.
+Processing: Tue Jul 31 2018 08:53:52 GMT-0700 (Pacific Daylight Time) zip processing started.
+Status of File Zip: 51000 files to be zipped.
+Status of File Zip: 3 chunk(s) required.
+Status of File Zip: the directory being zipped is C:\Users\bligh\Dropbox\CC7.0.3_Master\public\photoZipChunks2\
+Status of File Zip: the directory being zipped is C:\Users\bligh\Dropbox\CC7.0.3_Master\public\photoZipChunks1\
+Status of File Zip: the directory being zipped is C:\Users\bligh\Dropbox\CC7.0.3_Master\public\photoZipChunks0\
+Completed File Zip: the 2 chunk is zipped. 2917806 total bytes.
+Completed File Zip: the 1 chunk is zipped. 72985588 total bytes.
+Completed File Zip: the 0 chunk is zipped. 72994460 total bytes.
+--
+Processing: Tue Jul 31 2018 09:41:29 GMT-0700 (Pacific Daylight Time) began photo import.
+Processing: Tue Jul 31 2018 09:46:09 GMT-0700 (Pacific Daylight Time) zip processing started.
+Status of File Zip: 106000 files to be zipped.
+Status of File Zip: 5 chunk(s) required.
+Status of File Zip: the directory being zipped is C:\Users\bligh\Dropbox\CC7.0.3_Master\public\photoZipChunks4\
+Status of File Zip: the directory being zipped is C:\Users\bligh\Dropbox\CC7.0.3_Master\public\photoZipChunks1\
+Status of File Zip: the directory being zipped is C:\Users\bligh\Dropbox\CC7.0.3_Master\public\photoZipChunks2\
+Status of File Zip: the directory being zipped is C:\Users\bligh\Dropbox\CC7.0.3_Master\public\photoZipChunks3\
+Status of File Zip: the directory being zipped is C:\Users\bligh\Dropbox\CC7.0.3_Master\public\photoZipChunks0\
+Completed File Zip: chunk 4 is zipped. 17518696 total bytes.
+Completed File Zip: chunk 3 is zipped. 72994474 total bytes.
+Completed File Zip: chunk 2 is zipped. 72994460 total bytes.
+Completed File Zip: chunk 1 is zipped. 72994474 total bytes.
+Completed File Zip: chunk 0 is zipped. 73007796 total bytes.
+--
+Processing: Tue Jul 31 2018 10:42:38 GMT-0700 (Pacific Daylight Time) began photo import.
+Processing: Tue Jul 31 2018 10:43:13 GMT-0700 (Pacific Daylight Time) zip processing started.
+Status of File Zip: 10000 files to be zipped.
+Status of File Zip: 1 chunk(s) required.
+Status of File Zip: the directory being zipped is C:\Users\bligh\Dropbox\CC7.0.3_Master\public\photoZipChunks0\
+Completed File Zip: chunk 0 is zipped. 29177810 total bytes.
+--
+Processing: Tue Jul 31 2018 10:50:15 GMT-0700 (Pacific Daylight Time) began photo import.
+Processing: Tue Jul 31 2018 10:52:54 GMT-0700 (Pacific Daylight Time) zip processing started.
+Status of File Zip: 51000 files to be zipped.
+Status of File Zip: 3 chunk(s) required.
+Status of File Zip: the directory being zipped is C:\Users\bligh\Dropbox\CC7.0.3_Master\public\photoZipChunks2\
+Status of File Zip: the directory being zipped is C:\Users\bligh\Dropbox\CC7.0.3_Master\public\photoZipChunks1\
+Status of File Zip: the directory being zipped is C:\Users\bligh\Dropbox\CC7.0.3_Master\public\photoZipChunks0\
+Completed File Zip: chunk 2 is zipped. 2917806 total bytes.
+Completed File Zip: chunk 1 is zipped. 72985588 total bytes.
+Completed File Zip: chunk 0 is zipped. 72994460 total bytes.
+--
+Sweep Processing: Fri Aug 03 2018 09:12:00 GMT-0700 (Pacific Daylight Time) began photo import.
+Processing: Fri Aug 03 2018 09:14:40 GMT-0700 (Pacific Daylight Time) zip processing started.
+Status of File Zip: 51000 files to be zipped.
+Status of File Zip: 3 chunk(s) required.
+Status of File Zip: the directory being zipped is C:\Users\bligh\Dropbox\CC7.0.3_Master\public\photoZipChunks2\
+Status of File Zip: the directory being zipped is C:\Users\bligh\Dropbox\CC7.0.3_Master\public\photoZipChunks1\
+Status of File Zip: the directory being zipped is C:\Users\bligh\Dropbox\CC7.0.3_Master\public\photoZipChunks0\
+Completed File Zip: chunk 2 is zipped. 2917806 total bytes.
+Completed File Zip: chunk 1 is zipped. 72985588 total bytes.
+Completed File Zip: chunk 0 is zipped. 72994460 total bytes.
+--
+Sweep Processing: Fri Aug 03 2018 12:34:00 GMT-0700 (Pacific Daylight Time) began photo import.
+Processing: Fri Aug 03 2018 12:36:43 GMT-0700 (Pacific Daylight Time) zip processing started.
+Status of File Zip: 51000 files to be zipped.
+Status of File Zip: 3 chunk(s) required.
+Status of File Zip: the directory being zipped is C:\Users\bligh\Dropbox\CC7.0.3_Master\public\photoZipChunks2\
+Status of File Zip: the directory being zipped is C:\Users\bligh\Dropbox\CC7.0.3_Master\public\photoZipChunks1\
+Status of File Zip: the directory being zipped is C:\Users\bligh\Dropbox\CC7.0.3_Master\public\photoZipChunks0\
+Completed File Zip: chunk 2 is zipped. 2917806 total bytes.
+Completed File Zip: chunk 1 is zipped. 72985588 total bytes.
+Completed File Zip: chunk 0 is zipped. 72994460 total bytes.
