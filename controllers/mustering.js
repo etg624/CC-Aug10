@@ -30,19 +30,19 @@ module.exports.musterHome = function (req, res) {
   sess = req.session;
 
 
-      // don't let nameless people view the dashboard, redirect them back to the homepage
-      if (typeof sess.username == 'undefined') res.redirect('/');
-      else {
+  // don't let nameless people view the dashboard, redirect them back to the homepage
+  if (typeof sess.username == 'undefined') res.redirect('/');
+  else {
 
     //get a connection using the common handler in models/db.js
-    db.createConnection(function (err, reslt) {
+    db.createConnection(function (err, result) {
       if (err) {
 
         callback(err, null);
       } else {
         //process the i/o after successful connect.  Connection object returned in callback
-        var connection = reslt;
-        console.log('here is the connnection ' + reslt.threadId);
+        var connection = result;
+        console.log('here is the connnection ' + result.threadId);
 
 
         // Mustering Phase 1 resuses EVENTS. mustermaster table unused as of 5.2.3
@@ -65,7 +65,7 @@ module.exports.musterHome = function (req, res) {
         });
       }
     });
-      }
+  }
 };
 
 ////////////////////////////////////////////////////////////
@@ -74,18 +74,18 @@ module.exports.musterHome = function (req, res) {
 module.exports.musterGetOneForEdit = function (req, res) {
 
   sess = req.session;
-      // don't let nameless people view the dashboard, redirect them back to the homepage
-      if (typeof sess.username == 'undefined') res.redirect('/');
-      else {
+  // don't let nameless people view the dashboard, redirect them back to the homepage
+  if (typeof sess.username == 'undefined') res.redirect('/');
+  else {
 
     //get a connection using the common handler in models/db.js
-    db.createConnection(function (err, reslt) {
+    db.createConnection(function (err, result) {
       if (err) {
         console.log('Error while performing common connect query: ' + err);
         callback(err, null);
       } else {
         //process the i/o after successful connect.  Connection object returned in callback
-        var connection = reslt;
+        var connection = result;
 
         var strSQL = 'SELECT * FROM events WHERE EventID=' + req.params.musterID;
 
@@ -123,16 +123,16 @@ module.exports.musterGetOneForEdit = function (req, res) {
 
 exports.musterUpdateOne = function (req, res) {
   sess = req.session;
-      var name = req.query.name;
+  var name = req.query.name;
 
   //get a connection using the common handler in models/db.js
-  db.createConnection(function (err, reslt) {
+  db.createConnection(function (err, result) {
     if (err) {
       console.log('Error while performing common connect query: ' + err);
       callback(err, null);
     } else {
       //process the i/o after successful connect.  Connection object returned in callback
-      var connection = reslt;
+      var connection = result;
 
       var buildEventQuery = (function () {
         var updateEvent = function (field1, field2, field3, field4, field5, field6, field7, field8) {
@@ -198,7 +198,7 @@ exports.musterUpdateOne = function (req, res) {
       });//feb--end of connection.query
     }
   });
-     // res.render('/events', { title: 'Command Center 360 - Event List'});
+  // res.render('/events', { title: 'Command Center 360 - Event List'});
 };
 
 
@@ -217,18 +217,18 @@ module.exports.musterGetOne = function (req, res) {
   sess = req.session;
 
 
-      // don't let nameless people view the dashboard, redirect them back to the homepage
-      if (typeof sess.username == 'undefined') res.redirect('/');
-      else {
+  // don't let nameless people view the dashboard, redirect them back to the homepage
+  if (typeof sess.username == 'undefined') res.redirect('/');
+  else {
 
     //get a connection using the common handler in models/db.js
-    db.createConnection(function (err, reslt) {
+    db.createConnection(function (err, result) {
       if (err) {
         console.log('Error while performing common connect query: ' + err);
         callback(err, null);
       } else {
         //process the i/o after successful connect.  Connection object returned in callback
-        var connection = reslt;
+        var connection = result;
 
         // NOTE:  Mustering phase 1 reuses the EVENTS table
 
@@ -511,16 +511,16 @@ module.exports.musterGetOne = function (req, res) {
 
 exports.musterAdd = function (req, res) {
   sess = req.session;
-      // don't let nameless people view the dashboard, redirect them back to the homepage
-      if (typeof sess.username == 'undefined') res.redirect('/');
-      else {
+  // don't let nameless people view the dashboard, redirect them back to the homepage
+  if (typeof sess.username == 'undefined') res.redirect('/');
+  else {
 
-        var name = req.query.name;
+    var name = req.query.name;
     var defaultLat = process.env.LAT
     var defaultLng = process.env.LNG
     console.log("default lat " + defaultLat)
 
-        // show the mustering screen if msuter is enabled in the environment variables
+    // show the mustering screen if msuter is enabled in the environment variables
     if (process.env.MUSTER == "ON") {
       res.render('musterAdd', { title: 'Command Center', defaultLat: defaultLat, defaultLng: defaultLng });
     } else {
@@ -540,13 +540,13 @@ exports.musterAdd = function (req, res) {
 exports.musterPostDatabase = function (req, res) {
 
   //get a connection using the common handler in models/db.js
-  db.createConnection(function (err, reslt) {
+  db.createConnection(function (err, result) {
     if (err) {
       console.log('Error while performing common connect query: ' + err);
       callback(err, null);
     } else {
       //process the i/o after successful connect.  Connection object returned in callback
-      var connection = reslt;
+      var connection = result;
 
       var buildEventQuery = (function () {
         var insertEvent = function (field1, field2, field3, field4, field5, field6, field7, field8, field9) {
@@ -621,14 +621,14 @@ exports.musterPostDatabase = function (req, res) {
 exports.musterPostDatabase_FUTURE = function (req, res) {
 
   //get a connection using the common handler in models/db.js
-  db.createConnection(function (err, reslt) {
+  db.createConnection(function (err, result) {
     if (err) {
       console.log('Error while pErforming common connect query: ' + err);
       callback(err, null);
     } else {
       //process the i/o after successful connect.  Connection object returned in callback
-      var connection = reslt;
-      console.log('here is the connnection ' + reslt.threadId);
+      var connection = result;
+      console.log('here is the connnection ' + result.threadId);
 
       var buildMusterMasterQuery = (function () {
         var insertMuster = function (field1, field2, field3, field4, field5, field6, field7) {
@@ -689,10 +689,10 @@ exports.musterLive = function (req, res) {
   sess = req.session;
   sess.time = '';
 
-      // don't let nameless people view the dashboard, redirect them back to the homepage
-      if (typeof sess.username == 'undefined') {
+  // don't let nameless people view the dashboard, redirect them back to the homepage
+  if (typeof sess.username == 'undefined') {
     res.redirect('/');
-      } else {
+  } else {
 
     /**
      * 1. Get the attendance records for this event (may need to differentiate between check in and check out)
@@ -858,12 +858,12 @@ exports.musterLive = function (req, res) {
                             res.render('musterLive', { title: 'Command Center', statusBar: statusBar, overallProgress: overallProgress, overallProgRound: overallProgRound, missingCount: missingCount, username: req.session.username, resz1: resz1, resz2: resz2, resEvacDisplay: resEvacDisplay, resTotalScanned, resTotalUnknown, resTotalInvalid, resTotalFromEvacList, musterLat, musterLng, musterID, musterName, serverAddress });
                           })
 
-                          //     db.createConnection(function(err,reslt){  
+                          //     db.createConnection(function(err,result){  
                           //       if (err) {
                           //         console.log('Error while performing common connect query: ' + err);
                           //         callback(err, null);
                           //       }else{
-                          //         var connection = reslt
+                          //         var connection = result
                           //     //--
                           //     // Update the unaccounted table
                           //     // _sqlQU = 'DELETE FROM unaccounted'
@@ -952,10 +952,10 @@ exports.musterLive = function (req, res) {
 exports.musterLive_FUTURE = function (req, res) {
   sess = req.session;
   sess.time = '';
-      // don't let nameless people view the dashboard, redirect them back to the homepage
-      if (typeof sess.username == 'undefined') {
+  // don't let nameless people view the dashboard, redirect them back to the homepage
+  if (typeof sess.username == 'undefined') {
     res.redirect('/');
-      } else {
+  } else {
 
     muster.getMusterRecords(req.params.musterID, '1', function (err, resz1) { // begin of gets
       if (err) {
@@ -1064,19 +1064,19 @@ exports.musterPointHome = function (req, res) {
   sess.rptError = null;
 
   // don't let nameless people view the dashboard, redirect them back to the homepage
-      if (typeof sess.username == 'undefined') res.redirect('/');
-      else {
+  if (typeof sess.username == 'undefined') res.redirect('/');
+  else {
 
     //feb--connect to the database, performa query to get all rows from people and send that data to 
     //--to be rendered as a table in Jade
     //feb- we have user entry at this point and so setting up the credentials here
     //get a connection using the common handler in models/db.js
-    db.createConnection(function (err, reslt) {
+    db.createConnection(function (err, result) {
       if (err) {
         callback(err, null);
       } else {
         //process the i/o after successful connect.  Connection object returned in callback
-        var connection = reslt;
+        var connection = result;
 
         var _sqlQ = "SELECT * FROM musterpoint";
         connection.query(_sqlQ, function (err, results) {
@@ -1089,7 +1089,7 @@ exports.musterPointHome = function (req, res) {
         });
       }
     });
-      }
+  }
 };
 
 
@@ -1099,11 +1099,11 @@ exports.musterPointHome = function (req, res) {
 /////////////////////////////////////////////////
 exports.musterPointAdd = function (req, res) {
   sess = req.session;
-      // don't let nameless people view the dashboard, redirect them back to the homepage
-      if (typeof sess.username == 'undefined') res.redirect('/');
-      else {
+  // don't let nameless people view the dashboard, redirect them back to the homepage
+  if (typeof sess.username == 'undefined') res.redirect('/');
+  else {
 
-        // show the mustering screen if msuter is enabled in the environment variables
+    // show the mustering screen if msuter is enabled in the environment variables
     if (process.env.MUSTER == "ON") {
       res.render('musterPointAdd', { title: 'Command Center' });
     } else {
@@ -1121,13 +1121,13 @@ exports.musterPointAdd = function (req, res) {
 exports.musterPointPostDatabase = function (req, res) {
 
   //get a connection using the common handler in models/db.js
-  db.createConnection(function (err, reslt) {
+  db.createConnection(function (err, result) {
     if (err) {
       console.log('Error while performing common connect query: ' + err);
       callback(err, null);
     } else {
       //process the i/o after successful connect.  Connection object returned in callback
-      var connection = reslt;
+      var connection = result;
 
       var buildZoneQuery = (function () {
         var insertZone = function (field1, field2, field3, field4, field5, field6, field7, field8, field9) {
@@ -1194,18 +1194,18 @@ exports.deviceListForPoint = function (req, res) {
   sess = req.session;
   sess.rptError = null;
   sess.rptSuccess = null;
-      // don't let nameless people view the dashboard, redirect them back to the homepage
-      if (typeof sess.username == 'undefined') res.redirect('/');
-      else {
+  // don't let nameless people view the dashboard, redirect them back to the homepage
+  if (typeof sess.username == 'undefined') res.redirect('/');
+  else {
 
     //get a connection using the common handler in models/db.js
-    db.createConnection(function (err, reslt) {
+    db.createConnection(function (err, result) {
       if (err) {
         console.log('Error while performing common connect query: ' + err);
         callback(err, null);
       } else {
         //process the i/o after successful connect.  Connection object returned in callback
-        var connection = reslt;
+        var connection = result;
 
         var _sqlQ = "SELECT * FROM deviceheader where CurrentStatus='1'";
         connection.query(_sqlQ, function (err, results1) {
@@ -1245,8 +1245,8 @@ exports.deviceListForPoint = function (req, res) {
       }
     });
 
-            //res.render('cardholders', { title: 'Command Center 360 - ' });
-      }
+    //res.render('cardholders', { title: 'Command Center 360 - ' });
+  }
 };
 
 
@@ -1257,16 +1257,16 @@ exports.deviceListForPoint = function (req, res) {
 exports.deviceAddForPoint = function (req, res) {
 
   sess = req.session;
-    //var name = req.query.name;
+  //var name = req.query.name;
 
   //get a connection using the common handler in models/db.js
-  db.createConnection(function (err, reslt) {
+  db.createConnection(function (err, result) {
     if (err) {
       console.log('Error while performing common connect query: ' + err);
       callback(err, null);
     } else {
       //process the i/o after successful connect.  Connection object returned in callback
-      var connection = reslt;
+      var connection = result;
       var _authCode = req.params.AuthCode
 
       var strSQL2 = 'UPDATE musterpoint SET DeviceAuthCode="' + _authCode + '" WHERE PointID="' + req.params.pointID + '"';
@@ -1299,18 +1299,18 @@ exports.deviceAddForPoint = function (req, res) {
 module.exports.musterPointGetForModify = function (req, res) {
 
   sess = req.session;
-      // don't let nameless people view the dashboard, redirect them back to the homepage
-      if (typeof sess.username == 'undefined') res.redirect('/');
-      else {
+  // don't let nameless people view the dashboard, redirect them back to the homepage
+  if (typeof sess.username == 'undefined') res.redirect('/');
+  else {
 
     //get a connection using the common handler in models/db.js
-    db.createConnection(function (err, reslt) {
+    db.createConnection(function (err, result) {
       if (err) {
         console.log('Error while performing common connect query: ' + err);
         callback(err, null);
       } else {
         //process the i/o after successful connect.  Connection object returned in callback
-        var connection = reslt;
+        var connection = result;
         pointID = req.params.pointID
         pointID = pointID.replace("'", "\\'")
 
@@ -1349,13 +1349,13 @@ module.exports.musterPointGetForDelete = function (req, res) {
   else {
 
     //get a connection using the common handler in models/db.js
-    db.createConnection(function (err, reslt) {
+    db.createConnection(function (err, result) {
       if (err) {
         console.log('Error while performing common connect query: ' + err);
         callback(err, null);
       } else {
         //process the i/o after successful connect.  Connection object returned in callback
-        var connection = reslt;
+        var connection = result;
         pointID = req.params.pointID
         pointID = pointID.replace("'", "\\'")
 
@@ -1394,13 +1394,13 @@ module.exports.musterPointDeleteOne = function (req, res) {
   else {
 
     //get a connection using the common handler in models/db.js
-    db.createConnection(function (err, reslt) {
+    db.createConnection(function (err, result) {
       if (err) {
         console.log('Error while performing common connect query: ' + err);
         callback(err, null);
       } else {
         //process the i/o after successful connect.  Connection object returned in callback
-        var connection = reslt;
+        var connection = result;
         //Escape Quotes
         pointID = req.params.pointID
         pointID = pointID.replace("'", "\\'")
@@ -1436,13 +1436,13 @@ module.exports.musterPointDeleteOne = function (req, res) {
 exports.musterPointUpdateOne = function (req, res) {
 
   //get a connection using the common handler in models/db.js
-  db.createConnection(function (err, reslt) {
+  db.createConnection(function (err, result) {
     if (err) {
       console.log('Error while performing common connect query: ' + err);
       callback(err, null);
     } else {
       //process the i/o after successful connect.  Connection object returned in callback
-      var connection = reslt;
+      var connection = result;
 
       var buildPointQuery = (function () {
         var updatePoint = function (field1, field2, field3, field4, field5, field6, field7, field8, field9, field10, field11) {
@@ -1515,18 +1515,18 @@ exports.deviceChangeForMusterPoint = function (req, res) {
   sess = req.session;
   sess.rptError = null;
   sess.rptSuccess = null;
-      // don't let nameless people view the dashboard, redirect them back to the homepage
-      if (typeof sess.username == 'undefined') res.redirect('/');
-      else {
+  // don't let nameless people view the dashboard, redirect them back to the homepage
+  if (typeof sess.username == 'undefined') res.redirect('/');
+  else {
 
     //get a connection using the common handler in models/db.js
-    db.createConnection(function (err, reslt) {
+    db.createConnection(function (err, result) {
       if (err) {
         console.log('Error while performing common connect query: ' + err);
         callback(err, null);
       } else {
         //process the i/o after successful connect.  Connection object returned in callback
-        var connection = reslt;
+        var connection = result;
 
 
         var _sqlQ = "SELECT * FROM deviceheader WHERE CurrentStatus = '1'";
@@ -1569,8 +1569,8 @@ exports.deviceChangeForMusterPoint = function (req, res) {
       }
     });
 
-            //res.render('cardholders', { title: 'Command Center 360 - ' });
-      }
+    //res.render('cardholders', { title: 'Command Center 360 - ' });
+  }
 };
 
 
@@ -1584,7 +1584,7 @@ exports.deviceChangeForMusterPoint = function (req, res) {
 //   var eventID = req.params.eventID;
 
 
-//   writeReport.writeReport('Mustering', eventID, function(err,reslt){  
+//   writeReport.writeReport('Mustering', eventID, function(err,result){  
 
 //           res.status(301).redirect('/musterDetail/'+eventID);
 
@@ -1599,17 +1599,17 @@ exports.deviceChangeForMusterPoint = function (req, res) {
 // Handler for the mustering report.                                              //
 ////////////////////////////////////////////////////////////////////////////////////
 exports.writeMusteringRpt = function (req, res) {
-  console.error('im in the write handler: ' +  JSON.stringify(req.body));
+  console.error('im in the write handler: ' + JSON.stringify(req.body));
   sess = req.session;
   var eventID = req.params.eventID;
   //###### Sat Oct 28 18:24:30 CDT 2017 Send the TempID too.  Added a parm to the writeReport call
 
-  db.createConnection(function (err, reslt) {
+  db.createConnection(function (err, result) {
     if (err) {
 
       callback(err, null);
     } else {
-      var connection = reslt;
+      var connection = result;
 
       //###### Sun Oct 29 09:43:07 PDT 2017 Get the tempID for this event to pass to the report writer
       //###### Sat Dec 9 07:58:51 PST 2017 Also get the EventName as this will be the report name for the download
@@ -1619,7 +1619,7 @@ exports.writeMusteringRpt = function (req, res) {
         if (!err) {
           var eventTempID = result0[0].TempID;
           var eventName = result0[0].EventName
-          writeReport.writeReport('Mustering', eventID, eventTempID, function (err, reslt, fileName) {
+          writeReport.writeReport('Mustering', eventID, eventTempID, function (err, result, fileName) {
 
             //###### Sun Dec or 09:43:07 PDT 2017 Download the report (regardless if already exists)
             var cleanName = eventName.replace(/\//g, "-");
@@ -1659,8 +1659,8 @@ exports.writeMusteringRpt = function (req, res) {
                   if (resultU[0].UserEmail != "") {
                     var fullFileName = title + '.csv'
                     //###### Sat Feb 28 18:28:20 CDT 2018 User config report name prefix 
-                    //emailController.sendAttendanceEmail('Attendance Report -- '+eventName, 'Please find Attendance Report attached.', resultU[0].UserEmail, fullFileName, function(err,reslt){
-                    emailController.sendAttendanceEmail(fileName, 'Please find Mustering Report attached.', resultU[0].UserEmail, fullFileName, function (err, reslt) {
+                    //emailController.sendAttendanceEmail('Attendance Report -- '+eventName, 'Please find Attendance Report attached.', resultU[0].UserEmail, fullFileName, function(err,result){
+                    emailController.sendAttendanceEmail(fileName, 'Please find Mustering Report attached.', resultU[0].UserEmail, fullFileName, function (err, result) {
                       if (err) {
                         console.log('a problem occurred, attempting to email customer support')
 
@@ -1722,24 +1722,23 @@ exports.emailUnaccounted = function (req, res) {
   var musterID = req.params.musterID;
 
   //###### Sat Apr 28 18:24:30 CDT 2018 Only get the emails for this musterID
-  evacuation.getUnaccounted("Email", musterID, function (err, reslt) {
+  evacuation.getUnaccounted("", musterID, function (err, result) {
     if (err) {
 
-      console.error('Error connecting to database: ' +  err);
+      console.error('Error connecting to database: ' + err);
       res.status(301).redirect('/musterLive/' + musterID);
     } else {
 
       //--
       // Loop through the unaccounted table and find their emails
-      for (var i = 0; i < reslt.length; i++) {
+      for (var i = 0; i < result.length; i++) {
 
         //--
         // Email report
-        if (reslt[i].EmailAddress != "" && reslt[i].EmailAddress != null) {
-          var title = process.env.EMERGENCY_TITLE
-          var message = process.env.EMERGENCY_MESSAGE
+        if (result[i].EmailAddress != "" && result[i].EmailAddress != null) {
 
-          emailController.sendIncidentEmail(title, message, reslt[i].EmailAddress, function (err, reslt) {
+
+          emailController.sendIncidentEmail(result, function (err, result) {
             if (err) { console.log('a problem occurred, attempting to email evacuee') }
           });
 

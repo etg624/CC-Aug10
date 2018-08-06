@@ -431,7 +431,22 @@ router.post('/microsoftgraph', MicrosoftGraphController.addPerson);
 //############################################### Microsoft Graph END ############################################################
 
 
+//############################################### AJAX Stuff ############################################################
+var MusterController = require('../controllers/MusterController');
 
+router.get('/musterAttendance/:id', MusterController.getAttendance);
+router.get('/musterUnknowns/:id', MusterController.getUnknowns);
+router.get('/musterInvalids/:id', MusterController.getInvalids);
+router.get('/musterEvacuation', MusterController.getEvacuationList);
+router.get('/musterGetPoints/:id', MusterController.getMusterPoints);
+
+
+//############################################## AJAX Stuff End ############################################################
+
+//############################################## Email Additions ############################################################
+var EmailController = require('../controllers/emailController');
+router.get('/emailcheckin/:email/:eventid', EmailController.checkInByEmail);
+//########################################### Email Additions End ############################################################
 
 
 module.exports = router;

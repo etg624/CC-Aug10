@@ -84,29 +84,12 @@ module.exports.sendAttendanceEmail = function (subject, message, to, fileName, c
 
 module.exports.sendIncidentEmail = function (data) {
 
+    console.log('sendIncidentEmail called');
+
+    var title = process.env.EMERGENCY_TITLE;
+
     console.log('logging data from sendIncidentEmail');
     console.log(data);
-
-
-    // var smtpConfig = {
-    //     //host: 'smtp.mail.com',
-    //     host: process.env.EMAIL_HOST,
-    //     port: process.env.EMAIL_PORT,
-    //     secure: process.env.EMAIL_SECURE, // use SSL
-    //     auth: {
-    //         user: process.env.EMAIL_USER,
-    //         //pass: 'Dragonseat6000!'
-    //         pass: process.env.EMAIL_PASS
-    //     },
-    //     pool: true,
-    //     maxConnections: 1,
-    //     rateDelta: 20000,
-    //     rateLimit: 3
-    // };
-
-    // var transporter = nodemailer.createTransport(smtpConfig);
-
-    var title = process.env.EMERGENCY_TITLE
 
     //Loop through the unaccounted table and find their emails
     for (var i = 0; i < data.length; i++) {
@@ -122,30 +105,11 @@ module.exports.sendIncidentEmail = function (data) {
 
         //--
         // Email report
+
+
         if (data[i].EmailAddress != "" && data[i].EmailAddress != null) {
 
             var to = data[i].EmailAddress;
-
-            // setup email data with unicode symbols
-            // var mailOptions = {
-            //     //from: 'dragonseat@mail.com>', // sender address
-            //     from: process.env.EMAIL_FROMADDR, // sender address
-            //     to: to, // list of receivers
-            //     subject: title, // Subject line
-            //     text: message, //
-            //     //text: 'there was an error connecting to the database', //
-            //     html: '<b>' + message + '</b>' // html body
-
-            // };
-
-            //send mail with defined transport object
-            // transporter.sendMail(mailOptions, (error, info) => {
-            //     if (error) {
-            //         return console.log(error);
-            //     }
-            //     console.log('Message %s sent: %s', info.messageId, info.response);
-            // });
-
 
             sgMail.setApiKey(process.env.EMAIL_PASS);
             const msg = {
@@ -154,7 +118,11 @@ module.exports.sendIncidentEmail = function (data) {
                 subject: title,
                 text: message
             };
-            sgMail.send(msg);       
+
+            console.log('logging msg');
+            console.log(msg);
+
+            sgMail.send(msg);  
         }
     }
 };
