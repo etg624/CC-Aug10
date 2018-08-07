@@ -157,7 +157,7 @@ function loadScripts() {
             button.style.display = 'block';
             tableDiv.style.display = 'none';
             yesButton.style.display = 'none';
-            noButton.style.display = 'none'; 
+            noButton.style.display = 'none';
             clearAll();
 
             button.innerText = 'Begin'
@@ -199,7 +199,7 @@ function loadScripts() {
             noButton.style.display = 'none'
             yesButton.style.display = 'none'
             tableDiv.style.display = 'none';
-            
+
 
             comment.innerText = 'Which ' + groupCategory + ' do you want to add?'
         } else if (question == 4) {
@@ -207,11 +207,11 @@ function loadScripts() {
 
             if (groupCategory != 'Office 365 Distribution List') {
                 getPeople();
-                
+
             } else {
                 getDistributionListMembers();
-            }            
-            
+            }
+
 
             backButton.style.display = 'none'
             button.style.display = 'none';
@@ -314,10 +314,10 @@ function loadScripts() {
 
     }
 
-    function getDistributionListMembers(){
+    function getDistributionListMembers() {
         for (i = 0; i < distributionListMembers.length; i++) {
             let person = distributionListMembers[i];
-            
+
             console.log('logging from getDistributionListMembers')
             console.log(person);
 
