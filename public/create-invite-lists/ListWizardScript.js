@@ -495,7 +495,7 @@ function loadScripts() {
     }
 
     function postInvitee(person, listID) {
-        console.log('logging person');
+        console.log('logging a person');
         console.log(person);
 
         var xhr = new XMLHttpRequest();
