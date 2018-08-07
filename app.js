@@ -387,7 +387,7 @@ if (process.env.CC_SSL == "YES"){
    });
 
    const options = {
-     hostname: 'ec2-34-215-115-69.us-west-2.compute.amazonaws.com',
+     hostname: process.env.SERVER_ADDRESS_DOMAIN,
      port: 3000,
      path: '/microsoftgraph',
      method: 'POST',
@@ -486,7 +486,7 @@ if (process.env.CC_SSL == "YES"){
 
 
    const options = {
-     hostname: 'ec2-34-215-115-69.us-west-2.compute.amazonaws.com',
+     hostname: process.env.SERVER_ADDRESS_DOMAIN,
      port: 3000,
      path: '/distributionlist',
      method: 'POST',
@@ -562,7 +562,7 @@ if (process.env.CC_SSL == "YES"){
 
 
    const options = {
-     hostname: 'ec2-34-215-115-69.us-west-2.compute.amazonaws.com',
+     hostname: process.env.SERVER_ADDRESS_DOMAIN,
      port: 3000,
      path: '/distributionlistmembers',
      method: 'POST',

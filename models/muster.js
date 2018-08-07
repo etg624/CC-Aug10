@@ -128,39 +128,66 @@ module.exports.getMusterCounts = function(id, tempID, callback){
           }else{
             var strSQL = 'SELECT DeviceAuthCode,COUNT(*) as count FROM attendance WHERE EventID='+id+' or EventID="'+tempID+'" GROUP BY DeviceAuthCode ORDER BY count DESC';
           }
-          connection.query(strSQL, function(err, rows, fields) {
+          connection.query(strSQL, function(err, attendanceResult, fields) {
                if (!err) {
                 //feb--send back the results via callback (cant 'return results' from asynch fucntions, have to use calllback)
                 var devAuthCode = "" 
-                var resultsArray = rows
+
                 var strSQL1 = 'SELECT PointID, Lat, Lng, Description, DeviceAuthCode FROM musterPoint';
-                connection.query(strSQL1, function(err, result3) {
+                connection.query(strSQL1, function(err, musterPointResult) {
                      if (!err) {
                       // Loop through the muster point array and match the count array
-                      for (var i=0; i < rows.length; i++) {
+
+                      var resultsArray = [];
+
+                      console.log('logging attendanceResult');
+                      console.log(attendanceResult);
+
+                      console.log('logging musterPointResult');
+                      console.log(musterPointResult);
+
+                      for (var i=0; i < attendanceResult.length; i++) {
             
                           //console.log('whats the array value  ' + JSON.stringify(resEvacs[i].iClassNumber)); 
                           //console.log('whats the muster array length  ' + JSON.stringify(resz1.length)); 
                           
-                          for (var j=0; j < result3.length; j++) {
+                          for (var j=0; j < musterPointResult.length; j++) {
                             
-                              if (result3[j].DeviceAuthCode==rows[i].DeviceAuthCode) {
-                               // if (result3[j].DeviceAuthCode==rows[i].MobSSOperator) {
+                              if (musterPointResult[j].DeviceAuthCode==attendanceResult[i].DeviceAuthCode) {
+                               // if (musterPointResult[j].DeviceAuthCode==attendanceResult[i].MobSSOperator) {
                                     
-                                resultsArray[i].PointID = result3[j].PointID;
-                                resultsArray[i].Description = result3[j].Description;
-                                //###### Wed May 4 18:23:41 PDT 2018 If the lat lng of muster point is 0, use the default env lat lng
+
+                                //###### Wed May 4 18:23:41 PDT 2018 If the Lat Lng of muster point is 0, use the default env Lat Lng
                                   
                                    //atn: logic here to use the muster(event) GPS fields rather than the environmental variables
-                                   if ( result3[j].Lat !==0.000000 || result3[j].Lng !==0.000000){
+                                   if ( musterPointResult[j].Lat !==0.000000 || musterPointResult[j].Lng !==0.000000){
                                        
-                                       resultsArray[i].Lat = result3[j].Lat;
-                                       resultsArray[i].Lng = result3[j].Lng;
+                                    let record = {
+                                        PointID: musterPointResult[j].PointID,
+                                        Description: musterPointResult[j].Description,
+                                        Lat: musterPointResult[j].Lat,
+                                        Lng: musterPointResult[j].Lng,
+                                        count: attendanceResult[i].count,
+                                        DeviceAuthCode: attendanceResult[i].DeviceAuthCode
+                                        
+                                    }
+
+                                    resultsArray.push(record);
+
                                    }else{
                                        //######
-                                       // then use the default environment variable lat lng
-                                       resultsArray[i].Lat = process.env.LAT
-                                       resultsArray[i].Lng = process.env.LNG
+                                       // then use the default environment variable Lat Lng
+                                       let record = {
+                                        PointID: musterPointResult[j].PointID,
+                                        Description: musterPointResult[j].Description,
+                                        Lat: process.env.LAT,
+                                        Lng: process.env.LNG,
+                                        count: attendanceResult[i].count,
+                                        DeviceAuthCode: attendanceResult[i].DeviceAuthCode
+                                        
+                                    }
+
+                                    resultsArray.push(record);
 
 
                                    }

@@ -44,9 +44,11 @@ module.exports.checkIn = function (Body, callback) {
             var connection = reslt;
             var time = datetime.syncGetTimeInDisplayFormat();
             var date = datetime.syncGetDateOnlyInDisplayFormat();
-            var queryFields = '()'
-            var strSQL = "Insert into attendance values ('999999999', '" + Body.FirstName + "', '" + Body.LastName + "', '" + time + "', '','" + Body.EventID + "','" + Body.EventName + "','" + Body.EmpID + "', '" + date + "', '', '', '" + Body.EmpID + "', '', '','" + Body.CheckInType + "', '');";
-            connection.query(strSQL, function (err, rows, fields) {
+            var id = '99999999'
+            var queryFields = '(MobSSID, FirstName, LastName, InTime, EventID, EventName, EmpID, AttendDate, CheckInType)'
+            var queryValues = '"' + id + '", "' + Body.FirstName + '","' + Body.LastName + '","' + time + '", "' + Body.EventID + '", "' + Body.EventName + '", "' + Body.EmpID + '", "' + date + '", "' + Body.CheckInType + '");'
+            var query = 'INSERT INTO attendance ' + queryFields + ' VALUES (' + queryValues;
+            connection.query(query, function (err, rows, fields) {
                 if (!err) {
                     connection.end();
                     callback(null, rows);
