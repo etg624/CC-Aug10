@@ -5,12 +5,12 @@ html
 	head
 		title Command Center 5.0
 		script( src='/javascripts/jquery-3.1.1.min.js' )				
-		script( src='/popper.js' )
+		script(src='https://unpkg.com/popper.js/dist/umd/popper.min.js')
 		script( src='/bootstrap/js/bootstrap.min.js' )
 		script( src='/bootstrap-table/bootstrap-table.min.js' )
 		link(href="/bootstrap/css/bootstrap.min.css", rel="stylesheet")
 		link(href="/bootstrap-table/bootstrap-table.min.css", rel="stylesheet")
-		link(rel='stylesheet', href='/font-awesome-4.7.0/css/font-awesome.min.css')
+		link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.2.0/css/all.css', integrity='sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ', crossorigin='anonymous')
 		script( src='/javascripts/bootbox.min.js' )
 
 	body(style="padding-bottom:10rem;")
@@ -62,6 +62,7 @@ html
 										th(data-field="Building" data-sortable= "true") Building													
 				script(src='/create-invite-lists/ListWizardScript.js')
 				script.
+					var serverAddress = !{ JSON.stringify(serverAddress)}
 					var departments = !{ JSON.stringify(getDepartmentsResult)}
 					var divisions = !{ JSON.stringify(getDivisionsResult) }
 					var siteLocations = !{ JSON.stringify(getSiteLocationsResult) }

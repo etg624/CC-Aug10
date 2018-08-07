@@ -53,6 +53,9 @@ if (process.env.CC_SSL == "YES"){
 
 var app = express();
 
+// ###### Tue Aug 7 11:20:52 PDT 2018 ARA
+var cors = require('cors')
+app.use(cors())
 
 
 // which index file to use
@@ -105,7 +108,6 @@ app.use(session({secret: 'boris',
 
 
 app.use(bodyParser.urlencoded({limit: '50mb', extended: false, parameterLimit:50000}));
-
 
 app.use('/', routes);
 

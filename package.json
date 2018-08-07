@@ -11,6 +11,7 @@
     "aws-sdk": "^2.275.1",
     "body-parser": "~1.15.2",
     "cookie-parser": "~1.4.3",
+    "cors": "^2.8.4",
     "crlf-helper": "^0.1.0",
     "cron": "^1.3.0",
     "csv-parse": "^2.5.0",

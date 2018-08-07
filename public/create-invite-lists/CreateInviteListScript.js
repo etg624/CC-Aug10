@@ -30,9 +30,10 @@ function loadScripts() {
                             return false;
                         }
 
-                        xhr.open("POST", "https://convoyer.mobsscmd.com/postinvitelist", true);
+                        xhr.open("POST", serverAddress + "/postinvitelist", true);
 
                         xhr.setRequestHeader('Content-Type', 'application/json');
+
                         xhr.send(JSON.stringify({
                             "ListName": cleanNameInput,
                             "ListComment": cleanDescriptionInput
@@ -68,7 +69,7 @@ function loadScripts() {
             return false;
         }
 
-        xhr.open("GET", "https://convoyer.mobsscmd.com/lastinvitelist", true);
+        xhr.open("GET", serverAddress + "/lastinvitelist", true);
 
         xhr.send(null);
 
@@ -98,9 +99,11 @@ function loadScripts() {
             return false;
         }
 
-        xhr.open("POST", "https://convoyer.mobsscmd.com/postinvitee", true);
+        xhr.open("POST", serverAddress + "/postinvitee", true);
 
         xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+
         xhr.send(JSON.stringify({
             'InvitationListID': listID,
             'BadgeNumber': person.Cardnumber,

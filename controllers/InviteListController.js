@@ -13,6 +13,7 @@ exports.createInviteListHome = function (req, res) {
       } else {
         //process the i/o after successful connect.  Connection object returned in callback
         var connection = result;
+        var serverAddress = process.env.SERVER_ADDRESS;
 
         var _sqlQ = "SELECT * FROM people";
         connection.query(_sqlQ, function (err, results) {
@@ -23,7 +24,7 @@ exports.createInviteListHome = function (req, res) {
           //the page renders
           if (results.length < 5000) {
             //regular Js datatables high functionality search and pagination  
-            res.render('CreateInviteListView', { title: 'Command Center - Create Invite List', username: req.session.username, results });
+            res.render('CreateInviteListView', { title: 'Command Center - Create Invite List', username: req.session.username, results, serverAddress });
           } else {
             //plain table and browser search only  
             res.render('cardholdersLarge', { title: 'Command Center - Cardholders', username: req.session.username, results });
@@ -68,6 +69,8 @@ module.exports.getLastInviteList = function (req, res) {
 
 exports.renderListWizard = function (req, res) {
 
+  var serverAddress = process.env.SERVER_ADDRESS;
+
   sess = req.session;
   // don't let nameless people view the dashboard, redirect them back to the homepage
   if (typeof sess.username == 'undefined') res.redirect('/');
@@ -108,7 +111,7 @@ exports.renderListWizard = function (req, res) {
                           if (err){
                             res.end()
                           } else {
-                            res.render('ListWizardView', { title: 'Command Center - Create Invite List', username: req.session.username, getDepartmentsResult, getDivisionsResult, getSiteLocationsResult, getBuildingsResult, getDistributionListsResult,getDistributionListMembersResult  });
+                            res.render('ListWizardView', { title: 'Command Center - Create Invite List', username: req.session.username, getDepartmentsResult, getDivisionsResult, getSiteLocationsResult, getBuildingsResult, getDistributionListsResult,getDistributionListMembersResult, serverAddress  });
                           }
                         })
                         
