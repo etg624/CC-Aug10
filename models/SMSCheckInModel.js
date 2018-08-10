@@ -45,6 +45,8 @@ module.exports.checkIn = function (Body, callback) {
             connection.query(strSQL, function (err, rows, fields) {
                 if (!err) {
                     connection.end();
+                    console.log('logging fields aug 10');
+                    console.log(fields);
                     callback(null, rows);
 
                 } else {
