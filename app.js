@@ -46,7 +46,7 @@ if (process.env.CC_SSL == "YES") {
   if (process.env.CERT_PASSPHRASE == "") {
     var options = { key: privateKey, cert: certificate };
   } else {
-    var  passphrase = process.env.CERT_PASSPHRASE
+    var passphrase = process.env.CERT_PASSPHRASE
     var options = { key: privateKey, cert: certificate, passphrase: passphrase };
   }
 }
@@ -139,7 +139,7 @@ app.use(function (err, req, res, next) {
 ///////////////////////////////////////
 // daily csv sweeper                 //
 ///////////////////////////////////////
-var  CronJob  =  require('cron').CronJob;
+var CronJob = require('cron').CronJob;
 
 if (process.env.SWEEP_SCHED != "OFF") {
 
@@ -166,7 +166,7 @@ if (process.env.SWEEP_SCHED != "OFF") {
 
   console.log('Sweep time parm: ' + sweepTime)
 
-  new  CronJob(sweepTime,  function ()  {
+  new CronJob(sweepTime, function () {
 
     //new CronJob('0 31 11 * * 0-6', function() {
 
@@ -178,14 +178,14 @@ if (process.env.SWEEP_SCHED != "OFF") {
       if (err) { console.log('cron unsuccessful: ' + err); }
     });
 
-  },  null,  true,  'America/New_York');
+  }, null, true, 'America/New_York');
 }
 
 //###### Sun Jun 10 08:18:29 PDT 2018
 ///////////////////////////////////////
 // Event End Monitor                 //
 ///////////////////////////////////////
-var  eventEndMonitor  =  require('cron').CronJob;
+var eventEndMonitor = require('cron').CronJob;
 
 if (process.env.EVENTEND_MONITOR != "OFF") {
 
@@ -207,13 +207,13 @@ if (process.env.EVENTEND_MONITOR != "OFF") {
   //###### Tue Oct 24 07:12:37 PDT 2017  User config of sweep -- parameterize cron
   var eventEndMonitorFrequency = process.env.EVENTEND_FREQ
 
-  new  eventEndMonitor(eventEndMonitorFrequency,  function ()  {
+  new eventEndMonitor(eventEndMonitorFrequency, function () {
 
     eventEnd.eventEndMonitor(function (err, rslt) {
       if (err) { console.log('Event End Monitor cron unsuccessful: ' + err); }
     });
 
-  },  null,  true,  'America/New_York');
+  }, null, true, 'America/New_York');
 }
 
 

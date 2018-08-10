@@ -45,7 +45,7 @@ module.exports.checkIn = function (Body, callback) {
             connection.query(strSQL, function (err, rows, fields) {
                 if (!err) {
                     connection.end();
-                    callback(rows);
+                    callback(null, rows);
 
                 } else {
                     console.log('error with the query');
