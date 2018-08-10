@@ -50,7 +50,6 @@ module.exports.badgesHome = function(req, res) {
     }
 };
 
-
 ///////////////////////////////////
 // Display aactive badges list   //
 ///////////////////////////////////

@@ -27,14 +27,14 @@ module.exports.getPerson = function (Body, callback) {
 
 }
 
-module.exports.checkIn = function (Body, callback) {
+module.exports.checkIn = function (Body, asshat) {
 
     console.log('checkIn called');
 
     db.createConnection(function (err, reslt) {
         if (err) {
             console.log('Error while performing common connect query: ' + err);
-            callback(err, null);
+            asshat(err, null);
         } else {
             //process the i/o after successful connect.  Connection object returned in callback
             var connection = reslt;
@@ -45,12 +45,12 @@ module.exports.checkIn = function (Body, callback) {
             connection.query(strSQL, function (err, rows, fields) {
                 if (!err) {
                     connection.end();
-                    callback(null, rows);
+                    asshat(null, rows);
 
                 } else {
                     console.log('error with the query');
                     connection.end();
-                    callback(err, rows);
+                    asshat(err, rows);
                 }
             });
         }
