@@ -1,0 +1,39 @@
+doctype html
+html(lang='en')
+	head
+		link(href="/bootstrap/css/bootstrap.min.css", rel="stylesheet")
+		link(href="/snazzy-info-window-master/dist/snazzy-info-window.min.css", rel="stylesheet")
+		link(href="/convoyer/live-view/styles.css", rel="stylesheet")
+		link(href="/convoyer/live-view/infoboxstyles.css", rel="stylesheet")
+		link(rel='stylesheet', href='/perfect-scrollbar/css/perfect-scrollbar.css')
+		meta(charset='UTF-8')
+		title CONVOYER LIVE MAP
+		style.
+			#map {
+			height: 100%;
+			width: 100%;
+			}
+	body
+		#map
+		script( src='/javascripts/jquery-3.1.1.min.js' )
+		script( src='/bootstrap/js/bootstrap.min.js' )
+		script( src='/javascripts/bootbox.min.js' )
+		script(type="text/javascript" src="/perfect-scrollbar/dist/perfect-scrollbar.js")
+		script(src='https://maps.googleapis.com/maps/api/js?key='+ mapKey)
+		script(src='/snazzy-info-window-master/dist/snazzy-info-window.min.js')
+		script(src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js')
+		script(src='/convoyer/live-view/convoyerMapScript.js')
+		script(src='/convoyer/locationIsAccurate.js')
+		script.
+				var mapElement = document.getElementById('map');
+				var guards = !{ JSON.stringify(getAllGuardsResult) };		
+				var locations = !{ JSON.stringify(getCurrentLocationsResult) };
+				var incidents = !{ JSON.stringify(getAllIncidentsResult) };
+				var coords = !{ JSON.stringify(getCurrentCoordsResult) };
+				var patrols = !{ JSON.stringify(getCurrentPatrolsResult) }; 
+				var area = !{ JSON.stringify(getCurrentAreaResult) }; 
+				var serverAddress = !{ JSON.stringify(serverAddress)};
+				initMap();
+																				
+
+

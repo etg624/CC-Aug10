@@ -1,0 +1,36 @@
+doctype html
+html(lang='en')
+	head
+		script( src='/javascripts/jquery-3.1.1.min.js' )
+		script( src='/bootstrap/js/bootstrap.min.js' )
+		script( src='/javascripts/bootbox.min.js' )
+		script(type="text/javascript" src="/perfect-scrollbar/dist/perfect-scrollbar.js")
+		link(href="/bootstrap/css/bootstrap.min.css", rel="stylesheet")
+		link(href="/convoyer/route-editor/styles.css", rel="stylesheet")
+		link(rel='stylesheet', href='/perfect-scrollbar/css/perfect-scrollbar.css')
+		meta(charset='UTF-8')
+		title Route Editor
+		style.
+			#map {
+			height: 100%;
+			}
+			html, body {
+			position:fixed;
+			top:0;
+			bottom:0;
+			left:0;
+			right:0;
+			}
+	body
+		#map
+		script(src='https://maps.googleapis.com/maps/api/js?key='+ mapKey)
+		script(src='/convoyer/route-editor/routeEditorMapScript.js')
+		script.
+				var mapElement = document.getElementById('map');
+				var guards = !{ JSON.stringify(getAllGuardsResult) };
+				var routes = !{ JSON.stringify(getAllRoutesResult) }; 
+				var areas = !{ JSON.stringify(getAllPatrolAreasResult) }; 
+				initMap();
+																				
+
+

@@ -1,0 +1,49 @@
+doctype html
+html(lang='en')
+	head
+		meta(charset='UTF-8')
+		title Incident Details
+		style.
+			html, body {
+			}
+	link(href="/bootstrap/css/bootstrap.min.css", rel="stylesheet")
+	link(href="/stylesheets/chatstyle.css", rel="stylesheet")
+	link(href="/convoyer/styles/styles.css", rel="stylesheet")
+	link(rel='stylesheet', href='/font-awesome-4.7.0/css/font-awesome.min.css')
+	.row
+		.col-md-12.col-sm-12.col-xs-12
+			#backButton
+					a.btn.btn-default.btn-block
+						i.fa.fa-hand-o-left(aria-hidden='true')
+						| &nbsp Go Back
+	.row						
+		.col-md-12.col-sm-12.col-xs-12
+			-each incident in getIncidentResult
+				table#pickle.table.table-hover.table-striped.table-bordered
+								thead
+								tbody
+								-each incident in getIncidentResult
+														tr.default
+																td=incident.Type 
+														tr.default
+																td=incident.Description
+														tr.default
+																td=incident.IncidentTime													
+	.row.with-margin
+		.col-md-4.col-sm-4.col-xs-4.col-md-offset-4.col-sm-offset-4.col-xs-offset-4
+			img#incidentPhoto(src="",  width = "100%", height = "100%", display = 'none')
+			video#incidentVideo(src="",  width = "100%", height = "100%", display = "none" autoplay = "" loop = "true")
+	.row
+		.col-md-4.col-sm-4.col-xs-4.col-md-offset-4.col-sm-offset-4.col-xs-offset-4
+				object#map(data='https://convoyer.mobsscmd.com/incidentdetailmap/#{getIncidentResult[0].IncidentID}', width='100%', height='100%', type='text/html')
+	script(src='/convoyer/incident/incidentDetailScript.js')
+	script.
+			var incident = !{ JSON.stringify(getIncidentResult) };
+			incidentDetailScript();
+									
+
+
+
+								
+
+

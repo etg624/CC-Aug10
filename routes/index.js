@@ -254,10 +254,6 @@ router.get('/reportConfirm/:eventID/:rptFullName/:title', writeReport.reportConf
 router.post('/reportConfirm/:eventID/:rptFullName/:title', writeReport.reportDownload);
 
 
-
-
-
-
 /////////////////////////////////////////////////////////////////////
 //  USERS
 /////////////////////////////////////////////////////////////////////
@@ -371,6 +367,109 @@ router.get('/readmeRelNotes', cc.readmeRelNotes);
 router.post('/getCardholderImage', images.getCardholderImage);
 
 
+//############################################### Convoyer ############################################################
+var GuardController = require('../controllers/Convoyer/GuardController');
+
+router.post('/guardauth', GuardController.authenticateGuard);
+
+router.get('/guardlist', GuardController.guardList);
+
+router.get('/guardAdd', GuardController.guardAdd);
+router.post('/guardAdd', GuardController.guardAddToDb);
+        
+router.get('/guardModify/:GuardID', GuardController.getGuardByID);
+router.post('/guardModify/:GuardID', GuardController.updateGuard);
+router.get('/guardDelete/:GuardID', GuardController.getGuardForDelete);
+router.post('/guardDelete/:GuardID', GuardController.deleteGuard);
+
+
+router.get('/guards', GuardController.getAllGuards);
+router.get('/guards/:id', GuardController.getGuardByID);
+router.put('/guards', GuardController.updateGuardLogin);
+router.put('/addDeviceToken', GuardController.addDeviceToken);
+router.get('/getGuard/:username', GuardController.getGuardByUsername);
+
+var RouteEditorController = require('../controllers/Convoyer/RouteEditorController');
+router.get('/routeeditor', RouteEditorController.getRouteEditor);
+
+var RouteEditorMapController = require('../controllers/Convoyer/RouteEditorMapController');
+router.get('/routeeditormap', RouteEditorMapController.getRouteEditorMap);
+
+var ConvoyerController = require('../controllers/Convoyer/ConvoyerController');
+router.get('/convoyerliveview', ConvoyerController.getConvoyer);
+router.get('/activeguards', ConvoyerController.getActiveGuards);
+router.get('/guardnotifications', ConvoyerController.getGuardsForNotifications);
+
+var ConvoyerMapController = require('../controllers/Convoyer/ConvoyerMapController');
+router.get('/convoyerlivemap', ConvoyerMapController.getAllGuardPatrols);
+
+
+var PatrolReplayController = require('../controllers/Convoyer/PatrolReplayController');
+router.get('/patrolreplay/:id', PatrolReplayController.getPatrolReplay);
+
+var PatrolReplayMapController = require('../controllers/Convoyer/PatrolReplayMapController');
+router.get('/patrolreplaymap/:id', PatrolReplayMapController.getPatrolReplayMap);
+
+var IncidentDetailController = require('../controllers/Convoyer/IncidentDetailController');
+router.get('/incidentdetails/:id', IncidentDetailController.getIncidentDetails);
+router.get('/incidentpreview/:id', IncidentDetailController.getIncidentPreview);
+
+var IncidentDetailMapController = require('../controllers/Convoyer/IncidentDetailMapController');
+router.get('/incidentdetailmap/:id', IncidentDetailMapController.getIncidentDetailMap);
+
+var PatrolController = require('../controllers/Convoyer/PatrolController');
+router.get('/patrols', PatrolController.getAllPatrols);
+router.get('/patrols/:id', PatrolController.getPatrolByID);
+router.post('/patrols', PatrolController.addPatrol);
+router.delete('/patrols/:id', PatrolController.deletePatrol);
+router.put('/patrols', PatrolController.updatePatrol);
+router.get('/patrollist', PatrolController.patrolList);
+
+var IncidentController = require('../controllers/Convoyer/IncidentController');
+router.get('/incidents', IncidentController.getAllIncidents);
+router.get('/incidents/:id', IncidentController.getIncidentByID);
+router.post('/incidents', IncidentController.addIncident);
+router.delete('/incidents/:id', IncidentController.deleteIncident);
+router.put('/incidents/:id', IncidentController.updateIncident);
+router.get('/incidentlist', IncidentController.incidentList);
+
+var PatrolAreaController = require('../controllers/Convoyer/PatrolAreaController');
+router.get('/patrolareas', PatrolAreaController.getAllPatrolAreas);
+router.get('/patrolareas/:id', PatrolAreaController.getPatrolAreaByID);
+router.post('/patrolareas', PatrolAreaController.addPatrolArea);
+router.delete('/patrolareas/:id', PatrolAreaController.deletePatrolArea);
+router.put('/patrolareas', PatrolAreaController.updatePatrolArea);
+
+var CheckpointController = require('../controllers/Convoyer/CheckpointController');
+router.get('/checkpoints', CheckpointController.getAllCheckpoints);
+router.get('/checkpoints/:id', CheckpointController.getCheckpointByID);
+router.post('/checkpoints', CheckpointController.addCheckpoint);
+router.delete('/checkpoints/:id', CheckpointController.deleteCheckpoint);
+router.put('/checkpoints/:id', CheckpointController.updateCheckpoint);
+
+var CoordinateController = require('../controllers/Convoyer/CoordinateController');
+router.get('/coordinates', CoordinateController.getAllCoordinates);
+router.get('/coordinates/:id', CoordinateController.getCoordinateByID);
+router.post('/coordinates', CoordinateController.addCoordinate);
+router.delete('/coordinates/:id', CoordinateController.deleteCoordinate);
+router.put('/coordinates', CoordinateController.updateCoordinate);
+
+var RouteController = require('../controllers/Convoyer/RouteController');
+router.get('/routes', RouteController.getAllRoutes);
+router.get('/routes/:id', RouteController.getRouteByID);
+router.post('/routes', RouteController.addRoute);
+router.post('/saveroute', RouteController.saveRoute);
+router.delete('/routes/:id', RouteController.deleteRoute);
+router.put('/setcurrentroute', RouteController.updateRoute);
+router.put('/disableroutes', RouteController.disableRoutes);
+router.get('/currentroutes/:id', RouteController.getCurrentRoutes);
+router.put('/queueroute', RouteController.queueRoute);
+
+var MessageController = require('../controllers/Convoyer/MessageController');
+router.get('/messages', MessageController.getAllMessages);
+router.post('/messages', MessageController.addMessage);
+//############################################### Convoyer END ############################################################
+
 //###### Wed May 31 08:45:00 PST 2018 SMS processing
 /////////////////////////////////////////////////////////////////////
 // SMS
@@ -400,7 +499,6 @@ router.get('/logout', function(req, res) {
     // redirect user to homepage
     res.redirect('/');
 });
-
 
 // ###### Mon Jul 16 09:25:41 PDT 2018 ARA
 

@@ -1,0 +1,42 @@
+include mixins
+extends layout
+block content   
+			include navbar
+			h3 Incident History
+			br
+			div
+				table#pickle.table.table-hover.table-striped.table-bordered
+					thead
+						tr.primary 
+							th
+							th Time
+							th Type
+							th First Name
+							th Last Name
+							th Media
+					tbody
+						-each result in results
+							tr
+									td
+										a(href="/incidentdetails/#{result.IncidentID}")  View Details
+									td=result.IncidentTime
+									td=result.Type
+									td=result.FirstName
+									td=result.LastName
+									td=result.Media
+				script.
+					$(document).ready(function() {
+					$('#pickle').DataTable({
+						"order" : [1, 'desc']
+					});
+					});
+				script.
+					$(document).ready(function() {
+					$('#pickle tr').click(function() {
+					var href = $(this).find("a").attr("href");
+						if(href) {
+							window.location = href;
+						}
+					});
+					});
+		   

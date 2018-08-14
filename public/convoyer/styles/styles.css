@@ -1,0 +1,22 @@
+
+  .with-margin {
+    margin-bottom: 20px;
+  }
+
+  .scrollable-table {  
+    position: relative;
+    height: 100px !important;
+    overflow: scroll;
+    background-color: #2b3031
+  }
+
+  .scrollable-table-large {  
+    position: relative;
+    height: 500px !important;
+    overflow: scroll;
+    background-color: #2b3031
+  }
+
+  .footable-filtering {
+    display:none;
+  }

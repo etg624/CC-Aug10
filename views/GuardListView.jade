@@ -1,0 +1,47 @@
+include mixins
+extends layout
+block content   
+			include navbar
+			h3 Convoyer Guards
+			br
+			div
+				table#pickle.table.table-hover.table-striped.table-bordered
+					thead
+						tr.primary 
+							th
+							th User name
+							th Last name
+							th First name
+							th Employee ID
+							th Email
+							th Status
+							th Updated
+							th GuardID
+					tbody
+						-each result in results
+							tr
+									td
+										a(href="/guardModify/#{result.GuardID}")  Edit |
+										a(href="/guardDelete/#{result.GuardID}")  Delete
+									td=result.UserName
+									td=result.LastName
+									td=result.FirstName
+									td=result.EmpID
+									td=result.UserEmail
+									td=result.Status
+									td=result.UpdateTime
+									td=result.GuardID
+				script.
+					$(document).ready(function() {
+					$('#pickle').DataTable();
+					});
+				script.
+					$(document).ready(function() {
+					$('#pickle tr').click(function() {
+					var href = $(this).find("a").attr("href");
+						if(href) {
+							window.location = href;
+						}
+					});
+					});
+		   

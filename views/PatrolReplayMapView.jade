@@ -1,0 +1,28 @@
+doctype html
+html(lang='en')
+	head
+		link(href="/snazzy-info-window-master/dist/snazzy-info-window.min.css", rel="stylesheet")
+		link(href="/convoyer/patrol-replay/styles.css", rel="stylesheet")
+		link(rel='stylesheet', href='/perfect-scrollbar/css/perfect-scrollbar.css')
+		meta(charset='UTF-8')
+		title Patrol Replay
+		style.
+			#map {
+			height: 100%;
+			width: 100%;
+			}
+	body
+		#map
+		script(src='https://maps.googleapis.com/maps/api/js?key='+ mapKey)
+		script(src='/snazzy-info-window-master/dist/snazzy-info-window.min.js')
+		script(src='/convoyer/patrol-replay/patrolReplayMapScript.js')
+		script(type="text/javascript" src="/perfect-scrollbar/dist/perfect-scrollbar.js")
+		script(src='/convoyer/locationIsAccurate.js')
+		script.
+				var mapElement = document.getElementById('map');
+				var results = !{ JSON.stringify(getPatrolReplayMapResult) };
+				var incidents = !{ JSON.stringify(getIncidentsResult) };
+				initMap();
+																				
+
+

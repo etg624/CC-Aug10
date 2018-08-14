@@ -264,6 +264,325 @@ if (process.env.CC_SSL == "YES") {
 
 // ###### Mon Jul 16 09:29:51 PDT 2018 ARA
 
+/*
+==========================================================================================================================================
+==========================================================================================================================================
+              ###### ARA
+==========================================================================================================================================
+==========================================================================================================================================
+**/
+
+
+var io = require('socket.io').listen(server);
+let tokens = [];
+const querystring = require('querystring');
+var request = require('request');
+
+// Chatroom
+
+var numUsers = 0;
+
+io.on('connection', function (socket) {
+  console.log('new socket connection')
+  initializeSockets(socket);
+});
+
+function initializeSockets(socket) {
+  getDevices(socket);
+}
+
+function getDevices(socket) {
+
+  console.log('getDevices called');
+
+  var options = {
+    hostname: process.env.SERVER_ADDRESS_DOMAIN,
+    path: '/guardnotifications',
+    method: 'GET',
+    rejectUnauthorized: false
+  };
+
+  var req = https.request(options, (res) => {
+
+    res.on('data', (chunk) => {
+      var data = JSON.parse(JSON.stringify(chunk));
+      tokens = [];
+      for (var i = 0; i < data.length; i++) {
+        console.log(data[i]);
+        tokens.push(data[i].DeviceToken);
+      }
+      setSocketListeners(socket);
+    });
+    res.on('end', () => {
+    });
+  });
+
+  req.on('error', (e) => {
+    console.error(e);
+  });
+
+  req.end();
+
+}
+
+function setSocketListeners(socket) {
+
+  const apn = require("apn");
+
+  console.log('logging APN credentials');
+  console.log(process.env.APN_KEY);
+  console.log(process.env.APN_KEYID);
+  console.log(process.env.APN_TEAMID);
+
+  const notificationOptions = {
+    token: {
+      key: process.env.APN_KEY,
+      keyId: process.env.APN_KEYID,
+      teamId: process.env.APN_TEAMID
+    },
+    production: false
+  };
+
+
+  var apnProvider = new apn.Provider(notificationOptions);
+
+  var note = new apn.Notification();
+
+  note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
+  note.sound = "ping.aiff";
+  note.badge = 0;
+  note.alert = "\uD83D\uDCE7 \u2709 You have a new message";
+  note.payload = { 'messageFrom': 'DISPATCH' };
+  note.topic = "mobss.foxwatch";
+
+  /*
+  =====================================================================
+  =====================================================================
+                            SOCKET.IO STUFF
+  =====================================================================
+  =====================================================================
+  **/
+
+
+  let addedUser = false;
+
+  console.log('II. logging tokens from setSocketListeners()');
+  console.log(tokens);
+
+  // when the client emits 'message', this listens and executes
+  socket.on('new message', function (data) {
+
+    console.log('socket.on message called from app.js')
+
+    // we tell the client to execute 'new message'
+
+    if (socket.username == null) {
+      socket.username = "UNKNOWN USER"
+    }
+    socket.broadcast.emit('message', {
+      username: socket.username,
+      message: data
+    });
+
+    console.log('III. logging tokens from on message listener');
+    console.log(tokens);
+
+    apnProvider.send(note, tokens).then((result) => {
+      var res = JSON.stringify(result);
+      console.log('logging tokens: ' + tokens);
+      console.log('logging send result: ' + res);
+    });
+  });
+
+  /// when the client emits 'add user', this listens and executes
+  socket.on('add user', function (username) {
+
+    console.log('add user heard');
+
+    if (addedUser) return;
+
+    // we store the username in the socket session for this client
+    socket.username = username;
+    ++numUsers;
+    addedUser = true;
+    socket.emit('login', {
+      numUsers: numUsers
+    });
+
+    if (socket.username != 'DISPATCH') {
+      // echo globally (all clients) that a person has connected
+      socket.broadcast.emit('user joined', {
+        username: socket.username,
+        numUsers: numUsers
+      });
+    }
+  });
+
+  // when the client emits 'typing', we broadcast it to others
+  socket.on('typing', function () {
+    socket.broadcast.emit('typing', {
+      username: socket.username
+    });
+  });
+
+  // when the client emits 'stop typing', we broadcast it to others
+  socket.on('stop typing', function () {
+    socket.broadcast.emit('stop typing', {
+      username: socket.username
+    });
+  });
+
+  // when the End Patrol buttons is pressed.. do this
+  socket.on('stop', function (id) {
+    socket.broadcast.emit('patrol stop ' + id, {
+      id: id
+    });
+  })
+
+  // when a route is updated.. emit this so guard route updates
+  socket.on('load route', function () {
+    socket.broadcast.emit('new route', {
+    });
+  })
+
+  // when a location is updated.. emit this so patrol path is drawn
+  socket.on('new location', function (location) {
+    socket.broadcast.emit('location ' + location.guardID, {
+      location: location
+    });
+  })
+
+  // when first location is heard.. emit this so command center is refreshed
+  socket.on('first location', function (location) {
+
+    socket.broadcast.emit('first location', {
+      location: location
+    });
+  })
+
+  // when a new incident is reported.. emit this
+  socket.on('new incident', function (incident) {
+    socket.broadcast.emit('incident', {
+      incident: incident
+    });
+  })
+
+  socket.on('patrol start', function (data) {
+
+    patrolPost(data, socket);
+  })
+
+  socket.on('ended patrol', function (data) {
+
+    patrolPut(data, socket);
+  })
+
+  // when the user disconnects.. perform this
+  socket.on('disconnect', function () {
+
+    // initializeSockets(socket);
+
+    if (addedUser) {
+      --numUsers;
+
+      if (socket.username != 'DISPATCH') {
+        // echo globally that this client has left
+        socket.broadcast.emit('user left', {
+          username: socket.username,
+          numUsers: numUsers
+        });
+      }
+    }
+
+  });
+
+}
+
+function patrolPost(data, socket) {
+
+
+  console.log('A. patrolPost called');
+
+  const postData = querystring.stringify({
+    'PatrolID': data.PatrolID,
+    'GuardID': data.GuardID,
+    'CurrentPatrol': 1
+  });
+
+  const options = {
+    hostname: process.env.SERVER_ADDRESS_DOMAIN,
+    path: '/patrols',
+    method: 'POST',
+    rejectUnauthorized: false,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Length': Buffer.byteLength(postData)
+    }
+  };
+
+  const req = https.request(options, (res) => {
+
+    res.setEncoding('utf8');
+    res.on('data', (chunk) => {
+    });
+    res.on('end', () => {
+    });
+  });
+
+  req.on('error', (e) => {
+    console.log('logging  patrol post error from app.js ')
+    console.log(e);
+  });
+
+  // write data to request body
+  req.write(postData);
+  req.end();
+
+
+}
+
+function patrolPut(data, socket) {
+
+
+  const postData = querystring.stringify({
+    'PatrolID': data.PatrolID,
+    'CurrentPatrol': 0,
+    'GuardID': data.GuardID
+  });
+
+  const options = {
+    hostname: process.env.SERVER_ADDRESS_DOMAIN,
+    port: 3000,
+    path: '/patrols',
+    method: 'PUT',
+    rejectUnauthorized: false,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Length': Buffer.byteLength(postData)
+    }
+  };
+
+  const req = http.request(options, (res) => {
+    res.setEncoding('utf8');
+    res.on('data', (chunk) => {
+    });
+    res.on('end', () => {
+
+    });
+  });
+
+  req.on('error', (e) => {
+
+  });
+
+  // write data to request body
+  req.write(postData);
+  req.end();
+
+
+}
+
+
 // ###################### MICROSOFT GRAPH API ##################################################################################################################################
 
 
@@ -272,7 +591,6 @@ var graph = require('./microsoft-graph/graph');
 var findMatches = require('./findMatches');
 var CreateRandom = require('./CreateRandom');
 var request = require('request');
-const querystring = require('querystring');
 
 
 var exchangeArray = [];

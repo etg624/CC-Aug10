@@ -1,0 +1,42 @@
+include mixins
+extends layout
+block content   
+			include navbar
+			h3 Patrol History
+			br
+			div
+				table#pickle.table.table-hover.table-striped.table-bordered
+					thead
+						tr.primary 
+							th
+							th Start Time
+							th End Time
+							th First Name
+							th Last Name
+							th Incidents
+					tbody
+						-each result in results
+							tr
+									td
+										a(href="/patrolreplay/#{result.PatrolID}")  View Replay
+									td=result.Start
+									td=result.End
+									td=result.FirstName
+									td=result.LastName
+									td=result.IncidentCount
+				script.
+					$(document).ready(function() {
+					$('#pickle').DataTable({
+						"order" : [2, 'desc']
+					});
+					});
+				script.
+					$(document).ready(function() {
+					$('#pickle tr').click(function() {
+					var href = $(this).find("a").attr("href");
+						if(href) {
+							window.location = href;
+						}
+					});
+					});
+		   

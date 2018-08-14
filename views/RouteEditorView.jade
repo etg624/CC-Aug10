@@ -1,0 +1,85 @@
+include mixins
+extends layout
+block content   
+												include navbar
+												head
+													.row
+														.col-md-2.col-sm-2.col-xs-12
+																			.row
+																									.panel.panel-default
+																											.panel-heading
+																													h3.panel-title Patrol Areas
+																											div#areaContainer.scrollable-table
+																															table#pickle.table.table-hover.table-striped.table-bordered
+																																			thead
+																																			-each area in getAllPatrolAreasResult
+																																							tr.default(id=area.AreaID)
+																																											th=area.Name
+																			.row
+																									.panel.panel-default
+																											.panel-heading
+																													h3.panel-title Routes
+																											div#routeContainer.scrollable-table
+																															table#pickle.table.table-hover.table-striped.table-bordered
+																																			thead
+																																			-each route in getAllRoutesResult
+																																							tr.default(id=route.RouteID)
+																																											th=route.RouteName																																											
+																			.row
+																											a.btn.btn-default.btn-block(id='addAreaButton', style='display: block ! important;')
+																												i.fa.fa-map(aria-hidden='true')
+																												| &nbsp Add Area																			
+																			.row
+																											a.btn.btn-default.btn-block(id='cancelAreaButton', style='display: none ! important;')
+																												i.fa.fa-ban(aria-hidden='true')
+																												| &nbsp Cancel Area Add																	
+																			.row
+																											a.btn.btn-default.btn-block(id='saveAreaButton', style='display: none ! important;')
+																												i.fa.fa-floppy-o(aria-hidden='true')
+																												| &nbsp Save Area
+																			.row
+																											a.btn.btn-default.btn-block(id='setCurrentAreaButton', style='display: none ! important;')
+																												i.fa.fa-map-marker(aria-hidden='true')
+																												| &nbsp Set Current Area																													   																				   
+																			.row
+																											a.btn.btn-default.btn-block.with-margin(id='deleteAreaButton', style='display: block ! important;')
+																												i.fa.fa-trash(aria-hidden='true')
+																												| &nbsp Delete Area																																												
+																			.row
+																											a.btn.btn-default.btn-block(id='addRouteButton', style='display: block ! important;')
+																												i.fa.fa-map-signs(aria-hidden='true')
+																												| &nbsp Add Route																			
+																			.row
+																											a.btn.btn-default.btn-block(id='cancelRouteButton', style='display: none ! important;')
+																												i.fa.fa-ban(aria-hidden='true')
+																												| &nbsp Cancel Route Add
+																			.row
+																											a.btn.btn-default.btn-block(id='clearCheckpointsButton', style='display: none ! important;')
+																												i.fa.fa-eraser(aria-hidden='true')
+																												| &nbsp Clear All Checkpoints																			
+																			.row
+																											a.btn.btn-default.btn-block(id='removeLastCheckpointButton', style='display: none ! important;')
+																												i.fa.fa-undo(aria-hidden='true')
+																												| &nbsp Remove Last Point
+																			.row
+																											a.btn.btn-default.btn-block(id='saveRouteButton', style='display: none ! important;')
+																												i.fa.fa-floppy-o(aria-hidden='true')
+																												| &nbsp Save Route
+																			.row
+																											a.btn.btn-default.btn-block(id='loadRouteButton', style='display: none ! important;')
+																												i.fa.fa-cloud-download(aria-hidden='true')
+																												| &nbsp Load Template																													   																				   
+																			.row
+																											a.btn.btn-default.btn-block.with-margin(id='deleteRouteButton', style='display: block ! important;')
+																												i.fa.fa-trash(aria-hidden='true')
+																												| &nbsp Delete Route																													
+														.col-md-10.col-sm-10.col-xs-12			  
+																object#map(data='https://convoyer.mobsscmd.com/routeeditormap', width='100%', height='500', type='text/html')																	
+																script.
+																		var mapElement = document.getElementById('map');
+																		var guards = !{ JSON.stringify(getAllGuardsResult) };
+																		var routes = !{ JSON.stringify(getAllRoutesResult) };
+																		var areas = !{ JSON.stringify(getAllPatrolAreasResult)}; 
+																				
+
+

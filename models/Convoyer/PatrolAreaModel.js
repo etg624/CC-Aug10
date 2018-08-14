@@ -1,16 +1,18 @@
-var db = require('./db');
-var datetime = require('../controllers/datetime');
+var db = require('../db');
 
-module.exports.getPerson = function (Body, callback) {
-    console.log('getPerson called');
 
-    db.createConnection(function (err, result) {
+
+module.exports.getAllPatrolAreas = function (callback) {
+
+    db.createConnection(function (err, reslt) {
         if (err) {
-            console.log(err);
+
             callback(err, null);
         } else {
-            var connection = result;
-            var strSQL = 'SELECT * FROM people WHERE ' + Body.Field + ' = "' + Body.Value + '";'
+            //process the i/o after successful connect.  Connection object returned in callback
+            var connection = reslt;
+
+            var strSQL = ' Select * from patrolarea; ';
             connection.query(strSQL, function (err, rows, fields) {
                 if (!err) {
                     connection.end();
@@ -23,25 +25,22 @@ module.exports.getPerson = function (Body, callback) {
                 }
             });
         }
-    })
+    });
+
 
 }
 
-module.exports.checkIn = function (Body, callback) {
 
-    console.log('checkIn called');
-
+module.exports.getPatrolAreaByID = function (id, callback) {
     db.createConnection(function (err, reslt) {
         if (err) {
-            console.log('Error while performing common connect query: ' + err);
+
             callback(err, null);
         } else {
             //process the i/o after successful connect.  Connection object returned in callback
             var connection = reslt;
-            var time = datetime.syncGetTimeInDisplayFormat();
-            var date = datetime.syncGetDateOnlyInDisplayFormat();
 
-            var strSQL = "Insert into attendance values ('999999999', '" + Body.FirstName + "', '" + Body.LastName + "', '" + time + "', '','" + Body.EventID + "','" + Body.EventName + "','" + Body.iClassNumber + "', '" + date + "', '', '', '" + Body.EmpID + "', '', '', 'SMS', '" + Body.CheckInType + "')";
+            var strSQL = ' Select * from patrolarea where PatrolAreaID = "' + id + '";';
             connection.query(strSQL, function (err, rows, fields) {
                 if (!err) {
                     connection.end();
@@ -57,21 +56,18 @@ module.exports.checkIn = function (Body, callback) {
     });
 }
 
-module.exports.checkInUnknown = function (Body, callback) {
 
-    console.log('checkInUnknown called');
+module.exports.addPatrolArea = function (PatrolArea, callback) {
 
     db.createConnection(function (err, reslt) {
         if (err) {
-            console.log('Error while performing common connect query: ' + err);
+
             callback(err, null);
         } else {
             //process the i/o after successful connect.  Connection object returned in callback
             var connection = reslt;
-            var time = datetime.syncGetTimeInDisplayFormat();
-            var date = datetime.syncGetDateOnlyInDisplayFormat();
 
-            var strSQL = "Insert into attendance values ('999999999', '" + Body.FirstName + "', '" + Body.LastName + "', '" + time + "', '','" + Body.EventID + "','" + Body.EventName + "','" + Body.iClassNumber + "', '" + date + "', '', '', '" + Body.EmpID + "', '', '', 'SMS', '" + Body.CheckInType + "')";
+            var strSQL = "Insert into patrolarea values ('" + PatrolArea.AreaID + "', '" + PatrolArea.AreaName + "', '" + PatrolArea.lat + "', '" + PatrolArea.lng + "', " + PatrolArea.CurrentArea + ");";
             connection.query(strSQL, function (err, rows, fields) {
                 if (!err) {
                     connection.end();
@@ -87,19 +83,17 @@ module.exports.checkInUnknown = function (Body, callback) {
     });
 }
 
-module.exports.getEvent = function (input, callback) {
-
-    console.log('checkEvent called');
+module.exports.deletePatrolArea = function (id, callback) {
 
     db.createConnection(function (err, reslt) {
         if (err) {
-            console.log('Error while performing common connect query: ' + err);
+
             callback(err, null);
         } else {
             //process the i/o after successful connect.  Connection object returned in callback
             var connection = reslt;
 
-            var strSQL = 'SELECT * FROM events WHERE EventID ="' + input + '";';
+            var strSQL = ' delete from patrolarea where AreaID = "' + id + '";';
             connection.query(strSQL, function (err, rows, fields) {
                 if (!err) {
                     connection.end();
@@ -115,19 +109,36 @@ module.exports.getEvent = function (input, callback) {
     });
 }
 
-module.exports.getUnaccounted = function (Body, callback) {
+module.exports.updatePatrolArea = function (PatrolArea, callback) {
 
-    db.createConnection(function (err, result) {
+    db.createConnection(function (err, reslt) {
         if (err) {
-            console.log(err);
+
             callback(err, null);
         } else {
-            var connection = result;
-            var strSQL = "SELECT * FROM unaccounted WHERE MusterID = '" + Body.MusterID + "';"
+            //process the i/o after successful connect.  Connection object returned in callback
+            var connection = reslt;
+
+
+            var strSQL = "Update patrolarea SET CurrentArea = " + PatrolArea.NotCurrentArea + " WHERE NOT AreaID = '" + PatrolArea.AreaID + "';";
             connection.query(strSQL, function (err, rows, fields) {
                 if (!err) {
-                    connection.end();
-                    callback(null, rows);
+                    // connection.end();
+                    // callback(null, rows);
+                    // here we will set our selected route to 1
+                    var strSQL2 = "Update patrolarea SET CurrentArea = " + PatrolArea.CurrentArea + " WHERE AreaID = '" + PatrolArea.AreaID + "';";
+                    connection.query(strSQL2, function (err, rows, fields) {
+                        if (!err) {
+                            connection.end();
+                            callback(null, rows);
+                        } else {
+                            console.log('error with the query');
+                            connection.end();
+                            callback(err, rows);
+                        }
+
+                    });
+
 
                 } else {
                     console.log('error with the query');
@@ -136,9 +147,10 @@ module.exports.getUnaccounted = function (Body, callback) {
                 }
             });
         }
-    })
+    });
 
 }
+
 
 
 
