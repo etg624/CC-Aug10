@@ -1,5 +1,7 @@
 $(function () {
 
+  var serverAddress = 'https://convoyer.mobsscmd.com';
+
   console.log('socketStuff called');
 
   getMessages();
@@ -59,7 +61,7 @@ $(function () {
       }
     }
 
-    xhr.open("GET", "https://convoyer.mobsscmd.com/messages/", true);
+    xhr.open("GET", serverAddress + "/messages/", true);
 
     xhr.send(null);
   }
@@ -237,7 +239,7 @@ $(function () {
       return false;
     }
 
-    xhr.open("POST", "https://convoyer.mobsscmd.com/messages", true);
+    xhr.open("POST", serverAddress + "/messages", true);
 
     xhr.setRequestHeader('Content-Type', 'application/json');
 
