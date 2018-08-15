@@ -2,6 +2,8 @@ var RouteEditorModel = require('../../models/Convoyer/RouteEditorModel');
 
 module.exports.getRouteEditor = (function (req, res) {
 
+  var serverAddress = process.env.SERVER_ADDRESS;
+
 
   RouteEditorModel.getAllRoutes(function (err, getAllRoutesResult) {
     if (err) {
@@ -15,7 +17,7 @@ module.exports.getRouteEditor = (function (req, res) {
             if (err) {
               res.end();
             } else {
-              res.render('RouteEditorView', { title: 'Route Editor', getAllGuardsResult, getAllRoutesResult, getAllPatrolAreasResult });
+              res.render('RouteEditorView', { title: 'Route Editor', getAllGuardsResult, getAllRoutesResult, getAllPatrolAreasResult, serverAddress });
             }
           })
           
