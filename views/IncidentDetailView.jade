@@ -39,6 +39,7 @@ html(lang='en')
 	script(src='/convoyer/incident/incidentDetailScript.js')
 	script.
 			var incident = !{ JSON.stringify(getIncidentResult) };
+			var serverAddress = !{ JSON.stringify(serverAddress) };
 			incidentDetailScript();
 									
 

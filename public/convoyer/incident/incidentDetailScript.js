@@ -38,6 +38,6 @@ backButton.addEventListener('click', function (e) {
 
 function backToMap(){
 
-    window.location.href = "https://convoyer.mobsscmd.com/convoyerlivemap";
+    window.location.href = serverAddress + "/convoyerlivemap";
     
 }
