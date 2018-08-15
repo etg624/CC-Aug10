@@ -1,6 +1,6 @@
 $(function () {
 
-  var serverAddress = 'https://convoyer.mobsscmd.com';
+  var serverAddress = 'http://ec2-34-215-115-69.us-west-2.compute.amazonaws.com:3000';
 
   console.log('socketStuff called');
 
