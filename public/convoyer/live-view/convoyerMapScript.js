@@ -762,7 +762,7 @@ function initMap() {
             }
         }
 
-        xhr.open("GET", "https://convoyer.mobsscmd.com/incidents/" + incidentID, true);
+        xhr.open("GET", serverAddress + "/incidents/" + incidentID, true);
 
         xhr.send(null);
 
@@ -892,7 +892,7 @@ function initMap() {
             }
         }
 
-        xhr.open("GET", "https://convoyer.mobsscmd.com/routes/", true);
+        xhr.open("GET", serverAddress + "/routes/", true);
 
         xhr.send(null);
 
@@ -930,7 +930,7 @@ function initMap() {
             return false;
         }
 
-        xhr.open("PUT", "https://convoyer.mobsscmd.com/queueroute", true);
+        xhr.open("PUT", serverAddress + "/queueroute", true);
         xhr.setRequestHeader('Content-Type', 'application/json');
 
 
@@ -1026,7 +1026,7 @@ function initMap() {
             }
         }
 
-        xhr.open("GET", "https://convoyer.mobsscmd.com/currentroutes/" + currentGuard, true);
+        xhr.open("GET", serverAddress + "/currentroutes/" + currentGuard, true);
 
         xhr.send(null);
     }
@@ -1042,7 +1042,7 @@ function initMap() {
             return false;
         }
 
-        xhr.open("PUT", "https://convoyer.mobsscmd.com/queueroute", true);
+        xhr.open("PUT", serverAddress + "/queueroute", true);
         xhr.setRequestHeader('Content-Type', 'application/json');
 
 
@@ -1206,7 +1206,7 @@ function initMap() {
                         return false;
                     }
 
-                    xhr.open("PUT", "https://convoyer.mobsscmd.com/patrols", true);
+                    xhr.open("PUT", serverAddress + "/patrols", true);
                     xhr.setRequestHeader('Content-Type', 'application/json');
 
                     xhr.send(JSON.stringify({
@@ -1258,7 +1258,7 @@ function initMap() {
                     return false;
                 }
 
-                xhr.open("POST", "https://convoyer.mobsscmd.com/routes", true);
+                xhr.open("POST", serverAddress + "/routes", true);
 
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 xhr.send(JSON.stringify({
@@ -1302,7 +1302,7 @@ function initMap() {
                     return false;
                 }
 
-                xhr.open("POST", "https://convoyer.mobsscmd.com/saveroute", true);
+                xhr.open("POST", serverAddress + "/saveroute", true);
 
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 xhr.send(JSON.stringify({
@@ -1377,7 +1377,7 @@ function initMap() {
             }
         }
 
-        xhr.open("GET", "https://convoyer.mobsscmd.com/routes/", true);
+        xhr.open("GET", serverAddress + "/routes/", true);
 
         xhr.send(null);
     }
@@ -1401,7 +1401,7 @@ function initMap() {
             }
         }
 
-        xhr.open("GET", "https://convoyer.mobsscmd.com/currentroutes/" + id, true);
+        xhr.open("GET", serverAddress + "/currentroutes/" + id, true);
 
         xhr.send(null);
 
@@ -1420,7 +1420,7 @@ function initMap() {
             return false;
         }
 
-        xhr.open("PUT", "https://convoyer.mobsscmd.com/setcurrentroute", true);
+        xhr.open("PUT", serverAddress + "/setcurrentroute", true);
         xhr.setRequestHeader('Content-Type', 'application/json');
 
 
@@ -1477,7 +1477,7 @@ function initMap() {
             return false;
         }
 
-        xhr.open("PUT", "https://convoyer.mobsscmd.com/coordinates", true);
+        xhr.open("PUT", serverAddress + "/coordinates", true);
         xhr.setRequestHeader('Content-Type', 'application/json');
 
         xhr.send(JSON.stringify({
@@ -1502,7 +1502,7 @@ function initMap() {
                 return false;
             }
 
-            xhr.open("POST", "https://convoyer.mobsscmd.com/checkpoints", true);
+            xhr.open("POST", serverAddress + "/checkpoints", true);
 
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.send(JSON.stringify({
@@ -1535,7 +1535,7 @@ function initMap() {
             }
         }
 
-        xhr.open("GET", "https://convoyer.mobsscmd.com/checkpoints/" + routeID, true);
+        xhr.open("GET", serverAddress + "/checkpoints/" + routeID, true);
 
         xhr.send(null);
     }

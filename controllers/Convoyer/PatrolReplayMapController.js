@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 var PatrolReplayMapModel = require('../../models/Convoyer/PatrolReplayMapModel');
+var serverAddress = process.env.SERVER_ADDRESS;
 
 module.exports.getPatrolReplayMap = (function (req, res) {
 
@@ -13,7 +14,7 @@ module.exports.getPatrolReplayMap = (function (req, res) {
         if (err){
           res.end();
         } else {
-          res.render('PatrolReplayMapView', { title: 'Patrol Replay Map', getPatrolReplayMapResult: getPatrolReplayMapResult, getIncidentsResult: getIncidentsResult, mapKey: process.env.MAP_KEY});
+          res.render('PatrolReplayMapView', { title: 'Patrol Replay Map', getPatrolReplayMapResult: getPatrolReplayMapResult, getIncidentsResult: getIncidentsResult, mapKey: process.env.MAP_KEY, serverAddress});
         }
       })              
             }

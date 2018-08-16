@@ -293,7 +293,7 @@ function initMap() {
             
             if (incidents[i].Media != 'none') {
                 windowString = `<h3  style="text-align: center">` + incidents[i].Type + ` </h3> 
-                    <div style="text-align: center"> <p>` + incidents[i].Description + `</p> </div> <div text-align = 'center'> <object id = 'map' data='https://convoyer.mobsscmd.com/incidentpreview/` + incidents[i].IncidentID + `' width='100%' height='100%' type='text/html'> <object/> </div>
+                    <div style="text-align: center"> <p>` + incidents[i].Description + `</p> </div> <div text-align = 'center'> <object id = 'map' data=` + serverAddress + `'/incidentpreview/` + incidents[i].IncidentID + `' width='100%' height='100%' type='text/html'> <object/> </div>
                     `;
             } else {
                 windowString = `<h3  style="text-align: center">` + incidents[i].Type + ` </h3> 

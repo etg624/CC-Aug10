@@ -1,10 +1,11 @@
 require('dotenv').config();
 
 var ConvoyerMapModel = require('../../models/Convoyer/ConvoyerMapModel');
+var serverAddress = process.env.SERVER_ADDRESS
 
 module.exports.getAllGuardPatrols = (function (req, res) {
 
-  var serverAddress = process.env.SERVER_ADDRESS
+  
 
   ConvoyerMapModel.getAllGuards(function (err, getAllGuardsResult) {
 

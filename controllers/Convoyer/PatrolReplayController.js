@@ -1,6 +1,9 @@
 var PatrolReplayModel = require('../../models/Convoyer/PatrolReplayModel');
+var serverAddress = process.env.SERVER_ADDRESS;
 
 module.exports.getPatrolReplay = (function (req, res) {
+
+
 
 
   PatrolReplayModel.getPatrolReplay(req.params.id, function (err, getPatrolReplayResult) {
@@ -12,7 +15,7 @@ module.exports.getPatrolReplay = (function (req, res) {
         if (err) {
 
         } else {
-          res.render('PatrolReplayView', { title: 'Patrol Replay', getPatrolReplayResult: getPatrolReplayResult, getIncidentsResult: getIncidentsResult });
+          res.render('PatrolReplayView', { title: 'Patrol Replay', getPatrolReplayResult: getPatrolReplayResult, getIncidentsResult: getIncidentsResult, serverAddress });
         }
       })
     }

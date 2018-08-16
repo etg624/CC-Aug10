@@ -434,7 +434,7 @@ function initMap() {
                     return false;
                 }
 
-                xhr.open("POST", "https://convoyer.mobsscmd.com/patrolareas", true);
+                xhr.open("POST", serverAddress + "/patrolareas", true);
 
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 xhr.send(JSON.stringify({
@@ -512,7 +512,7 @@ function initMap() {
             }
         }
 
-        xhr.open("GET", "https://convoyer.mobsscmd.com/patrolareas/", true);
+        xhr.open("GET", serverAddress + "/patrolareas/", true);
 
         xhr.send(null);
     }
@@ -570,7 +570,7 @@ function initMap() {
             return false;
         }
 
-        xhr.open("PUT", "https://convoyer.mobsscmd.com/patrolareas", true);
+        xhr.open("PUT", serverAddress + "/patrolareas", true);
 
         xhr.setRequestHeader('Content-Type', 'application/json');
 
@@ -655,7 +655,7 @@ function initMap() {
                     return false;
                 }
 
-                xhr.open("POST", "https://convoyer.mobsscmd.com/saveroute", true);
+                xhr.open("POST", serverAddress + "/saveroute", true);
 
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 xhr.send(JSON.stringify({
@@ -738,7 +738,7 @@ function initMap() {
             }
         }
 
-        xhr.open("GET", "https://convoyer.mobsscmd.com/routes/", true);
+        xhr.open("GET", serverAddress + "/routes/", true);
 
         xhr.send(null);
     }
@@ -789,7 +789,7 @@ function initMap() {
             }
         }
 
-        xhr.open("GET", "https://convoyer.mobsscmd.com/routes/", true);
+        xhr.open("GET", serverAddress + "/routes/", true);
 
         xhr.send(null);
     }
@@ -840,7 +840,7 @@ function initMap() {
                         }
                     }
 
-                    xhr.open("DELETE", "https://convoyer.mobsscmd.com/checkpoints/" + routeID, true);
+                    xhr.open("DELETE", serverAddress + "/checkpoints/" + routeID, true);
 
                     xhr.send(null);
 
@@ -876,7 +876,7 @@ function initMap() {
                         }
                     }
 
-                    xhr.open("DELETE", "https://convoyer.mobsscmd.com/patrolareas/" + areaID, true);
+                    xhr.open("DELETE", serverAddress + "/patrolareas/" + areaID, true);
 
                     xhr.send(null);
 
@@ -917,7 +917,7 @@ function initMap() {
             }
         }
 
-        xhr.open("GET", "https://convoyer.mobsscmd.com/currentroutes/" + id, true);
+        xhr.open("GET", serverAddress + "/currentroutes/" + id, true);
 
         xhr.send(null);
 
@@ -937,7 +937,7 @@ function initMap() {
             }
         }
 
-        xhr.open("DELETE", "https://convoyer.mobsscmd.com/routes/" + routeID, true);
+        xhr.open("DELETE", serverAddress + "/routes/" + routeID, true);
 
         xhr.send(null);
 
@@ -982,7 +982,7 @@ function initMap() {
                 return false;
             }
 
-            xhr.open("POST", "https://convoyer.mobsscmd.com/checkpoints", true);
+            xhr.open("POST", serverAddress + "/checkpoints", true);
 
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.send(JSON.stringify({
@@ -1017,7 +1017,7 @@ function initMap() {
             }
         }
 
-        xhr.open("GET", "https://convoyer.mobsscmd.com/checkpoints/" + routeID, true);
+        xhr.open("GET", serverAddress + "/checkpoints/" + routeID, true);
 
         xhr.send(null);
     }
