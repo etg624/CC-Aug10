@@ -543,7 +543,13 @@ router.get('/musterGetPoints/:id', MusterController.getMusterPoints);
 
 //############################################## Email Additions ############################################################
 var EmailController = require('../controllers/emailController');
-router.get('/emailcheckin/:email/:eventid', EmailController.checkInByEmail);
+router.get('/linkcheckin/:email/:eventid', EmailController.checkInByLink);
+
+router.get('/emailcheckin', EmailController.checkInByEmail);
+
+
+
+
 //########################################### Email Additions End ############################################################
 
 

@@ -97,11 +97,11 @@ module.exports.sendIncidentEmail = function (data) {
         var message = `
         There is an Emergency in progress at the school. Please click the link below to confirm that you are okay. 
 
-` + process.env.SERVER_ADDRESS + '/emailcheckin/' + data[i].EmailAddress + '/' + data[i].MusterID + `
+` + process.env.SERVER_ADDRESS + '/linkcheckin/' + data[i].EmailAddress + '/' + data[i].MusterID + `
 
         Please review the emergency procedures... https://emilms.fema.gov/IS360/SAFE0104230text2.htm'
         `;
-    
+
 
         //--
         // Email report
@@ -122,41 +122,46 @@ module.exports.sendIncidentEmail = function (data) {
             console.log('logging msg');
             console.log(msg);
 
-            sgMail.send(msg);  
+            sgMail.send(msg);
         }
     }
 };
 
 
-module.exports.checkInByEmail = function (req, res) {
-EmailModel.getPerson(req.params.email, function (err,getPersonResult){
-    if (err) {
-    res.end();
-    } else {
-EmailModel.getEvent(req.params.eventid, function (err, getEventResult){
-    if (err) {
-        res.end();
-    } else {
-        let json = {
-            FirstName: getPersonResult[0].FirstName,
-            LastName: getPersonResult[0].LastName,
-            EventID: getEventResult[0].EventID,
-            EventName: getEventResult[0].EventName,
-            EmpID: getPersonResult[0].iClassNumber,
-            CheckInType: 4
+module.exports.checkInByLink = function (req, res) {
+    EmailModel.getPerson(req.params.email, function (err, getPersonResult) {
+        if (err) {
+            res.end();
+        } else {
+            EmailModel.getEvent(req.params.eventid, function (err, getEventResult) {
+                if (err) {
+                    res.end();
+                } else {
+                    let json = {
+                        FirstName: getPersonResult[0].FirstName,
+                        LastName: getPersonResult[0].LastName,
+                        EventID: getEventResult[0].EventID,
+                        EventName: getEventResult[0].EventName,
+                        EmpID: getPersonResult[0].iClassNumber,
+                        CheckInType: 4
 
+                    }
+                    EmailModel.checkIn(json, function (err, checkInResult) {
+                        if (err) {
+                            res.end();
+                        } else {
+                            res.json('Thank you, ' + getPersonResult[0].FirstName + '. You have checked in.');
+                        }
+                    })
+                }
+            })
         }
-EmailModel.checkIn(json, function (err, checkInResult) {
-    if (err) {
-        res.end();
-    } else {
-        res.json('Thank you, '  + getPersonResult[0].FirstName + '. You have checked in.');
-    }
-})        
-    }
-})        
-    }
-})
+    })
+}
+
+module.exports.checkInByEmail = function (req, res) {
+    console.log('received email');
+    res.json('chyeck');
 }
 
 
