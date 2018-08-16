@@ -161,7 +161,8 @@ module.exports.checkInByLink = function (req, res) {
 
 module.exports.checkInByEmail = function (req, res) {
     console.log('received email');
-    res.json('chyeck');
+    console.log(req.body);
+    res.json('Mission Success');
 }
 
 
