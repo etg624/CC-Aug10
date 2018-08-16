@@ -6,7 +6,7 @@
 
 const nodemailer = require('nodemailer');
 const sgMail = require('@sendgrid/mail');
-var EmailModel = require('../models/EmailModel');
+let EmailModel = require('../models/EmailModel');
 
 ////////////////////////////////////////////////////////////////////////////
 // The following module emails attendance reports to user's email address //
@@ -16,7 +16,7 @@ module.exports.sendAttendanceEmail = function (subject, message, to, fileName, c
 
     if (process.env.EMAIL_SECURE == "true") {
 
-        // var smtpConfig = {
+        // let smtpConfig = {
         //     //host: 'smtp.mail.com',
         //     host: process.env.EMAIL_HOST,
         //     port: process.env.EMAIL_PORT,
@@ -27,7 +27,7 @@ module.exports.sendAttendanceEmail = function (subject, message, to, fileName, c
         //     }
         // };
     } else {
-        // var smtpConfig = {
+        // let smtpConfig = {
         //     //host: 'smtp.mail.com',
         //     host: process.env.EMAIL_HOST,
         //     port: process.env.EMAIL_PORT,
@@ -47,10 +47,10 @@ module.exports.sendAttendanceEmail = function (subject, message, to, fileName, c
     sgMail.send(msg);
 
 
-    // var transporter = nodemailer.createTransport(smtpConfig);
+    // let transporter = nodemailer.createTransport(smtpConfig);
 
     // // setup email data with unicode symbols
-    // var mailOptions = {
+    // let mailOptions = {
     //     //from: 'dragonseat@mail.com>', // sender address
     //     from: process.env.EMAIL_FROMADDR, // sender address
     //     to: to, // list of receivers
@@ -86,15 +86,15 @@ module.exports.sendIncidentEmail = function (data) {
 
     console.log('sendIncidentEmail called');
 
-    var title = process.env.EMERGENCY_TITLE;
+    let title = process.env.EMERGENCY_TITLE;
 
     console.log('logging data from sendIncidentEmail');
     console.log(data);
 
     //Loop through the unaccounted table and find their emails
-    for (var i = 0; i < data.length; i++) {
+    for (let i = 0; i < data.length; i++) {
 
-        var message = `
+        let message = `
         There is an Emergency in progress at the school. Please click the link below to confirm that you are okay. 
 
 ` + process.env.SERVER_ADDRESS + '/linkcheckin/' + data[i].EmailAddress + '/' + data[i].MusterID + `
@@ -109,7 +109,7 @@ module.exports.sendIncidentEmail = function (data) {
 
         if (data[i].EmailAddress != "" && data[i].EmailAddress != null) {
 
-            var to = data[i].EmailAddress;
+            let to = data[i].EmailAddress;
 
             sgMail.setApiKey(process.env.EMAIL_PASS);
             const msg = {
@@ -161,14 +161,37 @@ module.exports.checkInByLink = function (req, res) {
 
 module.exports.checkInByEmail = function (req, res) {
 
+    let errorMessage = 'Sorry, there was an error with your request';
+    let eventNotFoundMessage = 'Sorry. No event was found with that ID';
+    let personNotFoundMessage = 'No file was found with that email. You have been checked in as anonymous.';
+
+    function sendEmail(email, message) {
+        let api_key = process.env.MAILGUN_KEY;
+        let domain = process.env.SERVER_ADDRESS;
+        let mailgun = require('mailgun-js')({ apiKey: api_key, domain: domain });
+
+        let data = {
+            from: 'Mobss <mobssreply@mobsscmd.com>',
+            to: email,
+            subject: 'RE: Check In',
+            text: message
+        };
+
+        mailgun.messages().send(data, function (error, body) {
+            console.log(body);
+        });
+    }
+
     EmailModel.getPerson(req.body.sender, function (err, getPersonResult) {
         if (err) {
-            res.end();
+            sendEmail(req.body.sender, errorMessage);
+            res.json(errorMessage);
         } else {
             if (getPersonResult.length > 0) {
                 EmailModel.getEvent(req.body.subject, function (err, getEventResult) {
                     if (err) {
-                        res.end();
+                        sendEmail(req.body.sender, errorMessage);
+                        res.json(errorMessage);
                     } else {
                         if (getEventResult.length > 0) {
                             let json = {
@@ -183,21 +206,26 @@ module.exports.checkInByEmail = function (req, res) {
                                 if (err) {
                                     console.log('logging EmailModel.checkin err');
                                     console.log(err);
-                                    res.end();
+                                    sendEmail(req.body.sender, errorMessage);
+                                    res.json(errorMessage);
 
                                 } else {
-                                    res.json('Thank you, ' + getPersonResult[0].FirstName + '. You have checked in.');
+                                    let message = 'Thank you, ' + getPersonResult[0].FirstName + '. You have checked in.';
+                                    sendEmail(req.body.sender, message);
+                                    res.json();
                                 }
                             })
                         } else {
-                            res.json('Sorry. No event was found with that ID');
+                            sendEmail(req.body.sender, eventNotFoundMessage);
+                            res.json(eventNotFoundMessage);
                         }
                     }
                 })
             } else {
                 EmailModel.getEvent(req.body.subject, function (err, getEventResult) {
                     if (err) {
-                        res.end();
+                        sendEmail(req.body.sender, errorMessage);
+                        res.json(errorMessage);
                     } else {
                         if (getEventResult.length > 0) {
                             let json = {
@@ -210,15 +238,16 @@ module.exports.checkInByEmail = function (req, res) {
                             }
                             EmailModel.checkIn(json, function (err, checkInResult) {
                                 if (err) {
-                                    console.log('logging EmailModel.checkin err');
-                                    console.log(err);
-                                    res.end();
+                                    sendEmail(req.body.sender, errorMessage);
+                                    res.json(errorMessage);
 
                                 } else {
-                                    res.json('No file was found with that email. You have been checked in as anonymous.');
+                                    sendEmail(req.body.sender, notFoundMessage);
+                                    res.json(personNotFoundMessage);
                                 }
                             })
                         } else {
+                            sendEmail(req.body.sender, eventNotFoundMessage);
                             res.json('Sorry. No event was found with that ID');
                         }
                     }
