@@ -160,9 +160,38 @@ module.exports.checkInByLink = function (req, res) {
 }
 
 module.exports.checkInByEmail = function (req, res) {
-    console.log('received email');
-    console.log(req.body);
-    res.json('Mission Success');
+
+    EmailModel.getPerson(req.body.sender, function (err, getPersonResult) {
+        if (err) {
+            res.end();
+        } else {
+            EmailModel.getEvent(req.body.subject, function (err, getEventResult) {
+                if (err) {
+                    res.end();
+                } else {
+                    let json = {
+                        FirstName: getPersonResult[0].FirstName,
+                        LastName: getPersonResult[0].LastName,
+                        EventID: getEventResult[0].EventID,
+                        EventName: getEventResult[0].EventName,
+                        EmpID: getPersonResult[0].iClassNumber,
+                        CheckInType: 4
+
+                    }
+                    EmailModel.checkIn(json, function (err, checkInResult) {
+                        if (err) {
+                            console.log('logging EmailModel.checkin err');
+                            console.log(err);
+                            res.end();
+
+                        } else {
+                            res.json('Thank you, ' + getPersonResult[0].FirstName + '. You have checked in.');
+                        }
+                    })
+                }
+            })
+        }
+    })
 }
 
 
