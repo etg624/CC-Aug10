@@ -545,7 +545,7 @@ router.get('/musterGetPoints/:id', MusterController.getMusterPoints);
 var EmailController = require('../controllers/emailController');
 router.get('/linkcheckin/:email/:eventid', EmailController.checkInByLink);
 
-router.get('/emailcheckin', EmailController.checkInByEmail);
+router.post('/emailcheckin', EmailController.checkInByEmail);
 
 
 
