@@ -242,7 +242,7 @@ module.exports.checkInByEmail = function (req, res) {
                                     res.json(errorMessage);
 
                                 } else {
-                                    sendEmail(req.body.sender, notFoundMessage);
+                                    sendEmail(req.body.sender, personNotFoundMessage);
                                     res.json(personNotFoundMessage);
                                 }
                             })
