@@ -142,7 +142,7 @@ module.exports.checkInByLink = function (req, res) {
                         LastName: getPersonResult[0].LastName,
                         EventID: getEventResult[0].EventID,
                         EventName: getEventResult[0].EventName,
-                        EmpID: getPersonResult[0].iClassNumber,
+                        iClassNumber: getPersonResult[0].iClassNumber,
                         CheckInType: 4
 
                     }
@@ -176,7 +176,7 @@ module.exports.checkInByEmail = function (req, res) {
                                 LastName: getPersonResult[0].LastName,
                                 EventID: getEventResult[0].EventID,
                                 EventName: getEventResult[0].EventName,
-                                EmpID: getPersonResult[0].iClassNumber,
+                                iClassNumber: getPersonResult[0].iClassNumber,
                                 CheckInType: 4
                             }
                             EmailModel.checkIn(json, function (err, checkInResult) {
@@ -205,7 +205,7 @@ module.exports.checkInByEmail = function (req, res) {
                                 LastName: req.body.sender,
                                 EventID: getEventResult[0].EventID,
                                 EventName: getEventResult[0].EventName,
-                                EmpID: '99999999999',
+                                iClassNumber: '99999999999',
                                 CheckInType: 4
                             }
                             EmailModel.checkIn(json, function (err, checkInResult) {
