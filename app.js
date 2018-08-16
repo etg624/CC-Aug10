@@ -282,7 +282,7 @@ var request = require('request');
 
 var numUsers = 0;
 
-io.on('connect', function (socket) {
+io.on('connection', function (socket) {
   console.log('new socket connection')
   initializeSockets(socket);
 });
