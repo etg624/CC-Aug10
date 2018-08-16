@@ -248,7 +248,7 @@ module.exports.checkInByEmail = function (req, res) {
                             })
                         } else {
                             sendEmail(req.body.sender, eventNotFoundMessage);
-                            res.json('Sorry. No event was found with that ID');
+                            res.json(eventNotFoundMessage);
                         }
                     }
                 })
