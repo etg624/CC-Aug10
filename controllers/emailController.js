@@ -165,13 +165,11 @@ module.exports.checkInByEmail = function (req, res) {
         if (err) {
             res.end();
         } else {
-
             if (getPersonResult.length > 0) {
                 EmailModel.getEvent(req.body.subject, function (err, getEventResult) {
                     if (err) {
                         res.end();
                     } else {
-
                         if (getEventResult.length > 0) {
                             let json = {
                                 FirstName: getPersonResult[0].FirstName,
@@ -180,7 +178,6 @@ module.exports.checkInByEmail = function (req, res) {
                                 EventName: getEventResult[0].EventName,
                                 EmpID: getPersonResult[0].iClassNumber,
                                 CheckInType: 4
-
                             }
                             EmailModel.checkIn(json, function (err, checkInResult) {
                                 if (err) {
@@ -198,27 +195,34 @@ module.exports.checkInByEmail = function (req, res) {
                     }
                 })
             } else {
-
-                let json = {
-                    FirstName: req.body.sender,
-                    LastName: req.body.sender,
-                    EventID: getEventResult[0].EventID,
-                    EventName: getEventResult[0].EventName,
-                    EmpID: '99999999999',
-                    CheckInType: 4
-
-                }
-                EmailModel.checkIn(json, function (err, checkInResult) {
+                EmailModel.getEvent(req.body.subject, function (err, getEventResult) {
                     if (err) {
-                        console.log('logging EmailModel.checkin err');
-                        console.log(err);
                         res.end();
-
                     } else {
-                        res.json('No file was found with that email. You have been checked in as anonymous.');
+                        if (getEventResult.length > 0) {
+                            let json = {
+                                FirstName: req.body.sender,
+                                LastName: req.body.sender,
+                                EventID: getEventResult[0].EventID,
+                                EventName: getEventResult[0].EventName,
+                                EmpID: '99999999999',
+                                CheckInType: 4
+                            }
+                            EmailModel.checkIn(json, function (err, checkInResult) {
+                                if (err) {
+                                    console.log('logging EmailModel.checkin err');
+                                    console.log(err);
+                                    res.end();
+
+                                } else {
+                                    res.json('No file was found with that email. You have been checked in as anonymous.');
+                                }
+                            })
+                        } else {
+                            res.json('Sorry. No event was found with that ID');
+                        }
                     }
                 })
-
             }
 
 
