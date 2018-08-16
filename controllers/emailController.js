@@ -172,7 +172,7 @@ module.exports.checkInByEmail = function (req, res) {
                         res.end();
                     } else {
 
-                        if (getEventResult > 0) {
+                        if (getEventResult.length > 0) {
                             let json = {
                                 FirstName: getPersonResult[0].FirstName,
                                 LastName: getPersonResult[0].LastName,
