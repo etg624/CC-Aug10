@@ -171,35 +171,40 @@ module.exports.checkInByEmail = function (req, res) {
                     if (err) {
                         res.end();
                     } else {
-                        let json = {
-                            FirstName: getPersonResult[0].FirstName,
-                            LastName: getPersonResult[0].LastName,
-                            EventID: getEventResult[0].EventID,
-                            EventName: getEventResult[0].EventName,
-                            EmpID: getPersonResult[0].iClassNumber,
-                            CheckInType: 4
 
-                        }
-                        EmailModel.checkIn(json, function (err, checkInResult) {
-                            if (err) {
-                                console.log('logging EmailModel.checkin err');
-                                console.log(err);
-                                res.end();
+                        if (getEventResult > 0) {
+                            let json = {
+                                FirstName: getPersonResult[0].FirstName,
+                                LastName: getPersonResult[0].LastName,
+                                EventID: getEventResult[0].EventID,
+                                EventName: getEventResult[0].EventName,
+                                EmpID: getPersonResult[0].iClassNumber,
+                                CheckInType: 4
 
-                            } else {
-                                res.json('Thank you, ' + getPersonResult[0].FirstName + '. You have checked in.');
                             }
-                        })
+                            EmailModel.checkIn(json, function (err, checkInResult) {
+                                if (err) {
+                                    console.log('logging EmailModel.checkin err');
+                                    console.log(err);
+                                    res.end();
+
+                                } else {
+                                    res.json('Thank you, ' + getPersonResult[0].FirstName + '. You have checked in.');
+                                }
+                            })
+                        } else {
+                            res.json('Sorry. No event was found with that ID');
+                        }
                     }
                 })
             } else {
 
                 let json = {
-                    FirstName: getPersonResult[0].FirstName,
-                    LastName: getPersonResult[0].LastName,
+                    FirstName: req.body.sender,
+                    LastName: req.body.sender,
                     EventID: getEventResult[0].EventID,
                     EventName: getEventResult[0].EventName,
-                    EmpID: getPersonResult[0].iClassNumber,
+                    EmpID: '99999999999',
                     CheckInType: 4
 
                 }
@@ -210,7 +215,7 @@ module.exports.checkInByEmail = function (req, res) {
                         res.end();
 
                     } else {
-                        res.json('Thank you, ' + getPersonResult[0].FirstName + '. You have checked in.');
+                        res.json('No file was found with that email. You have been checked in as anonymous.');
                     }
                 })
 
