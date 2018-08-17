@@ -171,7 +171,7 @@ module.exports.checkInByEmail = function (req, res) {
         let mailgun = require('mailgun-js')({ apiKey: api_key, domain: domain });
 
         let data = {
-            from: 'Mobss <mobssreply@mobsscmd.com>',
+            from: 'Mobss <postmaster@mail.convoyer.mobsscmd.com>',
             to: email,
             subject: 'RE: Check In',
             text: message
