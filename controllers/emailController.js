@@ -177,9 +177,15 @@ module.exports.checkInByEmail = function (req, res) {
             text: message
         };
 
-        mailgun.messages().send(data, function (error, body) {
-            console.log('logging email send body');
-            console.log(body);
+        mailgun.messages().send(data, function (err, body) {
+
+            if (err) {
+                console.log('loggin email send err');
+                console.log(err);
+            } else {
+                console.log('logging email send body');
+                console.log(body);
+            }
         });
     }
 
