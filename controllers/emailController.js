@@ -178,6 +178,7 @@ module.exports.checkInByEmail = function (req, res) {
         };
 
         mailgun.messages().send(data, function (error, body) {
+            console.log('logging email send body');
             console.log(body);
         });
     }
