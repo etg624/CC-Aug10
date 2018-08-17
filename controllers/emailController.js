@@ -167,7 +167,7 @@ module.exports.checkInByEmail = function (req, res) {
 
     function sendEmail(email, message) {
         let api_key = process.env.MAILGUN_KEY;
-        let domain = process.env.SERVER_ADDRESS;
+        let domain = process.env.MAILGUN_DOMAIN;
         let mailgun = require('mailgun-js')({ apiKey: api_key, domain: domain });
 
         let data = {
