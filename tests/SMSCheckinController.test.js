@@ -3,6 +3,18 @@ const expect = require('expect');
 
 var app = require('../app');
 
+
+/** TESTING THE FOLLOWING ROUTES 
+ 
+router.post('/smscheckin', SMSCheckInController.handleIncoming);
+router.post('/sendsmsalert', SMSCheckInController.sendAlerts);
+
+
+*/
+
+
+
+
 describe('POST /smscheckin', function() {
 	it('Should check someone in.', function(done) {
 	  var json = {

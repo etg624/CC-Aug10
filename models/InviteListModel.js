@@ -54,7 +54,7 @@ module.exports.postInvitee = function (Body, callback) {
                     console.log('error with the createInviteList query');
                     console.log(err);
                     connection.end();
-                    callback(err, rows);
+                    callback(err, query);
                 }
             });
         }
@@ -143,7 +143,7 @@ module.exports.getPeopleByGroup = function (GroupCategory, GroupName, callback) 
 //*************************** Microsoft Graph API Methods ************************************ */
 
 
-module.exports.truncateDistributionList = function (callback){
+module.exports.truncateDistributionList = function (callback) {
     db.createConnection(function (err, res) {
         if (err) {
             console.log('Error while performing common connect query: ' + err);
@@ -169,7 +169,7 @@ module.exports.truncateDistributionList = function (callback){
     });
 }
 
-module.exports.truncateDistributionListMembers = function (callback){
+module.exports.truncateDistributionListMembers = function (callback) {
     db.createConnection(function (err, res) {
         if (err) {
             console.log('Error while performing common connect query: ' + err);
@@ -195,7 +195,7 @@ module.exports.truncateDistributionListMembers = function (callback){
     });
 }
 
-module.exports.postDistributionList = function (Body, callback){
+module.exports.postDistributionList = function (Body, callback) {
     db.createConnection(function (err, res) {
         if (err) {
             console.log('Error while performing common connect query: ' + err);
@@ -220,10 +220,10 @@ module.exports.postDistributionList = function (Body, callback){
                 }
             });
         }
-    });   
+    });
 }
 
-module.exports.postDistributionListMembers = function (Body, callback){
+module.exports.postDistributionListMembers = function (Body, callback) {
 
     db.createConnection(function (err, res) {
         if (err) {
@@ -249,7 +249,7 @@ module.exports.postDistributionListMembers = function (Body, callback){
                 }
             });
         }
-    });   
+    });
 }
 
 module.exports.getDistributionLists = function (callback) {

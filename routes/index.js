@@ -506,15 +506,14 @@ router.get('/logout', function(req, res) {
 var InviteListController = require('../controllers/InviteListController');
 router.get('/createinvitelist', InviteListController.createInviteListHome);
 router.get('/lastinvitelist', InviteListController.getLastInviteList);
-router.post('/postinvitelist', InviteListController.postInviteList);
-router.post('/postinvitee', InviteListController.postInvitee);
-router.get('/listwizard', InviteListController.renderListWizard);
 router.get('/listwizard', InviteListController.renderListWizard);
 router.get('/listwizard/:groupCategory/:groupName', InviteListController.getPeopleByGroup);
-router.delete('/distributionlist', InviteListController.truncateDistributionList);
+router.get('/distributionlistmembers', InviteListController.getDistributionListMembers);
+router.post('/postinvitelist', InviteListController.postInviteList);
+router.post('/postinvitee', InviteListController.postInvitee);
 router.post('/distributionlist', InviteListController.postDistributionList);
 router.post('/distributionlistmembers', InviteListController.postDistributionListMembers);
-router.get('/distributionlistmembers', InviteListController.getDistributionListMembers);
+router.delete('/distributionlist', InviteListController.truncateDistributionList);
 router.delete('/distributionlistmembers', InviteListController.truncateDistributionListMembers);
 //############################################### Invite List END ############################################################
 
@@ -544,11 +543,7 @@ router.get('/musterGetPoints/:id', MusterController.getMusterPoints);
 //############################################## Email Additions ############################################################
 var EmailController = require('../controllers/emailController');
 router.get('/linkcheckin/:email/:eventid', EmailController.checkInByLink);
-
 router.post('/emailcheckin', EmailController.checkInByEmail);
-
-
-
 
 //########################################### Email Additions End ############################################################
 
