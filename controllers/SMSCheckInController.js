@@ -37,85 +37,85 @@ module.exports.handleIncoming = function (req, res) {
    ================================================================================================ 
    */
 
-    SMSCheckInModel.getEvent(input, function (err, getEventResults) {
-      if (err) {
-        console.log(err);
-        respond(errorMessage);
-        res.end();
+  SMSCheckInModel.getEvent(input, function (err, getEventResults) {
+    if (err) {
+      console.log(err);
+      respond(errorMessage);
+      res.end();
 
-      } else {
-        if (getEventResults.length > 0) {
-          let json = {
-            Field: 'Phone',
-            Value: phone
-          }
-          SMSCheckInModel.getPerson(json, function (err, getPersonResults) {
-            if (err) {
-              console.log(err);
-              respond(errorMessage);
-              res.end();
+    } else {
+      if (getEventResults.length > 0) {
+        let json = {
+          Field: 'Phone',
+          Value: phone
+        }
+        SMSCheckInModel.getPerson(json, function (err, getPersonResults) {
+          if (err) {
+            console.log(err);
+            respond(errorMessage);
+            res.end();
 
+          } else {
+
+            if (getPersonResults.length > 0) {
+              let json = {
+                FirstName: getPersonResults[0].FirstName,
+                LastName: getPersonResults[0].LastName,
+                EventID: input,
+                EventName: getEventResults[0].EventName,
+                iClassNumber: getPersonResults[0].iClassNumber,
+                EmpID: getPersonResults[0].EmpID,
+                CheckInType: "3"
+              }
+              SMSCheckInModel.checkIn(json, function (err, getCheckInResults) {
+
+                if (err) {
+                  console.log(err);
+                  respond(errorMessage);
+                  res.end();
+
+                } else {
+                  respond('Thank you, ' + getPersonResults[0].FirstName + '. You have been checked in.');
+                  res.json('Thank you, ' + getPersonResults[0].FirstName + '. You have been checked in.');
+                }
+
+              });
             } else {
 
-              if (getPersonResults.length > 0) {
-                let json = {
-                  FirstName: getPersonResults[0].FirstName,
-                  LastName: getPersonResults[0].LastName,
-                  EventID: input,
-                  EventName: getEventResults[0].EventName,
-                  iClassNumber: getPersonResults[0].iClassNumber,
-                  EmpID: getPersonResults[0].EmpID,
-                  CheckInType: "3"
-                }
-                SMSCheckInModel.checkIn(json, function (err, getCheckInResults) {
+              let json = {
+                FirstName: phone,
+                LastName: phone,
+                EventID: input,
+                EventName: getEventResults[0].EventName,
+                iClassNumber: '000',
+                EmpID: '000',
+                CheckInType: '3'
 
-                  if (err) {
-                    console.log(err);
-                    respond(errorMessage);
-                    res.end();
-
-                  } else {
-                    respond('Thank you, ' + getPersonResults[0].FirstName + '. You have been checked in.');
-                    res.end();
-                  }
-
-                });
-              } else {
-
-                let json = {
-                  FirstName: phone,
-                  LastName: phone,
-                  EventID: input,
-                  EventName: getEventResults[0].EventName,
-                  iClassNumber: '000',
-                  EmpID: '000',
-                  CheckInType: '3'
-
-                }
-                SMSCheckInModel.checkInUnknown(json, function (err, getCheckInResults) {
-
-
-                  if (err) {
-                    console.log(err);
-                    respond(errorMessage);
-                    res.end();
-                  } else {
-                    respond(contactNotFoundMessage);
-                    res.end();
-                  }
-
-                });
               }
+              SMSCheckInModel.checkInUnknown(json, function (err, getCheckInResults) {
 
+
+                if (err) {
+                  console.log(err);
+                  respond(errorMessage);
+                  res.end();
+                } else {
+                  respond(contactNotFoundMessage);
+                  res.end();
+                }
+
+              });
             }
-          })
-        } else {
-          respond(eventNotFoundMessage);
-          res.end();
-        }
+
+          }
+        })
+      } else {
+        respond(eventNotFoundMessage);
+        res.end();
       }
-    });
-  
+    }
+  });
+
 
 
 };
@@ -131,7 +131,7 @@ module.exports.sendAlerts = function (req, res) {
       respond(errorMessage);
       res.end();
     } else {
-      
+
       if (getUnaccountedResults.length > 0) {
 
         for (var i = 0; i < getUnaccountedResults.length; i++) {
@@ -144,14 +144,14 @@ module.exports.sendAlerts = function (req, res) {
           if (result.NotificationNumber != '0' && result.NotificationNumber != '') {
             client.messages
               .create({
-                body: result.FirstName + ', there is an Emergency in progress at the school.' + 
+                body: result.FirstName + ', there is an Emergency in progress at the school.' +
                   '. Please report to an Assembly Point OR reply with ' + req.body.MusterID + ' if you are safe.' +
                   ' Please review the emergency procedures... https://mobsscloud.com/emergency_procedures.html',
                 from: '+12132050068',
                 to: result.NotificationNumber
               })
               .then(message => {
-                console.log("What is this? "+message.sid)
+                console.log("What is this? " + message.sid)
               }).done();
 
 

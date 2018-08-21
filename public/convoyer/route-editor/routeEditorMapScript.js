@@ -641,7 +641,6 @@ function initMap() {
             if (result === null) {
             } else {
 
-
                 let cleanInput = result.replace(/[^a-zA-Z0-9 ]/g, "");
 
                 google.maps.event.clearListeners(map, 'click');
