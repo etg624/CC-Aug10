@@ -76,7 +76,7 @@ module.exports.handleIncoming = function (req, res) {
 
                 } else {
                   respond('Thank you, ' + getPersonResults[0].FirstName + '. You have been checked in.');
-                  res.json('Thank you, ' + getPersonResults[0].FirstName + '. You have been checked in.');
+                  res.end();
                 }
 
               });
