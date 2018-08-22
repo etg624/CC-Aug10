@@ -71,7 +71,7 @@ describe('POST /postinvitelist', function () {
     it('Should add a field to the invitelist table ', function (done) {
         const json = {
             "ListName": 'Unit Test',
-            "ListComments": 'From the unit test'
+            "ListComment": 'From the unit test'
         };
         request(app)
             .post('/postinvitelist')
@@ -80,7 +80,7 @@ describe('POST /postinvitelist', function () {
             .send(json)
             .expect(200)
             .expect((res) => {
-                expect(JSON.stringify(res.body)).toEqual(expect.not.stringContaining('"affectedRows": 0'));
+                expect(JSON.stringify(res.body)).toEqual(expect.not.stringContaining('undefined'));
             })
             .end(done);
     });
@@ -101,6 +101,9 @@ describe('POST /postinvitee', function () {
             .set('Content-Type', 'application/json')
             .send(json)
             .expect(200)
+            .expect((res) => {
+                expect(JSON.stringify(res.body)).toEqual(expect.not.stringContaining('undefined'));
+            })
             .end(done);
     });
 });

@@ -27,6 +27,7 @@ describe('POST /musterLive/127', function () {
     it('Should email unaccounted.', function (done) {
         request(app)
             .post('/musterLive/127')
+            .expect(302)
             .end(done);
     });
 });

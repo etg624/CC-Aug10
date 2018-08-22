@@ -40,11 +40,11 @@ module.exports.addPerson = function (Body, callback) {
             connection.query(strSQL, function (err, rows, fields) {
                 if (!err) {
                     connection.end();
-                    callback(null, rows);
+                    callback(null, strSQL);
                 } else {
                     console.log('error with the query');
                     connection.end();
-                    callback(err, rows);
+                    callback(err);
                 }
             })
         }

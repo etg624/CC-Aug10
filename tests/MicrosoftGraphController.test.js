@@ -35,6 +35,9 @@ describe('POST /microsoftgraph', function () {
             .set('Content-Type', 'application/json')
             .send(json)
             .expect(200)
+            .expect((res) => {
+                expect(JSON.stringify(res.body)).toEqual(expect.not.stringContaining('undefined'));
+            })            
             .end(done);
     });
 });

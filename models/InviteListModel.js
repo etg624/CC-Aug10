@@ -19,13 +19,13 @@ module.exports.postInviteList = function (Body, callback) {
             connection.query(query, function (err, rows, fields) {
                 if (!err) {
                     connection.end();
-                    callback(null, rows);
+                    callback(null, query);
 
                 } else {
                     console.log('error with the postInviteList query');
                     console.log(err);
                     connection.end();
-                    callback(err, rows);
+                    callback(err);
                 }
             });
         }
@@ -48,13 +48,13 @@ module.exports.postInvitee = function (Body, callback) {
             connection.query(query, function (err, rows, fields) {
                 if (!err) {
                     connection.end();
-                    callback(null, rows);
+                    callback(null, query);
 
                 } else {
                     console.log('error with the createInviteList query');
                     console.log(err);
                     connection.end();
-                    callback(err, query);
+                    callback(err);
                 }
             });
         }
