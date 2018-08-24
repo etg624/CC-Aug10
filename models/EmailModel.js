@@ -81,6 +81,8 @@ module.exports.getEvent = function (eventID, callback) {
             var strSQL = 'SELECT * FROM events WHERE EventID ="' + eventID + '";';
             connection.query(strSQL, function (err, rows, fields) {
                 if (!err) {
+                    console.log('logging query from EmailModel.getEvent');
+                    console.log(strSQL);
                     connection.end();
                     callback(null, rows);
 

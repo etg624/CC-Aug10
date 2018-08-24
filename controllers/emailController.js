@@ -77,19 +77,13 @@ module.exports.sendAttendanceEmail = function (subject, message, to, fileName, c
     // });
 };
 
-
 //////////////////////////////////////////////////////////////////////////
 // Following module emails in-application incidents and alerts to mobss //
 //////////////////////////////////////////////////////////////////////////
 
 module.exports.sendIncidentEmail = function (data) {
 
-    console.log('sendIncidentEmail called');
-
     let title = process.env.EMERGENCY_TITLE;
-
-    console.log('logging data from sendIncidentEmail');
-    console.log(data);
 
     //Loop through the unaccounted table and find their emails
     for (let i = 0; i < data.length; i++) {
@@ -126,7 +120,6 @@ module.exports.sendIncidentEmail = function (data) {
         }
     }
 };
-
 
 module.exports.checkInByLink = function (req, res) {
     EmailModel.getPerson(req.params.email, function (err, getPersonResult) {
@@ -219,11 +212,13 @@ module.exports.checkInByEmail = function (req, res) {
                                 } else {
                                     let message = 'Thank you, ' + getPersonResult[0].FirstName + '. You have checked in.';
                                     sendEmail(req.body.sender, message);
-                                    res.json();
+                                    res.json(message);
                                 }
                             })
                         } else {
                             sendEmail(req.body.sender, eventNotFoundMessage);
+                            console.log('event wasnt found, logging json data that was sent');
+                            console.log(json);
                             res.json(eventNotFoundMessage);
                         }
                     }

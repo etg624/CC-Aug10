@@ -6,190 +6,190 @@ var db = require('../models/db');
 ///////////////////////////////////
 // Display badges list screen    //
 ///////////////////////////////////
-module.exports.badgesHome = function(req, res) {
-  sess=req.session;
+module.exports.badgesHome = function (req, res) {
+  sess = req.session;
   // initializes the success/error messages for the report generation
   // ..so that messages are removed after leaving and re-entering the attendance ascreen
-  sess.rptSuccess=null;
-  sess.rptError=null;
+  sess.rptSuccess = null;
+  sess.rptError = null;
 
-     // don't let nameless people view the dashboard, redirect them back to the homepage
-    if (typeof sess.username == 'undefined') res.redirect('/');
-    else {
+  // don't let nameless people view the dashboard, redirect them back to the homepage
+      if (typeof sess.username == 'undefined') res.redirect('/');
+      else {
 
-        //feb--connect to the database, performa query to get all rows from people and send that data to 
-        //--to be rendered as a table in Jade
-        //feb- we have user entry at this point and so setting up the credentials here
-       //get a connection using the common handler in models/db.js
-        db.createConnection(function(err,reslt){  
-            if (err) {
-              callback(err, null);
-            }else{
-              //process the i/o after successful connect.  Connection object returned in callback
-              var connection = reslt;
+    //feb--connect to the database, performa query to get all rows from people and send that data to 
+    //--to be rendered as a table in Jade
+    //feb- we have user entry at this point and so setting up the credentials here
+    //get a connection using the common handler in models/db.js
+    db.createConnection(function (err, reslt) {
+      if (err) {
+        callback(err, null);
+      } else {
+        //process the i/o after successful connect.  Connection object returned in callback
+        var connection = reslt;
 
-              var _sqlQ = "SELECT * FROM empbadge";
-              connection.query(_sqlQ, function(err, results) {
-                //connection.release();
-                if(err) { console.log('Empbadge query error : '+err); connection.end(); callback(true); return; }
-             
-              connection.end()
-              //use alternate views based on data load. Using JS datatables, HTML must load comletely before
-              //the page renders
-              if (results.length <5000){
-              //regular Js datatables high functionality search and pagination  
-              res.render('badges', { title: 'Command Center', results });
-              }else{
-              //plain table and browser search only  
-              res.render('badgesLarge', { title: 'Command Center', results });
-              }
+        var _sqlQ = "SELECT * FROM empbadge";
+        connection.query(_sqlQ, function (err, results) {
+          //connection.release();
+          if (err) { console.log('Empbadge query error : ' + err); connection.end(); callback(true); return; }
 
-              });
-            }
+          connection.end()
+          //use alternate views based on data load. Using JS datatables, HTML must load comletely before
+          //the page renders
+          if (results.length < 5000) {
+            //regular Js datatables high functionality search and pagination  
+            res.render('badges', { title: 'Command Center', results });
+          } else {
+            //plain table and browser search only  
+            res.render('badgesLarge', { title: 'Command Center', results });
+          }
+
         });
-    }
+      }
+    });
+      }
 };
 
 ///////////////////////////////////
 // Display aactive badges list   //
 ///////////////////////////////////
-module.exports.badgesActive = function(req, res) {
-  sess=req.session;
+module.exports.badgesActive = function (req, res) {
+  sess = req.session;
   // initializes the success/error messages for the report generation
   // ..so that messages are removed after leaving and re-entering the attendance ascreen
-  sess.rptSuccess=null;
-  sess.rptError=null;
+  sess.rptSuccess = null;
+  sess.rptError = null;
 
-     // don't let nameless people view the dashboard, redirect them back to the homepage
-    if (typeof sess.username == 'undefined') res.redirect('/');
-    else {
+  // don't let nameless people view the dashboard, redirect them back to the homepage
+      if (typeof sess.username == 'undefined') res.redirect('/');
+      else {
 
-        //feb--connect to the database, performa query to get all rows from people and send that data to 
-        //--to be rendered as a table in Jade
-        //feb- we have user entry at this point and so setting up the credentials here
-       //get a connection using the common handler in models/db.js
-        db.createConnection(function(err,reslt){  
-            if (err) {
-              callback(err, null);
-            }else{
-              //process the i/o after successful connect.  Connection object returned in callback
-              var connection = reslt;
+    //feb--connect to the database, performa query to get all rows from people and send that data to 
+    //--to be rendered as a table in Jade
+    //feb- we have user entry at this point and so setting up the credentials here
+    //get a connection using the common handler in models/db.js
+    db.createConnection(function (err, reslt) {
+      if (err) {
+        callback(err, null);
+      } else {
+        //process the i/o after successful connect.  Connection object returned in callback
+        var connection = reslt;
 
-              var _sqlQ = 'SELECT * FROM empbadge where StatusID="1"';
-              connection.query(_sqlQ, function(err, results) {
-                //connection.release();
-                if(err) { console.log('Empbadge query error : '+err); connection.end(); callback(true); return; }
-             
-              connection.end()
-              //use alternate views based on data load. Using JS datatables, HTML must load comletely before
-              //the page renders
-              if (results.length <5000){
-              //regular Js datatables high functionality search and pagination  
-              res.render('badgesActive', { title: 'Command Center', results });
-              }else{
-              //plain table and browser search only  
-              res.render('badgesActiveLarge', { title: 'Command Center', results });
-              }
+        var _sqlQ = 'SELECT * FROM empbadge where StatusID="1"';
+        connection.query(_sqlQ, function (err, results) {
+          //connection.release();
+          if (err) { console.log('Empbadge query error : ' + err); connection.end(); callback(true); return; }
 
-              });
-            }
+          connection.end()
+          //use alternate views based on data load. Using JS datatables, HTML must load comletely before
+          //the page renders
+          if (results.length < 5000) {
+            //regular Js datatables high functionality search and pagination  
+            res.render('badgesActive', { title: 'Command Center', results });
+          } else {
+            //plain table and browser search only  
+            res.render('badgesActiveLarge', { title: 'Command Center', results });
+          }
+
         });
-    }
+      }
+    });
+      }
 };
 
 ///////////////////////////////////
 // Display inactive badges list  //
 ///////////////////////////////////
-module.exports.badgesInactive = function(req, res) {
-  sess=req.session;
+module.exports.badgesInactive = function (req, res) {
+  sess = req.session;
   // initializes the success/error messages for the report generation
   // ..so that messages are removed after leaving and re-entering the attendance ascreen
-  sess.rptSuccess=null;
-  sess.rptError=null;
+  sess.rptSuccess = null;
+  sess.rptError = null;
 
-     // don't let nameless people view the dashboard, redirect them back to the homepage
-    if (typeof sess.username == 'undefined') res.redirect('/');
-    else {
+  // don't let nameless people view the dashboard, redirect them back to the homepage
+      if (typeof sess.username == 'undefined') res.redirect('/');
+      else {
 
-        //feb--connect to the database, performa query to get all rows from people and send that data to 
-        //--to be rendered as a table in Jade
-        //feb- we have user entry at this point and so setting up the credentials here
-       //get a connection using the common handler in models/db.js
-        db.createConnection(function(err,reslt){  
-            if (err) {
-              callback(err, null);
-            }else{
-              //process the i/o after successful connect.  Connection object returned in callback
-              var connection = reslt;
+    //feb--connect to the database, performa query to get all rows from people and send that data to 
+    //--to be rendered as a table in Jade
+    //feb- we have user entry at this point and so setting up the credentials here
+    //get a connection using the common handler in models/db.js
+    db.createConnection(function (err, reslt) {
+      if (err) {
+        callback(err, null);
+      } else {
+        //process the i/o after successful connect.  Connection object returned in callback
+        var connection = reslt;
 
-              var _sqlQ = 'SELECT * FROM empbadge where StatusID!="1"';
-              connection.query(_sqlQ, function(err, results) {
-                //connection.release();
-                if(err) { console.log('Empbadge query error : '+err); connection.end(); callback(true); return; }
-             
-              connection.end()
+        var _sqlQ = 'SELECT * FROM empbadge where StatusID!="1"';
+        connection.query(_sqlQ, function (err, results) {
+          //connection.release();
+          if (err) { console.log('Empbadge query error : ' + err); connection.end(); callback(true); return; }
 
-              res.render('badgesInactive', { title: 'Command Center', results });
-              });
-            }
+          connection.end()
+
+          res.render('badgesInactive', { title: 'Command Center', results });
         });
-    }
+      }
+    });
+      }
 };
 
 ///////////////////////////////////////////
 // Retrieve a badge record for viewing   //
 ///////////////////////////////////////////
 
-module.exports.badgesGetOne = function(req,res) {
+module.exports.badgesGetOne = function (req, res) {
 
-var firstName = ""
-var lastName = ""
- sess=req.session;
-    // don't let nameless people view the dashboard, redirect them back to the homepage
-    if (typeof sess.username == 'undefined') res.redirect('/');
-    else {
+  var firstName = ""
+  var lastName = ""
+  sess = req.session;
+      // don't let nameless people view the dashboard, redirect them back to the homepage
+      if (typeof sess.username == 'undefined') res.redirect('/');
+      else {
 
-  //get a connection using the common handler in models/db.js
-    db.createConnection(function(err,reslt){  
-        if (err) {
-          console.log('Error while performing common connect query: ' + err);
-          callback(err, null);
-        }else{
-          //process the i/o after successful connect.  Connection object returned in callback
-          var connection = reslt;
+    //get a connection using the common handler in models/db.js
+    db.createConnection(function (err, reslt) {
+      if (err) {
+        console.log('Error while performing common connect query: ' + err);
+        callback(err, null);
+      } else {
+        //process the i/o after successful connect.  Connection object returned in callback
+        var connection = reslt;
 
-          console.log('badge param '+req.params.badgeID);
-          var strSQL = 'SELECT * FROM empbadge WHERE iClassNumber="'+req.params.badgeID+'"';
-         
-          var query = connection.query(strSQL, function(err, result) {
+        console.log('badge param ' + req.params.badgeID);
+        var strSQL = 'SELECT * FROM empbadge WHERE iClassNumber="' + req.params.badgeID + '"';
 
-               if (err) {
-                  console.log(err)
-                  connection.end();
-                  //sess.error = 'There was a problem updating the mobss database: '+err;
-                  res.render('cardholders', { title: 'Command Center'});
-                } else {
+        var query = connection.query(strSQL, function (err, result) {
 
-                    console.log('empbadge : '+JSON.stringify(result))
-                    var strSQL = 'SELECT LastName, FirstName FROM people WHERE iClassNumber="'+req.params.badgeID+'"';
-         
-                    var query = connection.query(strSQL, function(err, result2) {
+          if (err) {
+            console.log(err)
+            connection.end();
+            //sess.error = 'There was a problem updating the mobss database: '+err;
+            res.render('cardholders', { title: 'Command Center' });
+          } else {
 
-                         if (err) {
-                            console.log(err)
-                            
-                          } else {
+            console.log('empbadge : ' + JSON.stringify(result))
+            var strSQL = 'SELECT LastName, FirstName FROM people WHERE iClassNumber="' + req.params.badgeID + '"';
 
-                            firstName = result2[0].FirstName
-                            lastName = result2[0].LastName
-                          }
-                          connection.end();
-                          res.render('badgeDetail', { title: 'Command Center', result : result, firstName, lastName});
-                    });
-                };
-                });//feb--end of connection.query
-        }
+            var query = connection.query(strSQL, function (err, result2) {
+
+              if (err) {
+                console.log(err)
+
+              } else {
+
+                firstName = result2[0].FirstName
+                lastName = result2[0].LastName
+              }
+              connection.end();
+              res.render('badgeDetail', { title: 'Command Center', result: result, firstName, lastName });
+            });
+          };
+        });//feb--end of connection.query
+      }
     });
-};
+  };
 }; //end of getOne handler
 

@@ -153,13 +153,9 @@ module.exports.sendAlerts = function (req, res) {
               .then(message => {
                 console.log("What is this? " + message.sid)
               }).done();
-
-
           } else {
           }
-
         }
-
         res.end();
       } else {
         console.log('getUnaccounted error');

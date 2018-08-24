@@ -1709,9 +1709,6 @@ exports.writeMusteringRpt = function (req, res) {
 
 }
 
-
-
-
 //###### Sat Apr 28 18:24:30 CDT 2018 NEW module for emailing unaccounted
 ////////////////////////////////////////////////////////////////////////////////////
 // Handler for emailing the unaccounted during a muster.                          //
@@ -1724,11 +1721,9 @@ exports.emailUnaccounted = function (req, res) {
   //###### Sat Apr 28 18:24:30 CDT 2018 Only get the emails for this musterID
   evacuation.getUnaccounted("", musterID, function (err, result) {
     if (err) {
-
       console.error('Error connecting to database: ' + err);
       res.status(301).redirect('/musterLive/' + musterID);
     } else {
-
       //--
       // Loop through the unaccounted table and find their emails
       for (var i = 0; i < result.length; i++) {
@@ -1737,13 +1732,10 @@ exports.emailUnaccounted = function (req, res) {
         // Email report
         if (result[i].EmailAddress != "" && result[i].EmailAddress != null) {
 
-
           emailController.sendIncidentEmail(result, function (err, result) {
             if (err) { console.log('a problem occurred, attempting to email evacuee') }
           });
-
         }
-
       }
 
       res.status(301).redirect('/musterLive/' + musterID);
