@@ -14,8 +14,8 @@ module.exports.badgesHome = function (req, res) {
   sess.rptError = null;
 
   // don't let nameless people view the dashboard, redirect them back to the homepage
-      if (typeof sess.username == 'undefined') res.redirect('/');
-      else {
+  if (typeof sess.username == 'undefined') res.redirect('/');
+  else {
 
     //feb--connect to the database, performa query to get all rows from people and send that data to 
     //--to be rendered as a table in Jade
@@ -47,7 +47,7 @@ module.exports.badgesHome = function (req, res) {
         });
       }
     });
-      }
+  }
 };
 
 ///////////////////////////////////
@@ -61,8 +61,8 @@ module.exports.badgesActive = function (req, res) {
   sess.rptError = null;
 
   // don't let nameless people view the dashboard, redirect them back to the homepage
-      if (typeof sess.username == 'undefined') res.redirect('/');
-      else {
+  if (typeof sess.username == 'undefined') res.redirect('/');
+  else {
 
     //feb--connect to the database, performa query to get all rows from people and send that data to 
     //--to be rendered as a table in Jade
@@ -94,7 +94,7 @@ module.exports.badgesActive = function (req, res) {
         });
       }
     });
-      }
+  }
 };
 
 ///////////////////////////////////
@@ -108,8 +108,8 @@ module.exports.badgesInactive = function (req, res) {
   sess.rptError = null;
 
   // don't let nameless people view the dashboard, redirect them back to the homepage
-      if (typeof sess.username == 'undefined') res.redirect('/');
-      else {
+  if (typeof sess.username == 'undefined') res.redirect('/');
+  else {
 
     //feb--connect to the database, performa query to get all rows from people and send that data to 
     //--to be rendered as a table in Jade
@@ -133,7 +133,7 @@ module.exports.badgesInactive = function (req, res) {
         });
       }
     });
-      }
+  }
 };
 
 ///////////////////////////////////////////
@@ -145,9 +145,9 @@ module.exports.badgesGetOne = function (req, res) {
   var firstName = ""
   var lastName = ""
   sess = req.session;
-      // don't let nameless people view the dashboard, redirect them back to the homepage
-      if (typeof sess.username == 'undefined') res.redirect('/');
-      else {
+  // don't let nameless people view the dashboard, redirect them back to the homepage
+  if (typeof sess.username == 'undefined') res.redirect('/');
+  else {
 
     //get a connection using the common handler in models/db.js
     db.createConnection(function (err, reslt) {

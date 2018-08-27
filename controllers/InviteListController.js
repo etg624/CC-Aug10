@@ -103,21 +103,21 @@ exports.renderListWizard = function (req, res) {
                   if (err) {
                     res.end()
                   } else {
-                    InviteListModel.getDistributionLists(function (err, getDistributionListsResult){
-                      if (err){
+                    InviteListModel.getDistributionLists(function (err, getDistributionListsResult) {
+                      if (err) {
                         res.end()
                       } else {
-                        InviteListModel.getDistributionListMembers(function (err, getDistributionListMembersResult){
-                          if (err){
+                        InviteListModel.getDistributionListMembers(function (err, getDistributionListMembersResult) {
+                          if (err) {
                             res.end()
                           } else {
-                            res.render('ListWizardView', { title: 'Command Center - Create Invite List', username: req.session.username, getDepartmentsResult, getDivisionsResult, getSiteLocationsResult, getBuildingsResult, getDistributionListsResult,getDistributionListMembersResult, serverAddress  });
+                            res.render('ListWizardView', { title: 'Command Center - Create Invite List', username: req.session.username, getDepartmentsResult, getDivisionsResult, getSiteLocationsResult, getBuildingsResult, getDistributionListsResult, getDistributionListMembersResult, serverAddress });
                           }
                         })
-                        
+
                       }
                     })
-                    
+
                   }
                 })
               }

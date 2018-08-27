@@ -19,18 +19,18 @@ var clearTables = require('../models/clearTables');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //###### Sat Apr 21 09:56:35 PDT 2018 Initialize the error/success messages
 exports.evacuationHome = function (req, res) {
-sess = req.session;
-sess.error = null;
-sess.success = null;
+  sess = req.session;
+  sess.error = null;
+  sess.success = null;
 
-var name = req.query.name;
-if (typeof sess.username == 'undefined') {
-  res.render('home', { title: 'Command Center' });
-  // if user is logged in already, take them straight to the dashboard list
-} else {
+  var name = req.query.name;
+  if (typeof sess.username == 'undefined') {
+    res.render('home', { title: 'Command Center' });
+    // if user is logged in already, take them straight to the dashboard list
+  } else {
 
-  res.render('evacuationHome', { title: 'Command Center' });
-};
+    res.render('evacuationHome', { title: 'Command Center' });
+  };
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////

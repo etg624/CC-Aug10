@@ -8,48 +8,47 @@ var app = require('../app');
 
 /** TESTING THE FOLLOWING ROUTES 
  
-router.get('/badgeDetail/:badgeID', badges.badgesGetOne);
 router.get('/badges', badges.badgesHome);
 router.get('/badgesActive', badges.badgesActive);
 router.get('/badgesInactive', badges.badgesInactive);
+router.get('/badgeDetail/:badgeID', badges.badgesGetOne);
 
 
 */
 
-// describe('GET /linkcheckin/:email/:eventid', function () {
-//     it('Should check in someone by email.', function (done) {
-//         request(app)
-//             .get('/linkcheckin/pocketara@gmail.com/127')
-//             .expect(200)
-//             .expect((res) => {
-//                 expect(JSON.stringify(res.body)).toMatch('You have checked in.');
-//             })
-//             .end(done);
-//     });
-// });
+describe('GET /badges', function () {
+    it('Should render badges view.', function (done) {
+        request(app)
+            .get('/badges')
+            .expect(302)
+            .end(done);
+    });
+});
 
-// describe('POST /emailcheckin', function () {
-//     it('Should check in by email. ', function (done) {
-//         const json = {
-//             FirstName: 'Email',
-//             LastName: 'Test',
-//             subject: '127',
-//             EventName: 'uhhh',
-//             iClassNumber: '99999',
-//             CheckInType: 4,
-//             sender: 'pocketara@gmail.com'
-//         };
-//         request(app)
-//             .post('/emailcheckin')
-//             .set('Accept', 'application/json')
-//             .set('Content-Type', 'application/json')
-//             .send(json)
-//             .expect(200)
-//             .expect((res) => {
-//                 expect(JSON.stringify(res.body)).toMatch('You have checked in.');
-//             })
-//             .end(done);
-//     });
-// });
+describe('GET /badgesActive', function () {
+    it('Should render badges active view.', function (done) {
+        request(app)
+            .get('/badgesActive')
+            .expect(302)
+            .end(done);
+    });
+});
 
+describe('GET /badgesInactive', function () {
+    it('Should render badges active view.', function (done) {
+        request(app)
+            .get('/badgesInactive')
+            .expect(302)
+            .end(done);
+    });
+});
+
+describe('GET /badgeDetail/:badgeID', function () {
+    it('Should render badge detail view.', function (done) {
+        request(app)
+            .get('/badgeDetail/514')
+            .expect(302)
+            .end(done);
+    });
+});
 

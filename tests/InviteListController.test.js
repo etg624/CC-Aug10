@@ -18,7 +18,6 @@ router.post('/distributionlistmembers', InviteListController.postDistributionLis
 router.delete('/distributionlist', InviteListController.truncateDistributionList);
 router.delete('/distributionlistmembers', InviteListController.truncateDistributionListMembers);
 
-
 */
 
 describe('GET /createinvitelist', function () {
@@ -66,7 +65,6 @@ describe('GET /distributionlistmembers', function () {
     });
 });
 
-
 describe('POST /postinvitelist', function () {
     it('Should add a field to the invitelist table ', function (done) {
         const json = {
@@ -108,5 +106,24 @@ describe('POST /postinvitee', function () {
     });
 });
 
-
-
+describe('POST /distributionlist', function () {
+    it('Should add a field to the invitelist table ', function (done) {
+        const json = {
+            'InvitationListID': 'TEST111',
+            'BadgeNumber': '1234',
+            'LastName': 'Pocket',
+            'FirstName': 'Ara',
+            'EmailAddress': 'pocketara@gmail.com'
+        };
+        request(app)
+            .post('/distributionlist')
+            .set('Accept', 'application/json')
+            .set('Content-Type', 'application/json')
+            .send(json)
+            .expect(200)
+            .expect((res) => {
+                expect(JSON.stringify(res.body)).toEqual(expect.not.stringContaining('undefined'));
+            })
+            .end(done);
+    });
+});
