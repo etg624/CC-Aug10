@@ -547,5 +547,14 @@ router.post('/emailcheckin', EmailController.checkInByEmail);
 
 //########################################### Email Additions End ############################################################
 
+//############################################## Rcognize ############################################################
+var rcognize = require('../controllers/RcognizeController');
+router.get('/rcognize/index', rcognize.rcognizeIndexHome);
+router.post('/rcognize/index', rcognize.rcognizeIndex);
+router.get('/rcognize/search', rcognize.rcognizeSearchHome);
+router.post('/rcognize/search', rcognize.rcognizeSearch);
+router.get('/rcognize/gallery', rcognize.getIndexedPhotos);
+
+//########################################### Rcognize End ############################################################
 
 module.exports = router;
