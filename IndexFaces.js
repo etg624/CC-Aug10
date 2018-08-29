@@ -3,7 +3,7 @@ let path = require('path');
 let AWS = require('aws-sdk');
 AWS.config.update({ region: 'us-west-2' }); // TODO:can also use a global config onject in same way as credentials
 let rekognition = new AWS.Rekognition();
-const RcognizeGalleryModel = require('../models/RcognizeGalleryModel');
+const RcognizeModel = require('./models/RcognizeModel');
 
 
 if (process.send) {
@@ -60,15 +60,23 @@ process.on('message', message => {
                 if (data.FaceRecords.length > 0) {
                   // successful response
                   const faceData = data.FaceRecords[0].Face;
+                  const faceName = faceData.ExternalImageId.slice(0,-4);
                   const bucketName = 'rekog-image-bucket';
-                  const link = `https://s3.console.aws.amazon.com/s3/object/${bucketName}/${faceData.ExternalImageId}?region=us-east-1&tab=overview`;
+                  const link = `https://s3-us-west-2.amazonaws.com/${bucketName}/${faceName}.jpg`;
                   const body = {
                     Link: link,
                     Tag: '',
                     FaceID: faceData.FaceId,
                     Name: faceData.ExternalImageId.slice(0,-4)
                   };
-                  RcognizeGalleryModel.postIndexedPhoto(body);
+                  RcognizeModel.postIndexedPhoto(body, function (err, postIndexPhotoResult){
+                    if (!err){
+                      console.log('postIndexPhoto success');
+                    } else {
+                      console.log('postIndexPhoto err');
+                    }
+
+                  });
                 }
                 console.log(JSON.stringify(data));
                 if (imagesIndexed === numberOfImages) {

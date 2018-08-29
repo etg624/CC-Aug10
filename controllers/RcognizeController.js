@@ -3,16 +3,18 @@ var path = require('path');
 // var process = require( "process" ); -- I removed this as i believe it is globally availble object
 var db = require('../models/db');
 var archiver = require('archiver');
-const RcognizeGalleryModel = require('../models/RcognizeGalleryModel');
+const RcognizeModel = require('../models/RcognizeModel');
 
 // ###### Tues Aug 14 11:36:14 PDT 2018 David
 const { fork } = require('child_process');
+
+let serverAddress = process.env.SERVER_ADDRESS;
 
 //////////////////////////////////////////////////////
 //handler for showing the rcognition index page  /////
 //////////////////////////////////////////////////////
 
-exports.rcognizeIndexHome = function (req, res) {
+exports.renderIndexHome = function (req, res) {
   sess = req.session;
   // console.log(req);
   sess.photosSuccess = null;
@@ -26,7 +28,6 @@ exports.rcognizeIndexHome = function (req, res) {
     // res.render('rcognizeView', { title: 'Command Center 5.0' + name, username: sess.username, content: contents[name] });
   }
 };
-
 
 ///////////////////////////////////////////////////////////////////
 //** handler for indexing photos into rekognition collection //////
@@ -48,7 +49,7 @@ exports.rcognizeIndex = function (req, res) {
     } else {
 
       const fork = require('child_process').fork;
-      const program = path.resolve('controllers/IndexFacesController');
+      const program = path.resolve('IndexFaces');
       const parameters = [];
       const options = {
         // stdio: [ 'pipe', 'pipe', 'pipe', 'ipc' ]
@@ -57,7 +58,7 @@ exports.rcognizeIndex = function (req, res) {
 
       child.on('message', message => {
         console.log('message from child:', message);
-        child.send({files: files, moveFrom: moveFrom});
+        child.send({ files: files, moveFrom: moveFrom });
       });
 
       // QUESTION: shouldn't we run the below code only if the child process completes???
@@ -74,7 +75,25 @@ exports.rcognizeIndex = function (req, res) {
 //////////////////////////////////////////////////////
 //handler for showing the photo recognition page    //
 //////////////////////////////////////////////////////
-exports.rcognizeSearchHome = function (req, res) {
+exports.renderSearchHome = function (req, res) {
+  sess = req.session;
+  // console.log(req);
+  sess.photosSuccess = null;
+  sess.photosError = null;
+
+  // feb--don't let nameless people view the page, redirect them back to the homepage
+  if (typeof sess.username == 'undefined') {
+    res.redirect('/');
+  } else {
+    res.render('RcognizeSearchView');
+    // res.render('rcognizeView', { title: 'Command Center 5.0' + name, username: sess.username, content: contents[name] });
+  }
+};
+
+//////////////////////////////////////////////////////
+//handler for showing the photo recognition page    //
+//////////////////////////////////////////////////////
+exports.renderSearchHome = function (req, res) {
   sess = req.session;
   // console.log(req);
   sess.photosSuccess = null;
@@ -118,7 +137,7 @@ exports.rcognizeSearch = function (req, res) {
 
       child.on('message', message => {
         console.log('message from child:', message);
-        child.send({files: files, moveFrom: moveFrom});
+        child.send({ files: files, moveFrom: moveFrom });
       });
 
 
@@ -132,20 +151,33 @@ exports.rcognizeSearch = function (req, res) {
   });
 };
 
-
-
-exports.getIndexedPhotos = function (req, res) {
-  RcognizeGalleryModel.getIndexedPhotos(function (err, result) {
+exports.getFaceList = function (req, res) {
+  RcognizeModel.getFaceList(function (err, results) {
     if (err) {
       res.json(err);
       console.log(err);
     }
     else {
-      res.json(result);
-      console.log(result);
+      res.render('RcognizeGalleryListView', { results, serverAddress });
+      console.log(results);
     }
   });
 };
+
+exports.renderFaceDetails = function (req, res) {
+  RcognizeModel.getFaceDetail(req.params.id, function (err, results) {
+    if (err) {
+      res.json(err);
+      console.log(err);
+    }
+    else {
+      res.render('RcognizeGalleryDetailView', { results, serverAddress });
+      console.log(results);
+    }
+  });
+};
+
+
 
 /**
  ================================================================================================
@@ -161,7 +193,6 @@ function createLogEntry(param) {
   });
 };
 
-
 function setUpSessionVarables(req) {
   sess = req.session;
   sess.photoCheckError = null;
@@ -169,7 +200,6 @@ function setUpSessionVarables(req) {
   sess.empSearch = req.body.empIDSearch;
   return;
 };
-
 
 function setUpErrorsForDisplay() {
   sess.photosSuccess = null;
@@ -182,7 +212,6 @@ function setUpSuccessMessageForDisplay() {
   sess.photosError = null;
   return;
 };
-
 
 function getTheFMaxPhotosForDisplay(callback) {
   console.log("getting into getMax");

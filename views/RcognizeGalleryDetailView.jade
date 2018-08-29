@@ -1,0 +1,58 @@
+include mixins
+doctype
+html
+	head
+		title Command Center 5.0
+		script( src='/javascripts/jquery-3.1.1.min.js' )
+		script(src='https://unpkg.com/popper.js/dist/umd/popper.min.js')
+		script( src='/bootstrap/js/bootstrap.min.js' )
+		script( src='/bootstrap-table/bootstrap-table.min.js' )
+		link(href="/bootstrap/css/bootstrap.min.css", rel="stylesheet")
+		link(href="/bootstrap-table/bootstrap-table.min.css", rel="stylesheet")
+		link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.2.0/css/all.css', integrity='sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ', crossorigin='anonymous')
+
+		script( src='/javascripts/bootbox.min.js' )
+	body(style="padding-bottom:10rem;")
+		.container
+			block content
+				include navbar
+				br
+	.row.with-margin
+		.col-md-2.col-sm-2.col-xs-2
+		.col-md-3.col-sm-3.col-xs-12
+				.panel.panel-default
+						.panel-heading
+								h3.panel-title Name
+						div#areaContainer.scrollable-table
+										table#pickle.table.table-hover.table-striped.table-bordered
+														thead
+														-each result in results
+																		tr.default(id=result.FaceID)
+																						th=result.Name
+				#addTagButton
+						a.btn.btn-default.btn-block(href = '/rcognize/gallery')
+							i.fas.fa-plus(aria-hidden='true')
+							| &nbsp Add A Tag
+				#backButton
+						a.btn.btn-default.btn-block(href = '/rcognize/gallery')
+							i.fas.fa-hand-point-left(aria-hidden='true')
+							| &nbsp Back To Gallery
+		.col-md-1.col-sm-1.col-xs-12							
+		.col-md-4.col-sm-4.col-xs-12
+			img#incidentPhoto(src="",  width = "100%", height = "100%", display = 'none')
+								
+	script(src='/rcognize/RcognizeGalleryDetailScript.js')
+	script.
+			var results = !{ JSON.stringify(results) };
+			var serverAddress = !{ JSON.stringify(serverAddress) };
+			initScript();
+	
+	
+	
+
+								
+
+
+								
+
+

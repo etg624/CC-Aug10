@@ -1,0 +1,53 @@
+include mixins
+doctype
+html
+	head
+		title Command Center 5.0
+		script(src='https://unpkg.com/popper.js/dist/umd/popper.min.js')
+		script( src='/javascripts/jquery-3.1.1.min.js' )				
+		script( src='/bootstrap/js/bootstrap.min.js' )
+		script( src='/bootstrap-table/bootstrap-table.min.js' )
+		link(href="/bootstrap/css/bootstrap.min.css", rel="stylesheet")
+		link(href="/bootstrap-table/bootstrap-table.min.css", rel="stylesheet")
+		link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.2.0/css/all.css', integrity='sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ', crossorigin='anonymous')
+		script( src='/javascripts/bootbox.min.js' )
+
+	body(style="padding-bottom:10rem;")
+		.container   
+			block content
+
+				include navbar
+						
+				h3 Rcognize Gallery
+				br
+				
+				div
+				.row
+					.col-md-12.col-sm-12.col-xs-12
+						table#addTable.table.table-hover.table-striped.table-bordered(data-unique-id="ID" data-toggle="table" data-search="true" data-pagination="true" data-page-list="[10, 25, 50, 100, ALL]")
+							thead
+								tr.primary 
+									th
+									th Name
+									th Tag
+							tbody
+								-each result in results
+									tr
+										td
+											a(href="/rcognize/facedetails/#{result.FaceID}")  View Details
+										td=result.Name
+										td=result.Tag
+					script.
+						var results = !{ JSON.stringify(results) };
+						var serverAddress = !{JSON.stringify(serverAddress)};
+						var dataArray = [];
+						$(function () {
+							var addTable = $('#addTable');
+							var results = !{ JSON.stringify(results) };
+							addTable.bootstrapTable('refreshOptions', {
+								pageSize:10,
+								sortName: 'Name'
+							});
+						});
+										
+									

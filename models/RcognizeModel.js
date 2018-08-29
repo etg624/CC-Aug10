@@ -42,7 +42,7 @@ module.exports.postIndexedPhoto = function (body, callback) {
   });
 };
 
-module.exports.getIndexedPhotos = function (callback) {
+module.exports.getFaceList = function (callback) {
   db.createConnection(function (err, connection) {
     if (err) {
       console.log('Error while performing common connect query: ' + err);
@@ -50,17 +50,53 @@ module.exports.getIndexedPhotos = function (callback) {
     } else {
       //process the i/o after successful connect.  Connection object returned in callback
 
-      connection('face')
-        .select()
-        .then(result => {
-          connection.destroy();
-          callback(null, result);
-        })
-        .catch(err => {
-          console.log('error with the getIndexedPhotos query');
-          connection.destroy();
-          callback(err, null);
-        });
+
+      let query = 'SELECT * FROM face;'
+      connection.query(query, function (err, rows) {
+        if (!err) {
+          connection.end();
+          callback(null, rows);
+
+        } else {
+          console.log('error with the postIndexedPhoto query');
+          console.log(err);
+          connection.end();
+          callback(err, rows);
+        }
+      });
+
+    }
+  });
+};
+
+module.exports.getFaceDetail = function (FaceID, callback) {
+  db.createConnection(function (err, connection) {
+    if (err) {
+      console.log('Error while performing common connect query: ' + err);
+      callback(err, null);
+    } else {
+      //process the i/o after successful connect.  Connection object returned in callback
+
+      let queryField = 'FaceID';
+      let queryValue = `('${FaceID}')`;
+      let query = 'SELECT * FROM face WHERE ' + queryField + ' = ' + queryValue;
+
+      console.log('logging getFaceDetail query, bitch.')
+      console.log(query);
+
+      connection.query(query, function (err, rows) {
+        if (!err) {
+          connection.end();
+          callback(null, rows);
+
+        } else {
+          console.log('error with the postIndexedPhoto query');
+          console.log(err);
+          connection.end();
+          callback(err, rows);
+        }
+      });
+
     }
   });
 };

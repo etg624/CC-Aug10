@@ -5,7 +5,7 @@
 
 
 +nav("MOBSS", "dropdown_menu")
-    +nav_item("/", "active") Home
+    +nav_item("/") Home
     +nav_item('/dashboard') Dashboard
     +nav_item_dropdown("#")(label="Access Control")
         +nav_item("/cardholders") Cardholders
@@ -22,7 +22,6 @@
         +nav_item("/ticketImport") Add Import Tickets
         +nav_item("/createinvitelist") Create Invite List
         +nav_item("/listwizard") List Wizard        
-
     +nav_item_dropdown("#")(label="Emergency Management")
         +nav_item("/musterHome") Muster list
         +nav_item("/musterAdd") Add muster
@@ -38,6 +37,10 @@
         +nav_divider
         +nav_item("/guardList") Guards
         +nav_item("/guardAdd") Add Guard
+    +nav_item_dropdown("#")(label="Rcognize")
+        +nav_item("/rcognize/index") Upload Photos
+        +nav_item("/rcognize/search") Search Photos 
+        +nav_item("/rcognize/gallery") Gallery
     +nav_item_dropdown("#")(label="Administration")
         +nav_item("/devices") Device List
         +nav_item("/connections") Connections list
