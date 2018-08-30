@@ -1,20 +1,15 @@
 var fs = require('fs');
 var path = require('path');
-// var process = require( "process" ); -- I removed this as i believe it is globally availble object
 var db = require('../models/db');
 var archiver = require('archiver');
 const RcognizeModel = require('../models/RcognizeModel');
+const TagModel = require('../models/TagModel');
 
-// ###### Tues Aug 14 11:36:14 PDT 2018 David
 const { fork } = require('child_process');
 
 let serverAddress = process.env.SERVER_ADDRESS;
 
-//////////////////////////////////////////////////////
-//handler for showing the rcognition index page  /////
-//////////////////////////////////////////////////////
-
-exports.renderIndexHome = function (req, res) {
+exports.renderIndexPage = function (req, res) {
   sess = req.session;
   // console.log(req);
   sess.photosSuccess = null;
@@ -29,11 +24,59 @@ exports.renderIndexHome = function (req, res) {
   }
 };
 
-///////////////////////////////////////////////////////////////////
-//** handler for indexing photos into rekognition collection //////
-///////////////////////////////////////////////////////////////////
+exports.renderSearchPage = function (req, res) {
+  sess = req.session;
+  // console.log(req);
+  sess.photosSuccess = null;
+  sess.photosError = null;
 
-exports.rcognizeIndex = function (req, res) {
+  // feb--don't let nameless people view the page, redirect them back to the homepage
+  if (typeof sess.username == 'undefined') {
+    res.redirect('/');
+  } else {
+    res.render('RcognizeSearchView');
+    // res.render('rcognizeView', { title: 'Command Center 5.0' + name, username: sess.username, content: contents[name] });
+  }
+};
+
+exports.renderFaceDetails = function (req, res) {
+  RcognizeModel.getFaceDetail(req.params.faceid, function (err, getFaceResult) {
+    if (err) {
+      res.end();
+      console.log('logging renderFaceDetails err');
+      console.log(err);
+    }
+    else {
+
+      TagModel.getTags(req.params.faceid, function (err, getTagsResult) { 
+        if (err){
+          res.end();
+          console.log(err);
+        } else {
+          res.render('RcognizeGalleryDetailView', { getFaceResult, getTagsResult, serverAddress });
+        }
+      })
+
+
+      
+    }
+  });
+};
+
+exports.renderGallery = function (req, res) {
+  RcognizeModel.getFaceList(function (err, results) {
+    if (err) {
+      res.json(err);
+      console.log(err);
+    }
+    else {
+      res.render('RcognizeGalleryListView', { results, serverAddress });
+      console.log(results);
+    }
+  });
+};
+
+exports.indexPhoto = function (req, res) {
   // Tried declaring sess with let/var, but it causes problems where it can't be accessed in view since not in global scope (i think)
   sess = req.session;
   let moveFrom = req.body.directorySource;
@@ -72,47 +115,7 @@ exports.rcognizeIndex = function (req, res) {
   });
 };
 
-//////////////////////////////////////////////////////
-//handler for showing the photo recognition page    //
-//////////////////////////////////////////////////////
-exports.renderSearchHome = function (req, res) {
-  sess = req.session;
-  // console.log(req);
-  sess.photosSuccess = null;
-  sess.photosError = null;
-
-  // feb--don't let nameless people view the page, redirect them back to the homepage
-  if (typeof sess.username == 'undefined') {
-    res.redirect('/');
-  } else {
-    res.render('RcognizeSearchView');
-    // res.render('rcognizeView', { title: 'Command Center 5.0' + name, username: sess.username, content: contents[name] });
-  }
-};
-
-//////////////////////////////////////////////////////
-//handler for showing the photo recognition page    //
-//////////////////////////////////////////////////////
-exports.renderSearchHome = function (req, res) {
-  sess = req.session;
-  // console.log(req);
-  sess.photosSuccess = null;
-  sess.photosError = null;
-
-  // feb--don't let nameless people view the page, redirect them back to the homepage
-  if (typeof sess.username == 'undefined') {
-    res.redirect('/');
-  } else {
-    res.render('RcognizeSearchView');
-    // res.render('rcognizeView', { title: 'Command Center 5.0' + name, username: sess.username, content: contents[name] });
-  }
-};
-
-///////////////////////////////////////////////////////////////////////////
-//** handler for searching for matching photos in rekognition collection //
-///////////////////////////////////////////////////////////////////////////
-
-exports.rcognizeSearch = function (req, res) {
+exports.searchPhoto = function (req, res) {
   console.log('wooahhheeh lets search man');
   sess = req.session;
   let moveFrom = req.body.directorySource;
@@ -151,39 +154,124 @@ exports.rcognizeSearch = function (req, res) {
   });
 };
 
-exports.getFaceList = function (req, res) {
-  RcognizeModel.getFaceList(function (err, results) {
-    if (err) {
-      res.json(err);
-      console.log(err);
-    }
-    else {
-      res.render('RcognizeGalleryListView', { results, serverAddress });
-      console.log(results);
-    }
-  });
+exports.photoCheck = function (req, res) {
+
+  const callerOfThisRouteIsNotRecognized = 'undefined';
+
+  setUpSessionVarables(req);
+
+  console.log("back from session variable");
+  console.log("session variable" + sess.username);
+
+
+
+  // don't let nameless people view the page, redirect them back to the homepage
+  if (typeof sess.username == callerOfThisRouteIsNotRecognized) {
+    res.redirect('/');
+  } else {
+
+    getTheFMaxPhotosForDisplay(function (err, photoArrayForDisplay) {
+      console.log("getting back from getMax");
+
+
+      if (err) {
+
+        setUpErrorsForDisplay();
+        res.render('photos', { title: 'Command Center 360', username: sess.username, success: sess.photosSuccess, error: sess.photosError });
+
+      } else {
+
+        var imageLast = "";  //TODO  what is this?
+        setUpSuccessMessageForDisplay();
+        res.render('photoCheck', { title: 'Command Center', images: photoArrayForDisplay, imageLast: imageLast });
+      }
+
+    });
+  }
 };
 
-exports.renderFaceDetails = function (req, res) {
-  RcognizeModel.getFaceDetail(req.params.id, function (err, results) {
-    if (err) {
-      res.json(err);
-      console.log(err);
-    }
-    else {
-      res.render('RcognizeGalleryDetailView', { results, serverAddress });
-      console.log(results);
-    }
-  });
+exports.photoCheckOLD = function (req, res) {
+  sess = req.session;
+  sess.photoCheckError = null;
+  sess.photoCheckError1 = null;
+
+
+  // don't let nameless people view the page, redirect them back to the homepage
+  if (typeof sess.username == 'undefined') {
+    res.redirect('/');
+  } else {
+
+    sess.empSearch = req.body.empIDSearch;
+
+    if (typeof sess.empSearch == 'undefined') {
+
+      if (sess.empSearch == undefined)
+
+        /**
+         * Get ALL the photos from public/photosforreader/ and put them into an array
+         */
+        var imageLast = "";
+      var imageFile = "";
+
+      var images = [];
+      var photoDir = "./public/photosforreader";
+
+      // Loop through all the files in the source directory
+      fs.readdir(photoDir, function (err, files) {
+        if (err) {
+          sess.photosSuccess = null;
+          sess.photosError = 'Directory does not exist or not accessible';
+          res.render('photos', { title: 'Command Center 360', username: sess.username, success: sess.photosSuccess, error: sess.photosError });
+        } else {
+
+          files.forEach(function (file, index) {
+            imageFile = '/photosforreader/' + file;
+
+            images.push(imageFile);
+
+          });
+
+          //feb--finished looping through the directory, so process successful response
+          sess.photosSuccess = 'Photos processed successfully';
+          sess.photosError = null;
+          res.render('photoCheck', { title: 'Command Center', images: images, imageLast: imageLast });
+        }
+      }); //End of the directory address read
+
+    }; //feb--end of if/else test for nameless
+  };
 };
 
+function zipPhotos(callback) {
+  console.log('YEP WORKS');
 
+  // Using archiver
+  var rootPath = path.normalize(__dirname + '/..');
+  var filePath = path.normalize(rootPath + '/public/photosforreader/');
 
-/**
- ================================================================================================
-                                        Common functions
-  ================================================================================================ 
-  */
+  var output = fs.createWriteStream('./public/photosForDownload.zip');
+  var archive = archiver('zip', {
+    gzip: true,
+    zlib: { level: 9 } // Sets the compression level.
+  });
+
+  archive.on('error', function (err) {
+    throw err;
+  });
+
+  // pipe archive data to the output file
+  archive.pipe(output);
+
+  // append files
+  //archive.file(filePath+'/46000.jpg', {name: '46000.jpg'});
+  //archive.file(filePath+'/46001.jpg', {name: '46001.jpg'});
+  console.log('here is the filePath ' + filePath);
+
+  archive.directory(filePath, false);
+  //
+  archive.finalize();
+  // End archiver
+}
 
 function createLogEntry(param) {
   fs.open('./public/reports/eventEndMonitor.log', 'a', 666, function (e, id) {
@@ -267,134 +355,6 @@ function getTheFMaxPhotosForDisplay(callback) {
     // } );
 
   });
-}
-
-/**
- ================================================================================================ 
-*/
-
-exports.photoCheck = function (req, res) {
-
-  const callerOfThisRouteIsNotRecognized = 'undefined';
-
-  setUpSessionVarables(req);
-
-  console.log("back from session variable");
-  console.log("session variable" + sess.username);
-
-
-
-  // don't let nameless people view the page, redirect them back to the homepage
-  if (typeof sess.username == callerOfThisRouteIsNotRecognized) {
-    res.redirect('/');
-  } else {
-
-    getTheFMaxPhotosForDisplay(function (err, photoArrayForDisplay) {
-      console.log("getting back from getMax");
-
-
-      if (err) {
-
-        setUpErrorsForDisplay();
-        res.render('photos', { title: 'Command Center 360', username: sess.username, success: sess.photosSuccess, error: sess.photosError });
-
-      } else {
-
-        var imageLast = "";  //TODO  what is this?
-        setUpSuccessMessageForDisplay();
-        res.render('photoCheck', { title: 'Command Center', images: photoArrayForDisplay, imageLast: imageLast });
-      }
-
-    });
-  }
-};
-
-
-exports.photoCheckOLD = function (req, res) {
-  sess = req.session;
-  sess.photoCheckError = null;
-  sess.photoCheckError1 = null;
-
-
-  // don't let nameless people view the page, redirect them back to the homepage
-  if (typeof sess.username == 'undefined') {
-    res.redirect('/');
-  } else {
-
-    sess.empSearch = req.body.empIDSearch;
-
-    if (typeof sess.empSearch == 'undefined') {
-
-      if (sess.empSearch == undefined)
-
-        /**
-         * Get ALL the photos from public/photosforreader/ and put them into an array
-         */
-        var imageLast = "";
-      var imageFile = "";
-
-      var images = [];
-      var photoDir = "./public/photosforreader";
-
-      // Loop through all the files in the source directory
-      fs.readdir(photoDir, function (err, files) {
-        if (err) {
-          sess.photosSuccess = null;
-          sess.photosError = 'Directory does not exist or not accessible';
-          res.render('photos', { title: 'Command Center 360', username: sess.username, success: sess.photosSuccess, error: sess.photosError });
-        } else {
-
-          files.forEach(function (file, index) {
-            imageFile = '/photosforreader/' + file;
-
-            images.push(imageFile);
-
-          });
-
-          //feb--finished looping through the directory, so process successful response
-          sess.photosSuccess = 'Photos processed successfully';
-          sess.photosError = null;
-          res.render('photoCheck', { title: 'Command Center', images: images, imageLast: imageLast });
-        }
-      }); //End of the directory address read
-
-    }; //feb--end of if/else test for nameless
-  };
-};
-
-
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-// Function for creating the zip file
-//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function zipPhotos(callback) {
-  console.log('YEP WORKS');
-
-  // Using archiver
-  var rootPath = path.normalize(__dirname + '/..');
-  var filePath = path.normalize(rootPath + '/public/photosforreader/');
-
-  var output = fs.createWriteStream('./public/photosForDownload.zip');
-  var archive = archiver('zip', {
-    gzip: true,
-    zlib: { level: 9 } // Sets the compression level.
-  });
-
-  archive.on('error', function (err) {
-    throw err;
-  });
-
-  // pipe archive data to the output file
-  archive.pipe(output);
-
-  // append files
-  //archive.file(filePath+'/46000.jpg', {name: '46000.jpg'});
-  //archive.file(filePath+'/46001.jpg', {name: '46001.jpg'});
-  console.log('here is the filePath ' + filePath);
-
-  archive.directory(filePath, false);
-  //
-  archive.finalize();
-  // End archiver
 }
 
 

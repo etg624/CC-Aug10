@@ -548,14 +548,23 @@ router.post('/emailcheckin', EmailController.checkInByEmail);
 //########################################### Email Additions End ############################################################
 
 //############################################## Rcognize ############################################################
-var rcognize = require('../controllers/RcognizeController');
-router.get('/rcognize/index', rcognize.renderIndexHome);
-router.post('/rcognize/index', rcognize.rcognizeIndex);
-router.get('/rcognize/search', rcognize.renderSearchHome);
-router.post('/rcognize/search', rcognize.rcognizeSearch);
-router.get('/rcognize/gallery', rcognize.getFaceList);
-router.get('/rcognize/facedetails/:id', rcognize.renderFaceDetails);
+var RcognizeController = require('../controllers/RcognizeController');
+router.get('/rcognize/index', RcognizeController.renderIndexPage);
+router.post('/rcognize/index', RcognizeController.indexPhoto);
+router.get('/rcognize/search', RcognizeController.renderSearchPage);
+router.post('/rcognize/search', RcognizeController.searchPhoto);
+router.get('/rcognize/gallery', RcognizeController.renderGallery);
+router.get('/rcognize/facedetails/:faceid', RcognizeController.renderFaceDetails);
 
 //########################################### Rcognize End ############################################################
 
+//############################################## Tags ############################################################
+var TagController = require('../controllers/TagController');
+
+router.post('/addtag', TagController.addTag);
+//########################################### Tags ############################################################
+
+
+
 module.exports = router;
+

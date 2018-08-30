@@ -10,8 +10,10 @@ html
 		link(href="/bootstrap/css/bootstrap.min.css", rel="stylesheet")
 		link(href="/bootstrap-table/bootstrap-table.min.css", rel="stylesheet")
 		link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.2.0/css/all.css', integrity='sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ', crossorigin='anonymous')
-
+		script(type="text/javascript", src="/perfect-scrollbar/dist/perfect-scrollbar.js")
+		link(rel='stylesheet', href='/perfect-scrollbar/css/perfect-scrollbar.css')		
 		script( src='/javascripts/bootbox.min.js' )
+		
 	body(style="padding-bottom:10rem;")
 		.container
 			block content
@@ -23,12 +25,21 @@ html
 				.panel.panel-default
 						.panel-heading
 								h3.panel-title Name
-						div#areaContainer.scrollable-table
-										table#pickle.table.table-hover.table-striped.table-bordered
+						div#infoContainer.scrollable-table
+										table#infoTable.table.table-hover.table-striped.table-bordered
 														thead
-														-each result in results
+														-each result in getFaceResult
 																		tr.default(id=result.FaceID)
 																						th=result.Name
+				.panel.panel-default
+						.panel-heading
+								h3.panel-title Tags
+						div#tagContainer.scrollable-table
+										table#tagTable.table.table-hover.table-striped.table-bordered
+														thead
+														-each result in getTagsResult
+																		tr.default(id=result.TagID)
+																						th=result.TagName
 				#addButton
 						a.btn.btn-default.btn-block
 							i.fas.fa-plus(aria-hidden='true')
@@ -43,7 +54,8 @@ html
 								
 	script(src='/rcognize/RcognizeGalleryDetailScript.js')
 	script.
-			var results = !{ JSON.stringify(results) };
+			var getFaceResult = !{ JSON.stringify(getFaceResult) };
+			var getTagsResult = !{JSON.stringify(getTagsResult)};
 			var serverAddress = !{ JSON.stringify(serverAddress) };
 			initScript();
 	

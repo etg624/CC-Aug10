@@ -23,11 +23,13 @@ module.exports.postIndexedPhoto = function (body, callback) {
 
       let { Link, Tag, FaceID, Name } = body;
       let connection = postIndexedPhotoResult;
-      let queryFields = '(Link, Tag, FaceID, Name)';
-      let queryValues = `('${Link}', '${Tag}', '${FaceID}', '${Name}')`;
+      let queryFields = '(Link, FaceID, Name)';
+      let queryValues = `('${Link}','${FaceID}', '${Name}')`;
       let query = 'INSERT INTO face ' + queryFields + ' VALUES ' + queryValues;
       connection.query(query, function (err, rows) {
         if (!err) {
+          console.log('face posted');
+          console.log(rows);
           connection.end();
           callback(null, rows);
 
@@ -69,7 +71,7 @@ module.exports.getFaceList = function (callback) {
   });
 };
 
-module.exports.getFaceDetail = function (FaceID, callback) {
+module.exports.getFaceDetail = function (faceID, callback) {
   db.createConnection(function (err, connection) {
     if (err) {
       console.log('Error while performing common connect query: ' + err);
@@ -77,8 +79,8 @@ module.exports.getFaceDetail = function (FaceID, callback) {
     } else {
       //process the i/o after successful connect.  Connection object returned in callback
 
-      let queryField = 'FaceID';
-      let queryValue = `('${FaceID}')`;
+      let queryField = 'faceID';
+      let queryValue = `('${faceID}')`;
       let query = 'SELECT * FROM face WHERE ' + queryField + ' = ' + queryValue;
 
       console.log('logging getFaceDetail query, bitch.')

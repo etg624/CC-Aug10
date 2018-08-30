@@ -29,14 +29,12 @@ html
 								tr.primary 
 									th
 									th Name
-									th Tag
 							tbody
 								-each result in results
 									tr
 										td
 											a(href="/rcognize/facedetails/#{result.FaceID}")  View Details
 										td=result.Name
-										td=result.Tag
 					script.
 						var results = !{ JSON.stringify(results) };
 						var serverAddress = !{JSON.stringify(serverAddress)};
