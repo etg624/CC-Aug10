@@ -46,4 +46,16 @@ exports.addTag = function (req, res) {
     })
 }
 
+exports.assignTag = function (req, res) {
+    TagModel.assignTag(req.body, function (err, assignTagResult){
+        if (err){
+            res.json(err);
+            console.log(err);
+        } else {
+            res.json(assignTagResult);
+            console.log(assignTagResult);
+        }
+    })
+}
+
 

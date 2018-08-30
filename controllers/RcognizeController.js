@@ -48,17 +48,27 @@ exports.renderFaceDetails = function (req, res) {
     }
     else {
 
-      TagModel.getTags(req.params.faceid, function (err, getTagsResult) { 
-        if (err){
+      TagModel.getAssignedTags(req.params.faceid, function (err, getAssignedTagsResult) {
+        if (err) {
           res.end();
           console.log(err);
         } else {
-          res.render('RcognizeGalleryDetailView', { getFaceResult, getTagsResult, serverAddress });
+
+          TagModel.getAllTags(function (err, getAllTagsResult){
+            if (err){
+              res.end()
+              console.log(err);
+            } else {
+              res.render('RcognizeGalleryDetailView', { getFaceResult, getAssignedTagsResult, getAllTagsResult, serverAddress });    
+            }
+          })
+
+          
         }
       })
 
 
-      
+
     }
   });
 };

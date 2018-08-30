@@ -562,6 +562,7 @@ router.get('/rcognize/facedetails/:faceid', RcognizeController.renderFaceDetails
 var TagController = require('../controllers/TagController');
 
 router.post('/addtag', TagController.addTag);
+router.post('/assigntag', TagController.assignTag);
 //########################################### Tags ############################################################
 
 

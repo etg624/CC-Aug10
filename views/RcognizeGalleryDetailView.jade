@@ -37,7 +37,7 @@ html
 						div#tagContainer.scrollable-table
 										table#tagTable.table.table-hover.table-striped.table-bordered
 														thead
-														-each result in getTagsResult
+														-each result in getAssignedTagsResult
 																		tr.default(id=result.TagID)
 																						th=result.TagName
 				#addButton
@@ -63,7 +63,8 @@ html
 	script(src='/rcognize/RcognizeGalleryDetailScript.js')
 	script.
 			var getFaceResult = !{ JSON.stringify(getFaceResult) };
-			var getTagsResult = !{JSON.stringify(getTagsResult)};
+			var getAssignedTagsResult = !{JSON.stringify(getAssignedTagsResult)};
+			var getAllTagsResult = !{JSON.stringify(getAllTagsResult)};
 			var serverAddress = !{ JSON.stringify(serverAddress) };
 			initScript();
 	
