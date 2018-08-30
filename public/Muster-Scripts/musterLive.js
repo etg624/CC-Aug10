@@ -206,7 +206,6 @@ function initMap() {
                 invalidsLabel.innerText = invalidAttendance;
                 getTotalAttendance();
             }
-
         }
 
         xhr.open("GET", serverAddress + "/musterInvalids/" + musterID, true);
