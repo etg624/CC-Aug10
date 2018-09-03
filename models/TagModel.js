@@ -9,7 +9,7 @@ module.exports.addTag = function (Tag, callback) {
         } else {
             var connection = addTagResult;
 
-            let {TagName, TagID} = Tag;
+            let { TagName, TagID } = Tag;
 
             let queryFields = '(TagID, TagName)';
             let queryValues = `('${TagID}', '${TagName}')`;
@@ -40,7 +40,7 @@ module.exports.assignTag = function (Tag, callback) {
         } else {
             var connection = addTagResult;
 
-            let {TagID, FaceID} = Tag;
+            let { TagID, FaceID } = Tag;
 
             let queryFields = '(TagID, FaceID)';
             let queryValues = `('${TagID}', '${FaceID}')`;
@@ -70,7 +70,7 @@ module.exports.assignTag = function (Tag, callback) {
         } else {
             var connection = addTagResult;
 
-            let {FaceID, TagID} = Tag;
+            let { FaceID, TagID } = Tag;
 
             let queryFields = '(TagID, FaceID)';
             let queryValues = `('${TagID}', '${FaceID}')`;
@@ -93,7 +93,7 @@ module.exports.assignTag = function (Tag, callback) {
     });
 }
 
-module.exports.getAssignedTags = function(id, callback){
+module.exports.getAssignedTags = function (id, callback) {
 
     db.createConnection(function (err, getAssignedTagsResult) {
         if (err) {
@@ -123,7 +123,7 @@ module.exports.getAssignedTags = function(id, callback){
     });
 }
 
-module.exports.getAllTags = function(callback){
+module.exports.getAllTags = function (callback) {
 
     db.createConnection(function (err, getAllTagsResult) {
         if (err) {
@@ -132,6 +132,32 @@ module.exports.getAllTags = function(callback){
             var connection = getAllTagsResult;
 
             let query = `SELECT * FROM tag`;
+            console.log('logging getAssignedTags query');
+            console.log(query);
+
+            connection.query(query, function (err, rows) {
+                if (!err) {
+                    connection.end();
+                    callback(null, rows);
+
+                } else {
+                    console.log('error with the query');
+                    connection.end();
+                    callback(err, rows);
+                }
+            });
+        }
+    });
+}
+
+module.exports.getTagsByFace = function (faceid, callback) {
+    db.createConnection(function (err, getAllTagsResult) {
+        if (err) {
+            callback(err, null);
+        } else {
+            var connection = getAllTagsResult;
+
+            let query = `SELECT * FROM face_tag_tag_assigned WHERE faceid = '${faceid}'`;
             console.log('logging getAssignedTags query');
             console.log(query);
 

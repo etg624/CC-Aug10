@@ -1,13 +1,11 @@
-var fs = require('fs');
-var path = require('path');
-var db = require('../models/db');
-var archiver = require('archiver');
+const fs = require('fs');
+const path = require('path');
+const db = require('../models/db');
+const archiver = require('archiver');
 const RcognizeModel = require('../models/RcognizeModel');
 const TagModel = require('../models/TagModel');
-
 const { fork } = require('child_process');
-
-let serverAddress = process.env.SERVER_ADDRESS;
+const serverAddress = process.env.SERVER_ADDRESS;
 
 exports.renderIndexPage = function (req, res) {
   sess = req.session;
@@ -54,16 +52,16 @@ exports.renderFaceDetails = function (req, res) {
           console.log(err);
         } else {
 
-          TagModel.getAllTags(function (err, getAllTagsResult){
-            if (err){
+          TagModel.getAllTags(function (err, getAllTagsResult) {
+            if (err) {
               res.end()
               console.log(err);
             } else {
-              res.render('RcognizeGalleryDetailView', { getFaceResult, getAssignedTagsResult, getAllTagsResult, serverAddress });    
+              res.render('RcognizeGalleryDetailView', { getFaceResult, getAssignedTagsResult, getAllTagsResult, serverAddress });
             }
           })
 
-          
+
         }
       })
 
@@ -74,14 +72,14 @@ exports.renderFaceDetails = function (req, res) {
 };
 
 exports.renderGallery = function (req, res) {
-  RcognizeModel.getFaceList(function (err, results) {
+
+  RcognizeModel.getFaceList(function (err, getFaceListResults) {
     if (err) {
-      res.json(err);
+      res.end();
       console.log(err);
     }
     else {
-      res.render('RcognizeGalleryListView', { results, serverAddress });
-      console.log(results);
+      res.render('RcognizeGalleryListView', { getFaceListResults, serverAddress });
     }
   });
 };

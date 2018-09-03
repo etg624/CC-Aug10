@@ -11,6 +11,9 @@ html
 		link(href="/bootstrap-table/bootstrap-table.min.css", rel="stylesheet")
 		link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.2.0/css/all.css', integrity='sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ', crossorigin='anonymous')
 		script( src='/javascripts/bootbox.min.js' )
+		script(type="text/javascript", src="/perfect-scrollbar/dist/perfect-scrollbar.js")
+		link(rel='stylesheet', href='/perfect-scrollbar/css/perfect-scrollbar.css')		
+		link(rel='stylesheet', href='/convoyer/styles/styles.css')
 
 	body(style="padding-bottom:10rem;")
 		.container   
@@ -29,23 +32,26 @@ html
 								tr.primary 
 									th
 									th Name
+									th Photo
+									th Tags
 							tbody
-								-each result in results
+								-each result in getFaceListResults
 									tr
 										td
 											a(href="/rcognize/facedetails/#{result.FaceID}")  View Details
 										td=result.Name
+										td
+											img#facePhoto(src=result.Link,  width = "100px", height = "100px", display = 'none')
+										td
+											div(id = `tagContainer ${result.FaceID}`)
+													table.table.table-hover.table-striped.table-bordered.scrollable-table(id = `tagTable ${result.FaceID}`)
+																tbody
+					script(src='/rcognize/RcognizeGalleryListScript.js')
 					script.
-						var results = !{ JSON.stringify(results) };
 						var serverAddress = !{JSON.stringify(serverAddress)};
+						var getFaceListResults = !{ JSON.stringify(getFaceListResults)};
 						var dataArray = [];
-						$(function () {
-							var addTable = $('#addTable');
-							var results = !{ JSON.stringify(results) };
-							addTable.bootstrapTable('refreshOptions', {
-								pageSize:10,
-								sortName: 'Name'
-							});
-						});
+						initScript();
+
 										
 									

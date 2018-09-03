@@ -115,20 +115,17 @@ function initScript() {
         }));
 
         bootbox.hideAll();
-        bootbox.alert('Tag has been added!');
+        bootbox.alert('Tag has been assigned!');
     }
 
-    function onDeleteTag(){
+    function onDeleteTag() {
     }
 
-    function deleteTag(tagID, faceID){
-
+    function deleteTag(tagID, faceID) {
     }
 
     function setDataTables() {
 
-        const infoContainer = document.querySelector('#infoContainer');
-        const infoPS = new PerfectScrollbar(infoContainer);
 
         const tagContainer = document.querySelector('#tagContainer');
         const tagPS = new PerfectScrollbar(tagContainer);

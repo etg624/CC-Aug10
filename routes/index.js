@@ -563,6 +563,7 @@ var TagController = require('../controllers/TagController');
 
 router.post('/addtag', TagController.addTag);
 router.post('/assigntag', TagController.assignTag);
+router.get('/tags/:faceid', TagController.getTagsByFace);
 //########################################### Tags ############################################################
 
 
