@@ -45,13 +45,15 @@ html
 										td
 											div(id = `tagContainer ${result.FaceID}`)
 													table.table.table-hover.table-striped.table-bordered.scrollable-table(id = `tagTable ${result.FaceID}`)
-																tbody
+														tbody
+																
+
 					script(src='/rcognize/RcognizeGalleryListScript.js')
 					script.
 						var serverAddress = !{JSON.stringify(serverAddress)};
 						var getFaceListResults = !{ JSON.stringify(getFaceListResults)};
 						var dataArray = [];
-						initScript();
+						initScript();					
 
 										
 									

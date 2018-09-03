@@ -27,6 +27,8 @@ function initScript() {
 
                 let cleanInput = promptResult.replace(/[^a-zA-Z0-9 ]/g, "");
 
+                console.log(cleanInput);
+
                 let xhr = new XMLHttpRequest();
 
                 if (!xhr) {
@@ -47,7 +49,7 @@ function initScript() {
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 xhr.send(JSON.stringify({
                     "FaceID": face.FaceID,
-                    'TagName': promptResult
+                    'TagName': cleanInput
                 }));
 
                 bootbox.hideAll();

@@ -2,12 +2,18 @@ function initScript() {
 
     $(document).ready(function () {
 
-        
+
         for (let i = 0; i < getFaceListResults.length; i++) {
+
             let face = getFaceListResults[i];
             let tagContainer = document.getElementById(`tagContainer ${face.FaceID}`);
+            let tagTable = document.getElementById(`tagTable ${face.FaceID}`)
             let tagPS = new PerfectScrollbar(tagContainer);
             let xhr = new XMLHttpRequest();
+
+
+
+            console.log(face.FaceID)
 
             if (!xhr) {
                 return false;
@@ -16,10 +22,14 @@ function initScript() {
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == XMLHttpRequest.DONE) {
                     let json = JSON.parse(xhr.responseText);
-                    console.log(json);
-
                     for (let q = 0; q < json.length; q++) {
-                        $('#' + `tagTable ${face.FaceID}`).append('<tr><td>test 2</td></tr>')
+
+                        console.log(json[q]);
+
+                        var newRow = tagTable.insertRow(tagTable.rows.length)
+                        var newCell = newRow.insertCell(0);
+                        var newText = document.createTextNode(json[q].TagName);
+                        newCell.appendChild(newText);
                     }
                 }
             }
