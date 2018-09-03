@@ -150,22 +150,49 @@ module.exports.getAllTags = function (callback) {
     });
 }
 
+module.exports.deleteTag = function (Body, callback) {
+
+    db.createConnection(function (err, getDeletedTagsResult) {
+        if (err) {
+            callback(err, null);
+        } else {
+            var connection = getDeletedTagsResult;
+
+            let query = `DELETE FROM tag_assigned WHERE TagID= "${Body.TagID}" AND FaceID= "${Body.FaceID}" ;`
+            console.log('logging getDeletedTags query');
+            console.log(query);
+
+            connection.query(query, function (err, rows, fields) {
+                if (!err) {
+                    connection.end();
+                    callback(null, rows);
+
+                } else {
+                    console.log('error with the query');
+                    connection.end();
+                    callback(err, rows);
+                }
+            });
+        }
+    });
+}
+
 module.exports.getTagsByFace = function (faceid, callback) {
     db.createConnection(function (err, getAllTagsResult) {
         if (err) {
             callback(err, null);
         } else {
             var connection = getAllTagsResult;
-
+ 
             let query = `SELECT * FROM face_tag_tag_assigned WHERE faceid = '${faceid}'`;
             console.log('logging getAssignedTags query');
             console.log(query);
-
+ 
             connection.query(query, function (err, rows) {
                 if (!err) {
                     connection.end();
                     callback(null, rows);
-
+ 
                 } else {
                     console.log('error with the query');
                     connection.end();

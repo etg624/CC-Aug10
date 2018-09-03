@@ -120,10 +120,66 @@ function initScript() {
         bootbox.alert('Tag has been assigned!');
     }
 
-    function onDeleteTag() {
+    function onDeleteTag(){
+
+        let tagButtons = [];
+        for (let i = 0; i < allTags.length; i++) {
+            let label = allTags[i].TagName;
+            let faceID = face.FaceID
+            let buttonClass = 'btn-primary';
+            let tagID = allTags[i].TagID;
+
+            tagButtons.push({
+                label: label,
+                className: buttonClass,
+                callback: function () {
+                    deleteTag(tagID, faceID);
+                }
+            });
+        }
+
+        bootbox.hideAll();
+
+
+        let dialog = bootbox.dialog({
+            title: 'Delete Tag',
+            message: "<p>Select a tag to delete.</p>",
+            buttons: tagButtons
+        });
+
     }
 
-    function deleteTag(tagID, faceID) {
+    function deleteTag(tagID, faceID){
+
+        let xhr = new XMLHttpRequest();
+
+        if (!xhr) {
+            return false;
+        }
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == XMLHttpRequest.DONE) {
+                var newRow = tagTable.insertRow(tagTable.rows.length)
+                var newCell = newRow.insertCell(0);
+
+                var newText = document.createTextNode(tagName);
+                newCell.appendChild(newText);
+            }
+
+        }
+
+        xhr.open("DELETE", serverAddress + "/deletetag", true);
+
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({
+            'TagID': tagID,
+            // 'TagName': tagName,
+            'FaceID': faceID
+        }));
+
+        bootbox.hideAll();
+        bootbox.alert('Tag has been deleted');
+
     }
 
     function setDataTables() {
@@ -143,6 +199,8 @@ function initScript() {
         assignButton.addEventListener('click', function () {
             onAssignTag();
         })
+        deleteButton.addEventListener('click' , function () {
+            onDeleteTag();
+        })
     }
-
 }

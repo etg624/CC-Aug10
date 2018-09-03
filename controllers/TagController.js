@@ -58,6 +58,19 @@ exports.assignTag = function (req, res) {
     })
 }
 
+exports.deleteAssignedTag = function (req, res) {
+    console.log('deleteAssignedTag called from controller');
+    TagModel.deleteTag(req.body, function (err, deleteTagResult) {
+        if (err) {
+            res.json(err);
+            console.log(err);
+        } else {
+            res.json(deleteTagResult)
+            console.log(deleteTagResult);
+        }
+    })
+}
+
 exports.getTagsByFace = function (req, res) {
     TagModel.getTagsByFace(req.params.faceid, function (err, getTagsByFaceResult) {
         if (err) {
@@ -69,4 +82,3 @@ exports.getTagsByFace = function (req, res) {
         }
     })
 }
-
