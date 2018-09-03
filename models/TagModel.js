@@ -183,16 +183,16 @@ module.exports.getTagsByFace = function (faceid, callback) {
             callback(err, null);
         } else {
             var connection = getAllTagsResult;
- 
+
             let query = `SELECT * FROM face_tag_tag_assigned WHERE faceid = '${faceid}'`;
             console.log('logging getAssignedTags query');
             console.log(query);
- 
+
             connection.query(query, function (err, rows) {
                 if (!err) {
                     connection.end();
                     callback(null, rows);
- 
+
                 } else {
                     console.log('error with the query');
                     connection.end();

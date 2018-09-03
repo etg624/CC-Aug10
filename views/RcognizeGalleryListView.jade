@@ -43,9 +43,8 @@ html
 										td
 											img#facePhoto(src=result.Link,  width = "100px", height = "100px", display = 'none')
 										td
-											div(id = `tagContainer ${result.FaceID}`)
-													table.table.table-hover.table-striped.table-bordered.scrollable-table(id = `tagTable ${result.FaceID}`)
-														tbody
+											div(id = `tagContainer ${result.FaceID}`).scrollable-table
+													table.table.table-hover.table-striped.table-bordered(id = `tagTable ${result.FaceID}`)
 																
 
 					script(src='/rcognize/RcognizeGalleryListScript.js')
