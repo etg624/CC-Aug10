@@ -159,11 +159,11 @@ function initScript() {
 
         xhr.onreadystatechange = function () {
             if (xhr.readyState == XMLHttpRequest.DONE) {
-                var newRow = tagTable.insertRow(tagTable.rows.length)
-                var newCell = newRow.insertCell(0);
+                // var newRow = tagTable.insertRow(tagTable.rows.length)
+                // var newCell = newRow.insertCell(0);
 
-                var newText = document.createTextNode(tagName);
-                newCell.appendChild(newText);
+                // var newText = document.createTextNode(tagName);
+                // newCell.appendChild(newText);
             }
 
         }
