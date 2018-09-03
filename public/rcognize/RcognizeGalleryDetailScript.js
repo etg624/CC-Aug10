@@ -115,7 +115,7 @@ function initScript() {
         }));
 
         bootbox.hideAll();
-        bootbox.alert('Tag has been added!');
+        bootbox.alert('Tag has been assigned!');
     }
 
     function onDeleteTag(){
@@ -131,7 +131,7 @@ function initScript() {
                 label: label,
                 className: buttonClass,
                 callback: function () {
-                    deleteTag(tagID, label, faceID);
+                    deleteTag(tagID, faceID);
                 }
             });
         }
@@ -172,7 +172,7 @@ function initScript() {
         xhr.send(JSON.stringify({
             'TagID': tagID,
             // 'TagName': tagName,
-            "FaceID": faceID
+            'FaceID': faceID
         }));
 
         bootbox.hideAll();
@@ -182,8 +182,6 @@ function initScript() {
 
     function setDataTables() {
 
-        const infoContainer = document.querySelector('#infoContainer');
-        const infoPS = new PerfectScrollbar(infoContainer);
 
         const tagContainer = document.querySelector('#tagContainer');
         const tagPS = new PerfectScrollbar(tagContainer);

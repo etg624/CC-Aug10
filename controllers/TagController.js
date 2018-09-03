@@ -20,7 +20,7 @@ exports.addTag = function (req, res) {
 
 
     let TagID = CreateRandom.create();
-    let {TagName, FaceID} = req.body;
+    let { TagName, FaceID } = req.body;
     let json = {
         TagName: TagName,
         FaceID: FaceID,
@@ -47,8 +47,8 @@ exports.addTag = function (req, res) {
 }
 
 exports.assignTag = function (req, res) {
-    TagModel.assignTag(req.body, function (err, assignTagResult){
-        if (err){
+    TagModel.assignTag(req.body, function (err, assignTagResult) {
+        if (err) {
             res.json(err);
             console.log(err);
         } else {
@@ -59,13 +59,26 @@ exports.assignTag = function (req, res) {
 }
 
 exports.deleteAssignedTag = function (req, res) {
-    TagModel.deleteTag(req,body, function (err, deleteTagResult) {
+    console.log('deleteAssignedTag called from controller');
+    TagModel.deleteTag(req.body, function (err, deleteTagResult) {
         if (err) {
             res.json(err);
             console.log(err);
         } else {
             res.json(deleteTagResult)
             console.log(deleteTagResult);
+        }
+    })
+}
+
+exports.getTagsByFace = function (req, res) {
+    TagModel.getTagsByFace(req.params.faceid, function (err, getTagsByFaceResult) {
+        if (err) {
+            res.json(err);
+            console.log(err);
+        } else {
+            res.json(getTagsByFaceResult);
+            console.log(getTagsByFaceResult);
         }
     })
 }

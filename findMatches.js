@@ -1,6 +1,6 @@
-var findMatches = {};
+const FindMatches = {};
 
-findMatches.find = function(arr,arr2){
+FindMatches.find = function(arr,arr2){
     var matchArray = [];
     arr.sort();
     arr2.sort();
@@ -13,4 +13,4 @@ findMatches.find = function(arr,arr2){
 
 }
 
-module.exports = findMatches;
+module.exports = FindMatches;

@@ -191,10 +191,10 @@ router.post('/getNumberOfImageZipFiles', photosAPI.getZipFileCount);
 //router.post('/searchForImageMatch', images.searchForImageMatch);
 //###### Wed Jun 13 14:14:02 PDT 2018
 //-----
-router.post ('/imageRecognition/searchForImageMatch', images.searchForImageMatch);
+router.post('/imageRecognition/searchForImageMatch', images.searchForImageMatch);
 //-----
 //###### Wed Jun 19 14:14:02 PDT 2018
-router.post ('/searchForFaceMatch', images.searchForFaceMatch);
+router.post('/searchForFaceMatch', images.searchForFaceMatch);
 
 /////////////////////////////////////////////////////////////////////
 // API for PUBLIC method callers
@@ -334,8 +334,8 @@ router.get('/devicePointAdd/:pointID', mustering.deviceListForPoint);
 router.get('/devicePointChange/:pointID/:authCode', mustering.deviceChangeForMusterPoint);
 
 //Posts the selected device to the muster point record
-router.get('/musterPointAddDevice/:AuthCode/:pointID', mustering.deviceAddForPoint )
-router.post('/musterPointAddDevice/:AuthCode/:pointID', mustering.deviceAddForPoint )
+router.get('/musterPointAddDevice/:AuthCode/:pointID', mustering.deviceAddForPoint)
+router.post('/musterPointAddDevice/:AuthCode/:pointID', mustering.deviceAddForPoint)
 
 
 router.get('/evacuationHome', evacuation.evacuationHome);
@@ -376,7 +376,7 @@ router.get('/guardlist', GuardController.guardList);
 
 router.get('/guardAdd', GuardController.guardAdd);
 router.post('/guardAdd', GuardController.guardAddToDb);
-        
+
 router.get('/guardModify/:GuardID', GuardController.getGuardByID);
 router.post('/guardModify/:GuardID', GuardController.updateGuard);
 router.get('/guardDelete/:GuardID', GuardController.getGuardForDelete);
@@ -487,17 +487,17 @@ router.post('/', cc.home_post_handler);
 
 
 // and logging out, closing the session
-router.get('/logout', function(req, res) {
-    // delete the session variable
-	sess=req.session;
-	console.log("logging out "+ sess.username);
-    delete sess.username;
+router.get('/logout', function (req, res) {
+	    // delete the session variable
+	sess = req.session;
+	console.log("logging out " + sess.username);
+	    delete sess.username;
 	delete sess.success;
 	delete sess.photoSuccess;
 	delete sess.error;
-	console.log("logged out "+sess.username);
-    // redirect user to homepage
-    res.redirect('/');
+	console.log("logged out " + sess.username);
+	    // redirect user to homepage
+	    res.redirect('/');
 });
 
 // ###### Mon Jul 16 09:25:41 PDT 2018 ARA
@@ -564,6 +564,7 @@ var TagController = require('../controllers/TagController');
 router.post('/addtag', TagController.addTag);
 router.post('/assigntag', TagController.assignTag);
 router.delete('/deletetag', TagController.deleteAssignedTag);
+router.get('/tags/:faceid', TagController.getTagsByFace);
 //########################################### Tags ############################################################
 
 

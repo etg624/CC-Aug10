@@ -588,7 +588,7 @@ function patrolPut(data, socket) {
 
 var auth = require('./microsoft-graph/auth');
 var graph = require('./microsoft-graph/graph');
-var findMatches = require('./findMatches');
+const FindMatches = require('./FindMatches');
 var CreateRandom = require('./CreateRandom');
 var request = require('request');
 
@@ -604,7 +604,7 @@ var matches = [];
 
 clearDistributionLists();
 
-
+ 
 // ******************************** BELOW 3: For adding people to DB
 function callAPIForPeople() {
   // Get an access token for the app.
@@ -616,12 +616,7 @@ function callAPIForPeople() {
           let currentContact = contacts[i];
           // add contact to db;
           postPerson(currentContact);
-          // exchangeArray.push({
-          //   name: currentContact.givenName + ' ' + currentContact.surname,
-          //   phone: currentContact.mobilePhone
-          // });
         }
-        // getPeopleFromDB();
       }, function (error) {
         console.error('>>> Error getting users: ' + error);
       });
@@ -670,7 +665,6 @@ function getPeopleFromDB() {
           });
         }
 
-
         for (var i = 0; i < exchangeArray.length; i++) {
           exchangeNameArray.push(exchangeArray[i].name);
         }
@@ -684,7 +678,7 @@ function getPeopleFromDB() {
           ccPhoneArray.push(ccArray[i].phone);
         }
 
-        nameMatches = findMatches.find(exchangeNameArray, ccNameArray);
+        nameMatches = FindMatches.find(exchangeNameArray, ccNameArray);
 
         for (var i = 0; i < nameMatches.length; i++) {
 
