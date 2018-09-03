@@ -58,4 +58,14 @@ exports.assignTag = function (req, res) {
     })
 }
 
-
+exports.deleteAssignedTag = function (req, res) {
+    TagModel.deleteTag(req,body, function (err, deleteTagResult) {
+        if (err) {
+            res.json(err);
+            console.log(err);
+        } else {
+            res.json(deleteTagResult)
+            console.log(deleteTagResult);
+        }
+    })
+}

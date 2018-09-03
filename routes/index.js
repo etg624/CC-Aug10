@@ -563,6 +563,7 @@ var TagController = require('../controllers/TagController');
 
 router.post('/addtag', TagController.addTag);
 router.post('/assigntag', TagController.assignTag);
+router.delete('/deletetag', TagController.deleteAssignedTag);
 //########################################### Tags ############################################################
 
 

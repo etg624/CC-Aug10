@@ -149,3 +149,33 @@ module.exports.getAllTags = function(callback){
         }
     });
 }
+
+module.exports.deleteAssignedTags = function(id, callback){
+
+    db.createConnection(function (err, getDeletedTagsResult) {
+        if (err) {
+            callback(err, null);
+        } else {
+            var connection = getDeletedTagsResult;
+
+
+            let queryField = '(FaceID)';
+            let queryValue = `'${id}'`;
+            let query = `DELETE * FROM tag_tag_assigned WHERE ${queryField} =  ${queryValue}`;
+            console.log('logging getDeletedTags query');
+            console.log(query);
+
+            connection.query(query, function (err, rows, fields) {
+                if (!err) {
+                    connection.end();
+                    callback(null, rows);
+
+                } else {
+                    console.log('error with the query');
+                    connection.end();
+                    callback(err, rows);
+                }
+            });
+        }
+    });
+}
