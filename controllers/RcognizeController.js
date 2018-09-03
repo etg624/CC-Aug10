@@ -48,12 +48,12 @@ exports.renderFaceDetails = function (req, res) {
     }
     else {
 
-      TagModel.getTags(req.params.faceid, function (err, getTagsResult) { 
+      TagModel.getAssignedTags(req.params.faceid, function (err, getAssignedTagsResult) { 
         if (err){
           res.end();
           console.log(err);
         } else {
-          res.render('RcognizeGalleryDetailView', { getFaceResult, getTagsResult, serverAddress });
+          res.render('RcognizeGalleryDetailView', { getFaceResult, getAssignedTagsResult, serverAddress });
         }
       })
 

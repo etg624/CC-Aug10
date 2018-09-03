@@ -1,13 +1,15 @@
-function initScript(){
+function initScript() {
 
     console.log(getFaceResult[0]);
 
     let incidentPhoto = document.getElementById("incidentPhoto");
     let face = getFaceResult[0];
-    let tags = getTagsResult;
+    let assignedTags = getAssignedTagsResult;
+    let allTags = getAllTagsResult;
     incidentPhoto.src = face.Link;
     let addButton = document.getElementById('addButton');
     let assignButton = document.getElementById('assignButton');
+    let deleteButton = document.getElementById('deleteButton');
 
     setDataTables();
 
@@ -23,7 +25,6 @@ function initScript(){
             if (promptResult === null) {
             } else {
 
-
                 let cleanInput = promptResult.replace(/[^a-zA-Z0-9 ]/g, "");
 
                 let xhr = new XMLHttpRequest();
@@ -34,22 +35,19 @@ function initScript(){
 
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState == XMLHttpRequest.DONE) {
-                     var newRow = tagTable.insertRow(tagTable.rows.length)   
-                     var newCell = newRow.insertCell(0);
-
-                     var newText = document.createTextNode(promptResult);
-                     newCell.appendChild(newText);
-
+                        var newRow = tagTable.insertRow(tagTable.rows.length)
+                        var newCell = newRow.insertCell(0);
+                        var newText = document.createTextNode(promptResult);
+                        newCell.appendChild(newText);
                     }
-        
                 }
 
-                xhr.open("POST", serverAddress + "/addtag" , true);
+                xhr.open("POST", serverAddress + "/addtag", true);
 
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 xhr.send(JSON.stringify({
                     "FaceID": face.FaceID,
-                    'TagName':  promptResult
+                    'TagName': promptResult
                 }));
 
                 bootbox.hideAll();
@@ -63,19 +61,19 @@ function initScript(){
     function onAssignTag() {
 
         let tagButtons = [];
-        for (let i = 0; i < tags.length; i++) {
-            let label = tags[i].TagName;
+        for (let i = 0; i < allTags.length; i++) {
+            let label = allTags[i].TagName;
+            let faceID = face.FaceID
             let buttonClass = 'btn-primary';
-            let tagID = tags[i].TagID;
+            let tagID = allTags[i].TagID;
 
             tagButtons.push({
                 label: label,
                 className: buttonClass,
                 callback: function () {
-
+                    assignTag(tagID, label, faceID);
                 }
             });
-
         }
 
         bootbox.hideAll();
@@ -88,10 +86,96 @@ function initScript(){
         });
     }
 
-    function assignTag(){
-        
+    function assignTag(tagID, tagName, faceID) {
+
+        let xhr = new XMLHttpRequest();
+
+        if (!xhr) {
+            return false;
+        }
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == XMLHttpRequest.DONE) {
+                var newRow = tagTable.insertRow(tagTable.rows.length)
+                var newCell = newRow.insertCell(0);
+
+                var newText = document.createTextNode(tagName);
+                newCell.appendChild(newText);
+            }
+
+        }
+
+        xhr.open("POST", serverAddress + "/assigntag", true);
+
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({
+            'TagID': tagID,
+            'TagName': tagName,
+            "FaceID": faceID
+        }));
+
+        bootbox.hideAll();
+        bootbox.alert('Tag has been added!');
     }
-    
+
+    function onDeleteTag(){
+        let tagButtons = [];
+        for (let i = 0; i < allTags.length; i++) {
+            let label = allTags[i].TagName;
+            let faceID = face.FaceID
+            let buttonClass = 'btn-primary';
+            let tagID = allTags[i].TagID;
+
+            tagButtons.push({
+                label: label,
+                className: buttonClass,
+                callback: function () {
+                    deleteTag(tagID, label, faceID);
+                }
+            });
+        }
+
+        bootbox.hideAll();
+
+
+        let dialog = bootbox.dialog({
+            title: 'Assign Tag',
+            message: "<p>Select a tag to assign.</p>",
+            buttons: tagButtons
+        });
+    }
+
+    function deleteTag(tagID, faceID){
+        let xhr = new XMLHttpRequest();
+
+        if (!xhr) {
+            return false;
+        }
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == XMLHttpRequest.DONE) {
+                var newRow = tagTable.insertRow(tagTable.rows.length)
+                var newCell = newRow.insertCell(0);
+
+                var newText = document.createTextNode(tagName);
+                newCell.appendChild(newText);
+            }
+
+        }
+
+        xhr.open("DELETE", serverAddress + "/deletetag", true);
+
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({
+            'TagID': tagID,
+            'TagName': tagName,
+            "FaceID": faceID
+        }));
+
+        bootbox.hideAll();
+        bootbox.alert('Tag has been added!');
+    }
+
     function setDataTables() {
 
         const infoContainer = document.querySelector('#infoContainer');
@@ -103,14 +187,16 @@ function initScript(){
 
     }
 
-    function setButtonListeners(){
-        addButton.addEventListener('click', function (){
+    function setButtonListeners() {
+        addButton.addEventListener('click', function () {
             onAddTag();
         })
 
-        assignButton.addEventListener('click', function (){
+        assignButton.addEventListener('click', function () {
             onAssignTag();
         })
     }
-
+//         deleteButton.addEventListener('click', function () {
+//             onDeleteTag();
+//     })
 }
