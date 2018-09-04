@@ -8,13 +8,10 @@ function initScript() {
             let face = getFaceListResults[i];
             let tagContainer = document.getElementById(`tagContainer ${face.FaceID}`);
             let tagTable = document.getElementById(`tagTable ${face.FaceID}`)
-
             let tagPS = new PerfectScrollbar(tagContainer);
             let xhr = new XMLHttpRequest();
-
-
-
-            console.log(tagContainer)
+            let faceTable = $('#faceTable');
+            
 
             if (!xhr) {
                 return false;

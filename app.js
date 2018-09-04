@@ -602,7 +602,7 @@ var ccPhoneArray = [];
 var matches = [];
 
 
-// clearDistributionLists();
+clearDistributionLists();
 
  
 // ******************************** BELOW 3: For adding people to DB
