@@ -2,20 +2,22 @@ function initScript() {
 
     console.log(getFaceResult[0]);
 
-    let incidentPhoto = document.getElementById("incidentPhoto");
-    let face = getFaceResult[0];
-    let assignedTags = getAssignedTagsResult;
-    let allTags = getAllTagsResult;
+    const incidentPhoto = document.getElementById("incidentPhoto");
+    const face = getFaceResult[0];
+    const assignedTags = getAssignedTagsResult;
+    const allTags = getAllTagsResult;
     incidentPhoto.src = face.Link;
-    let addButton = document.getElementById('addButton');
-    let assignButton = document.getElementById('assignButton');
-    let deleteButton = document.getElementById('deleteButton');
+    const addButton = document.getElementById('addButton');
+    const assignButton = document.getElementById('assignButton');
+    const removeButton = document.getElementById('removeButton');
 
-    setDataTables();
+    const tagContainer = document.querySelector('#tagContainer');
+    const tagPS = new PerfectScrollbar(tagContainer);
+
+    const tagTable = document.getElementById('tagTable');
+
 
     setButtonListeners();
-
-    let tagTable = document.getElementById('tagTable');
 
     function onAddTag() {
 
@@ -99,6 +101,7 @@ function initScript() {
         xhr.onreadystatechange = function () {
             if (xhr.readyState == XMLHttpRequest.DONE) {
                 var newRow = tagTable.insertRow(tagTable.rows.length)
+                newRow.id = tagID;
                 var newCell = newRow.insertCell(0);
 
                 var newText = document.createTextNode(tagName);
@@ -120,20 +123,20 @@ function initScript() {
         bootbox.alert('Tag has been assigned!');
     }
 
-    function onDeleteTag(){
+    function onRemoveTag() {
 
         let tagButtons = [];
-        for (let i = 0; i < allTags.length; i++) {
-            let label = allTags[i].TagName;
+        for (let i = 0; i < assignedTags.length; i++) {
+            let label = assignedTags[i].TagName;
             let faceID = face.FaceID
             let buttonClass = 'btn-primary';
-            let tagID = allTags[i].TagID;
+            let tagID = assignedTags[i].TagID;
 
             tagButtons.push({
                 label: label,
                 className: buttonClass,
                 callback: function () {
-                    deleteTag(tagID, faceID);
+                    removeTag(tagID, faceID);
                 }
             });
         }
@@ -142,14 +145,14 @@ function initScript() {
 
 
         let dialog = bootbox.dialog({
-            title: 'Delete Tag',
+            title: 'Remove Tag',
             message: "<p>Select a tag to delete.</p>",
             buttons: tagButtons
         });
 
     }
 
-    function deleteTag(tagID, faceID){
+    function removeTag(tagID, faceID) {
 
         let xhr = new XMLHttpRequest();
 
@@ -159,16 +162,20 @@ function initScript() {
 
         xhr.onreadystatechange = function () {
             if (xhr.readyState == XMLHttpRequest.DONE) {
-                // var newRow = tagTable.insertRow(tagTable.rows.length)
-                // var newCell = newRow.insertCell(0);
+                let tagRow = document.getElementById(tagID);
 
-                // var newText = document.createTextNode(tagName);
-                // newCell.appendChild(newText);
+                try {
+                    tagRow.remove();
+                } catch (err) {
+                    console.log(err);
+                }
+
+                updateTagTable(faceID);
             }
 
         }
 
-        xhr.open("DELETE", serverAddress + "/deletetag", true);
+        xhr.open("DELETE", serverAddress + "/removetag", true);
 
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.send(JSON.stringify({
@@ -181,12 +188,26 @@ function initScript() {
 
     }
 
-    function setDataTables() {
+    function updateTagTable(faceID) {
 
+        let xhr = new XMLHttpRequest();
 
-        const tagContainer = document.querySelector('#tagContainer');
-        const tagPS = new PerfectScrollbar(tagContainer);
+        if (!xhr) {
+            return false;
+        }
 
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == XMLHttpRequest.DONE) {
+                for (let i = 0; i < tagTable.rows.length; i++) {
+                    // tagTable.rows[i].remove();
+                }
+            }
+
+        }
+
+        xhr.open("GET", serverAddress + `/tags/${faceID}`, true);
+
+        xhr.send(null);
 
     }
 
@@ -198,8 +219,8 @@ function initScript() {
         assignButton.addEventListener('click', function () {
             onAssignTag();
         })
-        deleteButton.addEventListener('click' , function () {
-            onDeleteTag();
+        removeButton.addEventListener('click', function () {
+            onRemoveTag();
         })
     }
 }

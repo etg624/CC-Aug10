@@ -8,7 +8,7 @@ function initScript() {
             let face = getFaceListResults[i];
             let tagContainer = document.getElementById(`tagContainer ${face.FaceID}`);
             let tagTable = document.getElementById(`tagTable ${face.FaceID}`)
-            
+
             let tagPS = new PerfectScrollbar(tagContainer);
             let xhr = new XMLHttpRequest();
 
@@ -28,6 +28,7 @@ function initScript() {
                         console.log(json[q]);
 
                         var newRow = tagTable.insertRow(tagTable.rows.length)
+                        newRow.id = `${json[q].TagID}`
                         var newCell = newRow.insertCell(0);
                         var newText = document.createTextNode(json[q].TagName);
                         newCell.appendChild(newText);

@@ -58,15 +58,15 @@ exports.assignTag = function (req, res) {
     })
 }
 
-exports.deleteAssignedTag = function (req, res) {
-    console.log('deleteAssignedTag called from controller');
-    TagModel.deleteTag(req.body, function (err, deleteTagResult) {
+exports.removeAssignedTag = function (req, res) {
+    console.log('removeAssignedTag called from controller');
+    TagModel.removeTag(req.body, function (err, removeTagResult) {
         if (err) {
             res.json(err);
             console.log(err);
         } else {
-            res.json(deleteTagResult)
-            console.log(deleteTagResult);
+            res.json(removeTagResult)
+            console.log(removeTagResult);
         }
     })
 }
