@@ -150,7 +150,7 @@ module.exports.getAllTags = function (callback) {
     });
 }
 
-module.exports.deleteTag = function (Body, callback) {
+module.exports.removeTag = function (Body, callback) {
 
     db.createConnection(function (err, getDeletedTagsResult) {
         if (err) {

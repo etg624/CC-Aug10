@@ -47,6 +47,7 @@ var requestParams = {
     } else {
       // If successful, return the access token.
       deferred.resolve(parsedBody.access_token);
+      console.log(parsedBody.access_token);
     }
   });
 

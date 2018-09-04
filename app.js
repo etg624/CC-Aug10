@@ -771,13 +771,10 @@ function callAPIForGroups() {
 
           let currentGroup = groups[i];
 
-
           let json = {
             ListID: currentGroup.id,
             ListName: currentGroup.displayName,
-
           }
-
           postList(json);
 
         }
