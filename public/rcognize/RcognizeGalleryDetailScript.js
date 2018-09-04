@@ -4,7 +4,7 @@ function initScript() {
 
     const incidentPhoto = document.getElementById("incidentPhoto");
     const face = getFaceResult[0];
-    const assignedTags = getAssignedTagsResult;
+    let assignedTags = getAssignedTagsResult;
     const allTags = getAllTagsResult;
     incidentPhoto.src = face.Link;
     const addButton = document.getElementById('addButton');
@@ -40,9 +40,12 @@ function initScript() {
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState == XMLHttpRequest.DONE) {
                         var newRow = tagTable.insertRow(tagTable.rows.length)
+                        newRow.id = face.TagID;
                         var newCell = newRow.insertCell(0);
                         var newText = document.createTextNode(promptResult);
                         newCell.appendChild(newText);
+                        console.log(JSON.stringify(face.FaceID));
+                        updateTagTable(face.FaceID);
                     }
                 }
 
@@ -106,6 +109,9 @@ function initScript() {
 
                 var newText = document.createTextNode(tagName);
                 newCell.appendChild(newText);
+
+                updateTagTable(faceID);
+
             }
 
         }
@@ -172,7 +178,6 @@ function initScript() {
 
                 updateTagTable(faceID);
             }
-
         }
 
         xhr.open("DELETE", serverAddress + "/removetag", true);
@@ -198,11 +203,20 @@ function initScript() {
 
         xhr.onreadystatechange = function () {
             if (xhr.readyState == XMLHttpRequest.DONE) {
-                for (let i = 0; i < tagTable.rows.length; i++) {
-                    // tagTable.rows[i].remove();
+                $(tagTable).empty();
+                let json = JSON.parse(xhr.responseText);
+                if (json.length > 0) {
+                    assignedTags = [];
+                    for (let i = 0; i < json.length; i++) {
+                        var newRow = tagTable.insertRow(tagTable.rows.length)
+                        newRow.id = json[i].TagID;
+                        var newCell = newRow.insertCell(0);
+                        var newText = document.createTextNode(json[i].TagName);
+                        newCell.appendChild(newText);
+                        assignedTags.push(json[i]);
+                    }
                 }
             }
-
         }
 
         xhr.open("GET", serverAddress + `/tags/${faceID}`, true);

@@ -110,7 +110,7 @@ module.exports.getFaceDetail = function (faceID, callback) {
       let queryValue = `('${faceID}')`;
       let query = 'SELECT * FROM face WHERE ' + queryField + ' = ' + queryValue;
 
-      console.log('logging getFaceDetail query, bitch.')
+      console.log('logging getFaceDetail query.')
       console.log(query);
 
       connection.query(query, function (err, rows) {

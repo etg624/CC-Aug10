@@ -122,6 +122,7 @@ graph.getGroups = function (token) {
       bearer: token
     }
   }, function (err, response, body) {
+    
     var parsedBody = JSON.parse(body);
 
     if (err) {
