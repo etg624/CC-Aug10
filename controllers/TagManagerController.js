@@ -3,7 +3,7 @@ var path = require('path');
 // var process = require( "process" ); -- I removed this as i believe it is globally availble object
 var db = require('../models/db');
 var archiver = require('archiver');
-const TagModel = require('../models/TagModel');
+const TagManagerModel = require('../models/TagManagerModel');
 var CreateRandom = require('../CreateRandom');
 
 // ###### Tues Aug 14 11:36:14 PDT 2018 David
@@ -27,19 +27,19 @@ exports.addTag = function (req, res) {
         TagID: TagID
     }
 
-    TagModel.addTag(json, function (err, addTagResult) {
+    TagManagerModel.addTag(json, function (err, addTagResult) {
         if (err) {
             res.json(err);
             console.log(err);
         } else {
 
-            TagModel.assignTag(json, function (err, assignTagResult) {
+            TagManagerModel.assignTag(json, function (err, assignTagResult) {
                 if (err) {
                     res.json(err);
                     console.log(err);
                 } else {
                     res.json(addTagResult);
-                    console.log(assignTagResult);
+                    console.log(addTagResult);
                 }
             })
         }
@@ -47,7 +47,7 @@ exports.addTag = function (req, res) {
 }
 
 exports.assignTag = function (req, res) {
-    TagModel.assignTag(req.body, function (err, assignTagResult) {
+    TagManagerModel.assignTag(req.body, function (err, assignTagResult) {
         if (err) {
             res.json(err);
             console.log(err);
@@ -60,7 +60,7 @@ exports.assignTag = function (req, res) {
 
 exports.deleteAssignedTag = function (req, res) {
     console.log('deleteAssignedTag called from controller');
-    TagModel.deleteTag(req.body, function (err, deleteTagResult) {
+    TagManagerModel.deleteTag(req.body, function (err, deleteTagResult) {
         if (err) {
             res.json(err);
             console.log(err);
@@ -72,7 +72,7 @@ exports.deleteAssignedTag = function (req, res) {
 }
 
 exports.getTagsByFace = function (req, res) {
-    TagModel.getTagsByFace(req.params.faceid, function (err, getTagsByFaceResult) {
+    TagManagerModel.getTagsByFace(req.params.faceid, function (err, getTagsByFaceResult) {
         if (err) {
             res.json(err);
             console.log(err);

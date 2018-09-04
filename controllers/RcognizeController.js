@@ -84,6 +84,18 @@ exports.renderGallery = function (req, res) {
   });
 };
 
+exports.renderTagManager = function (req, res) {
+  
+  RcognizeModel.getTags(function (err, getAllTagsResults) {
+    if (err) {
+      res.end();
+      console.log(err);
+    } else {
+      res.render('TagManagerView', {getAllTagsResults, serverAddress})
+    }
+  })
+}
+
 exports.indexPhoto = function (req, res) {
   // Tried declaring sess with let/var, but it causes problems where it can't be accessed in view since not in global scope (i think)
   sess = req.session;

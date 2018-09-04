@@ -554,6 +554,7 @@ router.post('/rcognize/index', RcognizeController.indexPhoto);
 router.get('/rcognize/search', RcognizeController.renderSearchPage);
 router.post('/rcognize/search', RcognizeController.searchPhoto);
 router.get('/rcognize/gallery', RcognizeController.renderGallery);
+router.get('/rcognize/tagManager', RcognizeController.renderTagManager);
 router.get('/rcognize/facedetails/:faceid', RcognizeController.renderFaceDetails);
 
 //########################################### Rcognize End ############################################################
