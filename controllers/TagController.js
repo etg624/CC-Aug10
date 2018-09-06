@@ -68,7 +68,7 @@ exports.addTag = function (req, res) {
                     }
                 })
             } else {
-                res.send('An existing tag with that name exists');
+                res.send('An existing tag with that name already exists');
             }
         }
     })

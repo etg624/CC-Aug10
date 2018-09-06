@@ -60,13 +60,22 @@ function initScript() {
 
                         console.log(xhr.responseText);
 
-                        var newRow = tagTable.insertRow(tagTable.rows.length)
-                        newRow.id = face.TagID;
-                        var newCell = newRow.insertCell(0);
-                        var newText = document.createTextNode(promptResult);
-                        newCell.appendChild(newText);
-                        console.log(JSON.stringify(face.FaceID));
-                        updateTagTable(face.FaceID);
+                        if (xhr.responseText.includes('existing')) {
+                            bootbox.hideAll();
+                            bootbox.alert('An existing tag with that name already exists!');
+
+                        } else {
+                            var newRow = tagTable.insertRow(tagTable.rows.length)
+                            newRow.id = face.TagID;
+                            var newCell = newRow.insertCell(0);
+                            var newText = document.createTextNode(promptResult);
+                            newCell.appendChild(newText);
+                            console.log(JSON.stringify(face.FaceID));
+                            updateTagTable(face.FaceID);
+
+                            bootbox.hideAll();
+                            bootbox.alert('Tag has been added!');
+                        }
                     }
                 }
 
@@ -77,9 +86,6 @@ function initScript() {
                     "FaceID": face.FaceID,
                     'TagName': cleanInput
                 }));
-
-                bootbox.hideAll();
-                bootbox.alert('Tag has been added!');
             }
         });
 
