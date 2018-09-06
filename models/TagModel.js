@@ -1,5 +1,6 @@
-var db = require('./db');
-var CreateRandom = require('../CreateRandom');
+const db = require('./db');
+const CreateRandom = require('../CreateRandom');
+const datetime = require('../controllers/datetime');
 
 module.exports.addTag = function (Tag, callback) {
 
@@ -9,10 +10,12 @@ module.exports.addTag = function (Tag, callback) {
         } else {
             var connection = addTagResult;
 
+            
             let { TagName, TagID } = Tag;
+            let time = datetime.syncCurrentDateTimeforDB();
 
-            let queryFields = '(TagID, TagName)';
-            let queryValues = `('${TagID}', '${TagName}')`;
+            let queryFields = '(TagID, TagName, TimeCreated)';
+            let queryValues = `('${TagID}', '${TagName}', '${time}')`;
             let query = 'INSERT INTO tag ' + queryFields + ' VALUES ' + queryValues + ';'
             console.log('logging addTag query');
             console.log(query);

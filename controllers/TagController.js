@@ -12,6 +12,21 @@ const { fork } = require('child_process');
 let serverAddress = process.env.SERVER_ADDRESS;
 
 
+const nameDoesNotAlreadyExist = function (existingTags, newTagName) {
+
+    for (let i = 0; i < existingTags.length; i++) {
+        console.log(existingTags[i].TagName)
+
+        if (newTagName == existingTags[i].TagName) {
+            console.log('An existing tag with that name exists.')
+            return false;
+        }
+    }
+
+    return true;
+
+}
+
 ///////////////////////////////////////////////////////////////////
 //** handler for indexing photos into rekognition collection //////
 ///////////////////////////////////////////////////////////////////
@@ -27,21 +42,34 @@ exports.addTag = function (req, res) {
         TagID: TagID
     }
 
-    TagModel.addTag(json, function (err, addTagResult) {
+    TagModel.getAllTags(function (err, getAllTagsResult) {
         if (err) {
             res.json(err);
             console.log(err);
+
         } else {
 
-            TagModel.assignTag(json, function (err, assignTagResult) {
-                if (err) {
-                    res.json(err);
-                    console.log(err);
-                } else {
-                    res.json(addTagResult);
-                    console.log(assignTagResult);
-                }
-            })
+            if (nameDoesNotAlreadyExist(getAllTagsResult, TagName)) {
+                TagModel.addTag(json, function (err, addTagResult) {
+                    if (err) {
+                        res.json(err);
+                        console.log(err);
+                    } else {
+
+                        TagModel.assignTag(json, function (err, assignTagResult) {
+                            if (err) {
+                                res.json(err);
+                                console.log(err);
+                            } else {
+                                res.end();
+                                console.log(assignTagResult);
+                            }
+                        })
+                    }
+                })
+            } else {
+                res.send('An existing tag with that name exists');
+            }
         }
     })
 }
