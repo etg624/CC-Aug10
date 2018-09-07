@@ -232,10 +232,3 @@ module.exports.getNextEvent = function (callback) {
   });
 
 };
-
-
-// module.exports = {
-//   dbConnect,
-//   dbDisconnect,
-//   dbGet
-// };
