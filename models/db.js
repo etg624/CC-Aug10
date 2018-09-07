@@ -47,26 +47,26 @@ module.exports.createKnexConnection = function (callback) {
 //Make the connection set up reusable from everywhere and also make it
 // dependant on the .env environment variables
 module.exports.createConnection = function (callback) {
-  var  connection  =  mysql.createConnection({
+  var connection = mysql.createConnection({
 
-      //user     : sess.username,
-      //password : sess.password,
+    //user     : sess.username,
+    //password : sess.password,
 
     host: process.env.DB_HOST,
-      user     :  process.env.DB_USER,
-      password :  process.env.DB_PASS,
+    user     : process.env.DB_USER,
+    password : process.env.DB_PASS,
     database: process.env.DB_NAME
 
   });
-  connection.connect(function (err)  {
-      if  (err)  {
-          console.error('error doing the modularized connect '  +  err.stack);
+  connection.connect(function (err) {
+    if (err) {
+      console.error('error doing the modularized connect ' + err.stack);
       // email mobss support if there is a problem connecting to the database
       emailController.sendIncidentEmail('Database Incident', 'A database problem occurred during db connection', process.env.FROMADDR, function (err, reslt) {
         if (err) { console.log('a problem occurred, attempting to email customer support') }
       });
-          callback('error connecting to database in db.js', null);
-      } else {
+      callback('error connecting to database in db.js', null);
+    } else {
       callback(null, connection);
     };
   });
@@ -82,8 +82,8 @@ module.exports.getQuery = function (callback) {
 
   var connection = mysql.createConnection({
     host: process.env.DB_HOST,
-    user     :  process.env.DB_USER,
-    password :  process.env.DB_PASS,
+    user     : process.env.DB_USER,
+    password : process.env.DB_PASS,
     database: process.env.DB_NAME
   });
 
@@ -113,8 +113,8 @@ module.exports.getTableLatestUpdateTime = function (table, callback) {
 
   var connection = mysql.createConnection({
     host: process.env.DB_HOST,
-    user     :  process.env.DB_USER,
-    password :  process.env.DB_PASS,
+    user     : process.env.DB_USER,
+    password : process.env.DB_PASS,
     database: process.env.DB_NAME
   });
 
@@ -145,8 +145,8 @@ module.exports.getTableLatestUpdateDate = function (table, callback) {
 
   var connection = mysql.createConnection({
     host: process.env.DB_HOST,
-    user     :  process.env.DB_USER,
-    password :  process.env.DB_PASS,
+    user     : process.env.DB_USER,
+    password : process.env.DB_PASS,
     database: process.env.DB_NAME
   });
 
@@ -183,8 +183,8 @@ module.exports.getTableRowCount = function (table, callback) {
 
   var connection = mysql.createConnection({
     host: process.env.DB_HOST,
-    user     :  process.env.DB_USER,
-    password :  process.env.DB_PASS,
+    user     : process.env.DB_USER,
+    password : process.env.DB_PASS,
     database: process.env.DB_NAME
   });
 
@@ -212,8 +212,8 @@ module.exports.getNextEvent = function (callback) {
 
   var connection = mysql.createConnection({
     host: process.env.DB_HOST,
-    user     :  process.env.DB_USER,
-    password :  process.env.DB_PASS,
+    user     : process.env.DB_USER,
+    password : process.env.DB_PASS,
     database: process.env.DB_NAME
   });
 
