@@ -23,12 +23,6 @@ function dbGet() {
   return knex;
 }
 
-module.exports = {
-  dbConnect,
-  dbDisconnect,
-  dbGet
-};
-
 module.exports.createKnexConnection = function (callback) {
   console.log('creating connection');
   var connection = createKnex({
@@ -239,3 +233,9 @@ module.exports.getNextEvent = function (callback) {
 
 };
 
+
+// module.exports = {
+//   dbConnect,
+//   dbDisconnect,
+//   dbGet
+// };
