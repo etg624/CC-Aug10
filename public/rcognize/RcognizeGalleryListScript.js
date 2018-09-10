@@ -11,7 +11,7 @@ function initScript() {
             let tagPS = new PerfectScrollbar(tagContainer);
             let xhr = new XMLHttpRequest();
             let faceTable = $('#faceTable');
-            
+
 
             if (!xhr) {
                 return false;
