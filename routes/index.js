@@ -566,8 +566,13 @@ router.post('/addtag', TagController.addTag);
 router.post('/assigntag', TagController.assignTag);
 router.delete('/removetag', TagController.removeAssignedTag);
 router.get('/tags/:faceid', TagController.getTagsByFace);
-//########################################### Tags ############################################################
+//########################################### Tags Manager############################################################
+var TagManagerController = require('../controllers/TagController');
 
+router.post('/addtag', TagManagerController.addTag);
+router.post('/assigntag', TagManagerController.assignTag);
+router.delete('/removetag', TagManagerController.removeAssignedTag);
+router.get('/tags/:faceid', TagManagerController.getTagsByFace);
 
 
 module.exports = router;

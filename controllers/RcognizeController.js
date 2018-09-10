@@ -91,7 +91,7 @@ exports.renderTagManager = function (req, res) {
       res.end();
       console.log(err);
     } else {
-      res.render('TagManagerView', {getAllTagsResults, serverAddress})
+      res.render('TagManagerView', { getAllTagsResults, serverAddress });
     }
   })
 }
