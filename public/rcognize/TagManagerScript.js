@@ -1,13 +1,7 @@
 function initScript() {
 
-
-    let incidentPhoto = document.getElementById("incidentPhoto");
-    let face = getFaceResult[0];
-    let assignedTags = getAssignedTagsResult;
-    let allTags = getAllTagsResult;
-    incidentPhoto.src = face.Link;
+    let allTags = getAllTagsResults;
     let addButton = document.getElementById('addButton');
-    let assignButton = document.getElementById('assignButton');
     let deleteButton = document.getElementById('deleteButton');
 
     setDataTables();
@@ -47,7 +41,6 @@ function initScript() {
 
                 xhr.setRequestHeader('Content-Type', 'application/json');
                 xhr.send(JSON.stringify({
-                    "FaceID": face.FaceID,
                     'TagName': cleanInput
                 }));
 
@@ -59,72 +52,11 @@ function initScript() {
 
     }
 
-    function onAssignTag() {
-
-        let tagButtons = [];
-        for (let i = 0; i < allTags.length; i++) {
-            let label = allTags[i].TagName;
-            let faceID = face.FaceID
-            let buttonClass = 'btn-primary';
-            let tagID = allTags[i].TagID;
-
-            tagButtons.push({
-                label: label,
-                className: buttonClass,
-                callback: function () {
-                    assignTag(tagID, label, faceID);
-                }
-            });
-        }
-
-        bootbox.hideAll();
-
-
-        let dialog = bootbox.dialog({
-            title: 'Assign Tag',
-            message: "<p>Select a tag to assign.</p>",
-            buttons: tagButtons
-        });
-    }
-
-    function assignTag(tagID, tagName, faceID) {
-
-        let xhr = new XMLHttpRequest();
-
-        if (!xhr) {
-            return false;
-        }
-
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == XMLHttpRequest.DONE) {
-                var newRow = tagTable.insertRow(tagTable.rows.length)
-                var newCell = newRow.insertCell(0);
-
-                var newText = document.createTextNode(tagName);
-                newCell.appendChild(newText);
-            }
-
-        }
-
-        xhr.open("POST", serverAddress + "/assigntag", true);
-
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(JSON.stringify({
-            'TagID': tagID,
-            'TagName': tagName,
-            "FaceID": faceID
-        }));
-
-        bootbox.hideAll();
-        bootbox.alert('Tag has been assigned!');
-    }
-
     function onDeleteTag(){
 
         let tagButtons = [];
         for (let i = 0; i < allTags.length; i++) {
             let label = allTags[i].TagName;
-            let faceID = face.FaceID
             let buttonClass = 'btn-primary';
             let tagID = allTags[i].TagID;
 
@@ -192,10 +124,6 @@ function initScript() {
     function setButtonListeners() {
         addButton.addEventListener('click', function () {
             onAddTag();
-        })
-
-        assignButton.addEventListener('click', function () {
-            onAssignTag();
         })
         deleteButton.addEventListener('click' , function () {
             onDeleteTag();

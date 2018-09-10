@@ -570,7 +570,6 @@ router.get('/tags/:faceid', TagController.getTagsByFace);
 var TagManagerController = require('../controllers/TagController');
 
 router.post('/addtag', TagManagerController.addTag);
-router.post('/assigntag', TagManagerController.assignTag);
 router.delete('/removetag', TagManagerController.removeAssignedTag);
 router.get('/tags/:faceid', TagManagerController.getTagsByFace);
 

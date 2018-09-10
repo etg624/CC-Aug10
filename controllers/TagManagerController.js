@@ -33,7 +33,7 @@ exports.addTag = function (req, res) {
             console.log(err);
         } else {
 
-            TagManagerModel.assignTag(json, function (err, assignTagResult) {
+            TagManagerModel.assignTag(json, function (err, addTagResult) {
                 if (err) {
                     res.json(err);
                     console.log(err);
@@ -42,18 +42,6 @@ exports.addTag = function (req, res) {
                     console.log(addTagResult);
                 }
             })
-        }
-    })
-}
-
-exports.assignTag = function (req, res) {
-    TagManagerModel.assignTag(req.body, function (err, assignTagResult) {
-        if (err) {
-            res.json(err);
-            console.log(err);
-        } else {
-            res.json(assignTagResult);
-            console.log(assignTagResult);
         }
     })
 }

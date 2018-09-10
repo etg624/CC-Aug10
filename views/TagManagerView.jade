@@ -42,10 +42,7 @@ html
 						a.btn.btn-default.btn-block
 							i.fas.fa-plus(aria-hidden='true')
 							| &nbsp Add New Tag
-				#assignButton
-						a.btn.btn-default.btn-block
-							i.fas.fa-list(aria-hidden='true')
-							| &nbsp Assign Existing Tag							
+									
 				#deleteButton
 						a.btn.btn-default.btn-block
 							i.fas.fa-trash-alt(aria-hidden='true')
@@ -56,13 +53,10 @@ html
 							| &nbsp Back To Gallery
 		.col-md-1.col-sm-1.col-xs-12							
 		.col-md-4.col-sm-4.col-xs-12
-			img#incidentPhoto(src="",  width = "100%", height = "100%", display = 'none')
 								
 	script(src='/rcognize/TagManagerScript.js')
 	script.
-			//- var getFaceResult = !{ JSON.stringify(getFaceResult) };
-			var getAssignedTagsResult = !{JSON.stringify(getAssignedTagsResult)};
-			var getAllTagsResult = !{JSON.stringify(getAllTagsResult)};
+			var getAllTagsResults = !{JSON.stringify(getAllTagsResults)};
 			var serverAddress = !{ JSON.stringify(serverAddress) };
 			initScript();
 	
