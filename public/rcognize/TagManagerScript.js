@@ -1,7 +1,7 @@
 function initScript() {
 
     // let assignedTags = getAssignedTagsResults;
-    const allTags = getAllTagsResults;
+    let allTags = getAllTagsResults;
     // let assignedTags = getAssignedTagsResults;
     const addButton = document.getElementById('addButton');
     const removeButton = document.getElementById('removeButton');
@@ -12,7 +12,7 @@ function initScript() {
     const tagTable = document.getElementById('tagTable');
 
     let buttonArray = [];
-    let assignedArray = [];
+    let tagArray = [];
 
 
     const matches = function (arr, arr2) {
@@ -83,93 +83,16 @@ function initScript() {
 
 
     }
-
-    function onAssignTag() {
-
-        let tagButtons = [];
-
-        updateTagTable(face.FaceID).then(function () {
-            buttonArray = [];
-
-            for (let i = 0; i < allTags.length; i++) {
-                let label = allTags[i].TagName;
-                let faceID = face.FaceID
-                let buttonClass = 'btn-primary';
-                let tagID = allTags[i].TagID;
-
-                buttonArray.push(label);
-
-
-                tagButtons.push({
-                    label: label,
-                    className: buttonClass,
-                    callback: function () {
-
-                        console.log('logging buttonArray then assignedArray');
-                        console.log(buttonArray);
-                        console.log(assignedArray);
-
-                        if (matches(buttonArray, assignedArray)) {
-                            bootbox.hideAll();
-                            bootbox.alert('Tag has already been assigned!');
-                        } else assignTag(tagID, label, faceID);
-
-
-                    }
-                });
-            }
-
-            bootbox.hideAll();
-
-            let dialog = bootbox.dialog({
-                title: 'Assign Tag',
-                message: "<p>Select a tag to assign.</p>",
-                buttons: tagButtons
-            });
-        })
-
-    }
-
-    function assignTag(tagID, tagName, faceID) {
-
-        let xhr = new XMLHttpRequest();
-
-        if (!xhr) {
-            return false;
-        }
-
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == XMLHttpRequest.DONE) {
-                var newRow = tagTable.insertRow(tagTable.rows.length)
-                newRow.id = tagID;
-                var newCell = newRow.insertCell(0);
-
-                var newText = document.createTextNode(tagName);
-                newCell.appendChild(newText);
-
-                updateTagTable(faceID);
-
-            }
-
-        }
-
-        xhr.open("POST", serverAddress + "/assigntag", true);
-
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(JSON.stringify({
-            'TagID': tagID,
-            'TagName': tagName,
-            "FaceID": faceID
-        }));
-
-        bootbox.hideAll();
-        bootbox.alert('Tag has been assigned!');
-    }
-
+    
     function onRemoveTag() {
 
         let tagButtons = [];
+
+        console.log(allTags);
+
         for (let i = 0; i < allTags.length; i++) {
+
+            
             let label = allTags[i].TagName;
             // let faceID = face.FaceID
             let buttonClass = 'btn-primary';
@@ -179,7 +102,7 @@ function initScript() {
                 label: label,
                 className: buttonClass,
                 callback: function () {
-                    removeTag(tagID, tagName);
+                    removeTag(tagID, label);
                 }
             });
         }
@@ -213,11 +136,11 @@ function initScript() {
                     console.log(err);
                 }
 
-                updateTagTable(tagName);
+                updateTagTable();
             }
         }
 
-        xhr.open("DELETE", serverAddress + "/removetag", true);
+        xhr.open("DELETE", serverAddress + "/deletetag", true);
 
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.send(JSON.stringify({
@@ -229,7 +152,7 @@ function initScript() {
 
     }
 
-    function updateTagTable(faceID) {
+    function updateTagTable() {
 
         return new Promise(function (resolve, reject) {
             let xhr = new XMLHttpRequest();
@@ -247,16 +170,16 @@ function initScript() {
                     $(tagTable).empty();
                     let json = JSON.parse(xhr.responseText);
                     if (json.length > 0) {
-                        assignedTags = [];
+                        allTags = [];
                         for (let i = 0; i < json.length; i++) {
                             var newRow = tagTable.insertRow(tagTable.rows.length)
                             newRow.id = json[i].TagID;
                             var newCell = newRow.insertCell(0);
                             var newText = document.createTextNode(json[i].TagName);
                             newCell.appendChild(newText);
-                            assignedTags.push(json[i]);
-                            assignedArray = [];
-                            assignedArray.push(json[i].TagName);
+                            allTags.push(json[i]);
+                            tagArray = [];
+                            tagArray.push(json[i].TagName);
                         }
                     }
 
@@ -265,7 +188,7 @@ function initScript() {
                 }
             }
 
-            xhr.open("GET", serverAddress + `/tags/${faceID}`, true);
+            xhr.open("GET", serverAddress + `/tags`, true);
 
             xhr.send(null);
 

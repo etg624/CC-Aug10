@@ -29,10 +29,10 @@ html
 								h3.panel-title Tags
 						div#tagContainer.scrollable-table
 										table#tagTable.table.table-hover.table-striped.table-bordered
-										//- 				thead
-										//- 				-each result in getAssignedTagsResult
-										//- 								tr.default(id=result.TagID)
-										//- 												th=result.TagName
+														thead
+														-each result in getAllTagsResults
+																		tr.default(id=result.TagID)
+																						th=result.TagName
 				#addButton
 						a.btn.btn-default.btn-block
 							i.fas.fa-plus(aria-hidden='true')
@@ -53,12 +53,8 @@ html
 			//- var getAssignedTagsResult = !{JSON.stringify(getAssignedTagsResult)};
 			var getAllTagsResults = !{JSON.stringify(getAllTagsResults)};
 			var serverAddress = !{ JSON.stringify(serverAddress) };
+			console.log(getAllTagsResults);
 			initScript();
-	
-	
-	
-
-								
 
 
 								

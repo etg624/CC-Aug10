@@ -3,7 +3,7 @@ var path = require('path');
 // var process = require( "process" ); -- I removed this as i believe it is globally availble object
 var db = require('../models/db');
 var archiver = require('archiver');
-const TagModel = require('../models/TagModel');
+const TagManagerModel = require('../models/TagManagerModel');
 var CreateRandom = require('../CreateRandom');
 
 // ###### Tues Aug 14 11:36:14 PDT 2018 David
@@ -28,11 +28,17 @@ const nameDoesNotAlreadyExist = function (existingTags, newTagName) {
 }
 
 
-
-
-///////////////////////////////////////////////////////////////////
-//** handler for indexing photos into rekognition collection //////
-///////////////////////////////////////////////////////////////////
+exports.renderTagManager = function (req, res) {
+  
+    TagManagerModel.getAllTags(function (err, getAllTagsResults) {
+      if (err) {
+        res.end();
+        console.log(err);
+      } else {
+        res.render('TagManagerView', { getAllTagsResults, serverAddress });
+      }
+    })
+  }
 
 exports.addTag = function (req, res) {
 
@@ -59,7 +65,7 @@ exports.addTag = function (req, res) {
                         console.log(err);
                     } else {
 
-                        TagModel.assignTag(json, function (err, assignTagResult ) {
+                        TagModel.assignTag(json, function (err, assignTagResult) {
                             if (err) {
                                 res.json(err);
                                 console.log(err);
@@ -100,4 +106,17 @@ exports.removeAssignedTag = function (req, res) {
             console.log(removeTagResult);
         }
     })
+}
+
+
+exports.getAllTags = function (req, res){
+    TagManagerModel.getAllTags(function (err, getAllTagsResult){
+        if (err){
+            console.log(err);
+            res.json(err);
+        } else {
+            res.json(getAllTagsResult);
+        }
+
+    });
 }

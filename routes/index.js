@@ -554,7 +554,6 @@ router.post('/rcognize/index', RcognizeController.indexPhoto);
 router.get('/rcognize/search', RcognizeController.renderSearchPage);
 router.post('/rcognize/search', RcognizeController.searchPhoto);
 router.get('/rcognize/gallery', RcognizeController.renderGallery);
-router.get('/rcognize/tagManager', RcognizeController.renderTagManager);
 router.get('/rcognize/facedetails/:faceid', RcognizeController.renderFaceDetails);
 
 //########################################### Rcognize End ############################################################
@@ -567,10 +566,12 @@ router.post('/assigntag', TagController.assignTag);
 router.delete('/removetag', TagController.removeAssignedTag);
 router.get('/tags/:faceid', TagController.getTagsByFace);
 //########################################### Tags Manager############################################################
-var TagManagerController = require('../controllers/TagController');
+var TagManagerController = require('../controllers/TagManagerController');
 
 router.post('/addtag', TagManagerController.addTag);
-router.delete('/removetag', TagManagerController.removeAssignedTag);
+router.delete('/deletetag', TagManagerController.removeAssignedTag);
+router.get('/rcognize/tagManager', TagManagerController.renderTagManager);
+router.get('/tags', TagManagerController.getAllTags);
 
 
 module.exports = router;

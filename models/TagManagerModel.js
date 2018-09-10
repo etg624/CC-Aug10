@@ -35,36 +35,6 @@ module.exports.addTag = function (Tag, callback) {
     });
 }
 
-// module.exports.assignTag = function (Tag, callback) {
-
-//     db.createConnection(function (err, addTagResult) {
-//         if (err) {
-//             callback(err, null);
-//         } else {
-//             var connection = addTagResult;
-
-//             let { TagID, FaceID } = Tag;
-
-//             let queryFields = '(TagID, FaceID)';
-//             let queryValues = `('${TagID}', '${FaceID}')`;
-//             let query = 'INSERT INTO tag_assigned ' + queryFields + ' VALUES ' + queryValues + ';'
-//             console.log(query);
-
-//             connection.query(query, function (err, rows) {
-//                 if (!err) {
-//                     connection.end();
-//                     callback(null, rows);
-
-//                 } else {
-//                     console.log('error with the query');
-//                     connection.end();
-//                     callback(err, rows);
-//                 }
-//             });
-//         }
-//     });
-// }
-
 module.exports.assignTag = function (Tag, callback) {
 
     db.createConnection(function (err, addTagResult) {
@@ -161,7 +131,7 @@ module.exports.removeTag = function (Body, callback) {
         } else {
             var connection = getDeletedTagsResult;
 
-            let query = `DELETE FROM tag WHERE TagID= "${Body.TagID}" AND FaceID= "${Body.TagName}" ;`
+            let query = `DELETE FROM tag WHERE TagID= "${Body.TagID}" ;`
             console.log('logging getDeletedTags query');
             console.log(query);
 
