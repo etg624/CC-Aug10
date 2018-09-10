@@ -38,6 +38,8 @@ function initScript() {
 
     function onAddTag() {
 
+        console.log('onAddTag called');
+
         bootbox.hideAll();
 
         bootbox.prompt("Enter a new tag name.", function (promptResult) {
@@ -244,11 +246,11 @@ function initScript() {
             let xhr = new XMLHttpRequest();
 
             if (!xhr) {
-                return false;
                 reject({
                     status: this.status,
                     statusText: xhr.statusText
                 });
+                return false;
             }
 
             xhr.onreadystatechange = function () {
