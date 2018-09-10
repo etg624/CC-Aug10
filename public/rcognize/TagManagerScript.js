@@ -169,17 +169,17 @@ function initScript() {
     function onRemoveTag() {
 
         let tagButtons = [];
-        for (let i = 0; i < assignedTags.length; i++) {
-            let label = assignedTags[i].TagName;
-            let faceID = face.FaceID
+        for (let i = 0; i < allTags.length; i++) {
+            let label = allTags[i].TagName;
+            // let faceID = face.FaceID
             let buttonClass = 'btn-primary';
-            let tagID = assignedTags[i].TagID;
+            let tagID = allTags[i].TagID;
 
             tagButtons.push({
                 label: label,
                 className: buttonClass,
                 callback: function () {
-                    removeTag(tagID, faceID);
+                    removeTag(tagID, tagName);
                 }
             });
         }
@@ -195,7 +195,7 @@ function initScript() {
 
     }
 
-    function removeTag(tagID, faceID) {
+    function removeTag(tagID, tagName) {
 
         let xhr = new XMLHttpRequest();
 
@@ -213,7 +213,7 @@ function initScript() {
                     console.log(err);
                 }
 
-                updateTagTable(faceID);
+                updateTagTable(tagName);
             }
         }
 
