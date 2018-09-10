@@ -571,7 +571,6 @@ var TagManagerController = require('../controllers/TagController');
 
 router.post('/addtag', TagManagerController.addTag);
 router.delete('/removetag', TagManagerController.removeAssignedTag);
-router.get('/tags/:faceid', TagManagerController.getTagsByFace);
 
 
 module.exports = router;

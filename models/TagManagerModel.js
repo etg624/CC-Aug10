@@ -1,5 +1,6 @@
-var db = require('./db');
-var CreateRandom = require('../CreateRandom');
+const db = require('./db');
+const CreateRandom = require('../CreateRandom');
+const datetime = require('../controllers/datetime');
 
 module.exports.addTag = function (Tag, callback) {
 
@@ -9,10 +10,12 @@ module.exports.addTag = function (Tag, callback) {
         } else {
             var connection = addTagResult;
 
+            
             let { TagName, TagID } = Tag;
+            let time = datetime.syncCurrentDateTimeforDB();
 
-            let queryFields = '(TagID, TagName)';
-            let queryValues = `('${TagID}', '${TagName}')`;
+            let queryFields = '(TagID, TagName, TimeCreated)';
+            let queryValues = `('${TagID}', '${TagName}', '${time}')`;
             let query = 'INSERT INTO tag ' + queryFields + ' VALUES ' + queryValues + ';'
             console.log('logging addTag query');
             console.log(query);
@@ -48,6 +51,37 @@ module.exports.assignTag = function (Tag, callback) {
             console.log(query);
 
             connection.query(query, function (err, rows) {
+                if (!err) {
+                    connection.end();
+                    callback(null, rows);
+
+                } else {
+                    console.log('error with the query');
+                    connection.end();
+                    callback(err, rows);
+                }
+            });
+        }
+    });
+}
+
+module.exports.assignTag = function (Tag, callback) {
+
+    db.createConnection(function (err, addTagResult) {
+        if (err) {
+            callback(err, null);
+        } else {
+            var connection = addTagResult;
+
+            let { FaceID, TagID } = Tag;
+
+            let queryFields = '(TagID, FaceID)';
+            let queryValues = `('${TagID}', '${FaceID}')`;
+            let query = 'INSERT INTO tag_assigned' + queryFields + ' VALUES ' + queryValues + ';'
+            console.log('logging assignTag query');
+            console.log(query);
+
+            connection.query(query, function (err, rows, fields) {
                 if (!err) {
                     connection.end();
                     callback(null, rows);
@@ -119,7 +153,7 @@ module.exports.getAllTags = function (callback) {
     });
 }
 
-module.exports.deleteTag = function (Body, callback) {
+module.exports.removeTag = function (Body, callback) {
 
     db.createConnection(function (err, getDeletedTagsResult) {
         if (err) {
