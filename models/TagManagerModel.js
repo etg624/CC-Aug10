@@ -77,7 +77,7 @@ module.exports.getAssignedTags = function (id, callback) {
 
             let queryField = '(TagName)';
             let queryValue = `'${id}'`;
-            let query = `SELECT * FROM tag WHERE ${queryField} =  ${queryValue}`;
+            let query = `SELECT * FROM tag WHERE ${queryField} =  ${queryValue} ORDER BY TagName ASC`;
             console.log('logging getAssignedTags query');
             console.log(query);
 
@@ -104,7 +104,7 @@ module.exports.getAllTags = function (callback) {
         } else {
             var connection = getAllTagsResult;
 
-            let query = `SELECT * FROM tag`;
+            let query = `SELECT * FROM tag ORDER BY TagName ASC`;
             console.log('logging getAssignedTags query');
             console.log(query);
 
@@ -157,7 +157,7 @@ module.exports.getTagsByFace = function (faceid, callback) {
         } else {
             var connection = getAllTagsResult;
 
-            let query = `SELECT * FROM face_tag_tag_assigned WHERE faceid = '${faceid}'`;
+            let query = `SELECT * FROM face_tag_tag_assigned WHERE faceid = '${faceid}' ORDER BY TagName ASC`;
             console.log('logging getAssignedTags query');
             console.log(query);
 

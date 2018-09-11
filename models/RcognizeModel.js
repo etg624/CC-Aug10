@@ -53,7 +53,7 @@ module.exports.getFaceList = function (callback) {
       //process the i/o after successful connect.  Connection object returned in callback
 
 
-      let query = 'SELECT * FROM face;'
+      let query = 'SELECT * FROM face ORDER BY Name ASC;'
       connection.query(query, function (err, rows) {
         if (!err) {
           connection.end();
@@ -80,7 +80,7 @@ module.exports.getTags = function (callback) {
       //process the i/o after successful connect.  Connection object returned in callback
 
 
-      let query = 'SELECT * FROM face_tag_tag_assigned;'
+      let query = 'SELECT * FROM face_tag_tag_assigned ORDER BY TagName ASC;'
       connection.query(query, function (err, rows) {
         if (!err) {
           connection.end();
