@@ -14,7 +14,7 @@ function initScript() {
     let buttonArray = [];
     let tagArray = [];
 
-
+    updateTagTable();
     const matches = function (arr, arr2) {
 
         var matchArray = [];
@@ -182,16 +182,29 @@ function initScript() {
                             tagArray.push(json[i].TagName);
                         }
 
-                        if (6 < json.length < 10){
-                            console.log('between 6 and 10');
-                            $(tagContainer).css('height', '200');
+                        if (json.length > 10) {
+                            console.log('greater than 10');
+                            $(tagContainer).css('height', '380');
 
-
-                        } else if (1 <json.length < 6){
-                            console.log('between 1 and 6');
-                            $(tagContainer).css('height', '100');
-                        } else {
-                            console.log('none of the above');
+                        } else if (json.length > 9) {
+                            console.log('10');
+                            $(tagContainer).css('height', '375');
+                        } else if (json.length > 8) {
+                            console.log('9') 
+                            $(tagContainer).css('height', '345')
+                        } else if (json.length > 7) {
+                            console.log('8'); 
+                            $(tagContainer).css('height', '315')
+                        } else if (json.length > 6) {
+                            console.log(7)
+                            $(tagContainer).css('height', '270')
+                        } else if (json.length > 5) {
+                            console.log('6')
+                            $(tagContainer).css('height', '235')
+                        }
+                        else {
+                            console.log('less than 6');
+                            $(tagContainer).css('height', '100')
                         }
 
                     }
