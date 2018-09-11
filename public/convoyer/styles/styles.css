@@ -16,6 +16,13 @@
     background-color: #2b3031
   }
 
+  .scrollable-table-large-wide {  
+    position: relative;
+    height: 400px !important;
+    overflow: scroll;
+    background-color: #071114
+  }
+
   .footable-filtering {
     display:none;
   }

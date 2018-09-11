@@ -21,13 +21,13 @@ html
 				include navbar
 				br
 	.row.with-margin
-		.col-md-2.col-sm-2.col-xs-2
-		.col-md-3.col-sm-3.col-xs-12
+		.col-md-3.col-sm-4.col-xs-12
+		.col-md-6.col-sm-5.col-xs-12
 				.panel.panel-default
 				.panel.panel-default
 						.panel-heading
 								h3.panel-title Tags
-						div#tagContainer.scrollable-table
+						div#tagContainer.scrollable-table-large-wide
 										table#tagTable.table.table-hover.table-striped.table-bordered
 														thead
 														-each result in getAllTagsResults
@@ -45,9 +45,7 @@ html
 						a.btn.btn-default.btn-block(href = '/rcognize/gallery')
 							i.fas.fa-hand-point-left(aria-hidden='true')
 							| &nbsp Back To Gallery
-		.col-md-1.col-sm-1.col-xs-12							
-		.col-md-4.col-sm-4.col-xs-12
-								
+		.col-md-3.col-sm-1.col-xs-12															
 	script(src='/rcognize/TagManagerScript.js')
 	script.
 			//- var getAssignedTagsResult = !{JSON.stringify(getAssignedTagsResult)};
