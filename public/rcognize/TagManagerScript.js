@@ -62,13 +62,12 @@ function initScript() {
                             bootbox.alert('An existing tag with that name already exists!');
 
                         } else {
-                            var newRow = tagTable.insertRow(tagTable.rows.length)
-                            var newCell = newRow.insertCell(0);
-                            var newText = document.createTextNode(promptResult);
-                            newCell.appendChild(newText);
+                            updateTagTable();
                             bootbox.hideAll();
                             bootbox.alert('Tag has been added!');
                         }
+
+
                     }
                 }
 
@@ -181,6 +180,18 @@ function initScript() {
                             allTags.push(json[i]);
                             tagArray = [];
                             tagArray.push(json[i].TagName);
+                        }
+
+                        if (6 < json.length < 10){
+                            console.log('between 6 and 10');
+                            $(tagContainer).css('height', '200');
+
+
+                        } else if (1 <json.length < 6){
+                            console.log('between 1 and 6');
+                            $(tagContainer).css('height', '100');
+                        } else {
+                            console.log('none of the above');
                         }
 
                     }
