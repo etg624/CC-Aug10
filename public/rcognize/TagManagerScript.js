@@ -83,7 +83,7 @@ function initScript() {
 
 
     }
-    
+
     function onRemoveTag() {
 
         let tagButtons = [];
@@ -92,7 +92,7 @@ function initScript() {
 
         for (let i = 0; i < allTags.length; i++) {
 
-            
+
             let label = allTags[i].TagName;
             // let faceID = face.FaceID
             let buttonClass = 'btn-primary';
@@ -171,6 +171,7 @@ function initScript() {
                     let json = JSON.parse(xhr.responseText);
                     if (json.length > 0) {
                         allTags = [];
+                        
                         for (let i = 0; i < json.length; i++) {
                             var newRow = tagTable.insertRow(tagTable.rows.length)
                             newRow.id = json[i].TagID;
@@ -181,6 +182,7 @@ function initScript() {
                             tagArray = [];
                             tagArray.push(json[i].TagName);
                         }
+
                     }
 
                     resolve(xhr.response);
